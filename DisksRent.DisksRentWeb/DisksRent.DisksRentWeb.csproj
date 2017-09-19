@@ -1009,10 +1009,16 @@
     <Content Include="Scripts\jquery-3.1.1.min.map" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\_ManagerLayout.cshtml" />
+    <Content Include="Views\Shared\_LoginLayout.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Login\ForgetPassword.cshtml" />
-    <Content Include="Views\Shared\_ManagerLayout.cshtml" />
-    <Content Include="Views\Manager\Index.cshtml" />
+    <Content Include="Views\Manager\QuanLyKhachHang.cshtml" />
+    <Content Include="Views\Manager\QuanLyThueTraDia.cshtml" />
+    <Content Include="Views\Manager\QuanLyTieuDe.cshtml" />
+    <Content Include="Views\Manager\QuanLyDatDia.cshtml" />
+    <Content Include="Views\Manager\QuanLyDia.cshtml" />
+    <Content Include="Views\Manager\QuanLyPhiTre.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

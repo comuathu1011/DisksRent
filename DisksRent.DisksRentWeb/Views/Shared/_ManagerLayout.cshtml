@@ -18,7 +18,7 @@
     <!-- Google Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini sidebar-collapse    ">
     <div class="wrapper">
 
             <!-- Main Header -->
@@ -81,17 +81,58 @@
                 </nav>
             </header>
             <!-- Left side column. contains the logo and sidebar -->
-            <aside class="main-sidebar">
-
+            <aside class="main-sidebar ">
                 <!-- sidebar: style can be found in sidebar.less -->
                 <section class="sidebar">
                     <!-- Sidebar Menu -->
                     <ul class="sidebar-menu" data-widget="tree">
                         <li class="header">Menu</li>
                         <!-- Optionally, you can add icons to the links -->
-                        <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
-                        <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
-                        <li class="treeview">
+                        <li class="active">
+                            <a href="@Url.Action("QuanLyThueTraDia", "Manager")">
+                            <i class="fa fa-money"></i> 
+                            <span>Quản lý thuê-trả đĩa</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="@Url.Action("QuanLyKhachHang", "Manager")">
+                                <i class="fa fa-user"></i>
+                                <span>Quản lý khách hàng</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="@Url.Action("QuanLyTieuDe", "Manager")">
+                                <i class="fa fa-align-center"></i>
+                                <span>Quản lý tiêu đề</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="@Url.Action("QuanLyDatDia", "Manager")">
+                                <i class="fa fa-cart-plus"></i>
+                                <span>Quản lý đặt đĩa</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="@Url.Action("QuanLyDia", "Manager")">
+                                <i class="fa fa-database"></i>
+                                <span>Quản lý đĩa</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="@Url.Action("QuanLyPhiTre", "Manager")">
+                                <i class="fa fa-clock-o"></i>
+                                <span>Quản lý phí trả trễ</span>
+                            </a>
+                        </li>
+
+                     
+                        <!--
+                             <li class="treeview">
                             <a href="#">
                                 <i class="fa fa-link"></i> <span>Multilevel</span>
                                 <span class="pull-right-container">
@@ -103,6 +144,8 @@
                                 <li><a href="#">Link in level 2</a></li>
                             </ul>
                         </li>
+                        -->
+                       
                     </ul>
                     <!-- /.sidebar-menu -->
                 </section>
