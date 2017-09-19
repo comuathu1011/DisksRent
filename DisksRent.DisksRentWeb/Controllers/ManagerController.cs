@@ -6,15 +6,10 @@ using System.Web.Mvc;
 
 namespace DisksRent.DisksRentWeb.Controllers
 {
-    public class LoginController : Controller
+    public class ManagerController : Controller
     {
-        // GET: Login
+        // GET: Manager
         public ActionResult Index()
-        {
-            return View();
-        }
-
-        public ActionResult ForgetPassword()
         {
             return View();
         }
