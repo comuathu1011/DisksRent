@@ -10,6 +10,7 @@ namespace DisksRent.DisksRentWeb.Controllers
     {
         // GET: Manager
 
+        [Route("/")]
         public ActionResult QuanLyKhachHang()
         {
             return View();
