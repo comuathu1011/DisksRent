@@ -8,6 +8,8 @@ namespace DisksRent.DisksRentWeb.Controllers
 {
     public class ManagerController : Controller
     {
+
+        
         // GET: Manager
 
         public ActionResult QuanLyKhachHang()
