@@ -69,6 +69,24 @@
         </div>
     </div>
 
+    <div class="fade modal" id="delete-title-modal" tabindex="-1" role="dialog" aria-labelledby="dekete-title-label">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="delete-title-label">Xóa đĩa</h4>
+                </div>
+                <div class="modal-body">
+                    <h2 class="danger">Bạn có chắc chắn muốn xóa!</h2>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-danger">Có</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-md-12">
             <button class="btn btn-primary margin-bottom" data-toggle="modal" data-target="#add-title-modal">Thêm mới tiêu đề</button>
@@ -102,7 +120,7 @@
                                 <td>
                                     <div class="input-group-btn btn-group-sm">
                                         <button class="btn btn-primary" data-target="#add-number-title-modal" data-toggle="modal">Thêm</button>
-                                        <button class="btn btn-danger">Xóa</button>
+                                        <button class="btn btn-danger" data-toggle="modal" data-target="#delete-title-modal">Xóa</button>
                                     </div>
                                 </td>
                             </tr>
