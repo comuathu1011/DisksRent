@@ -4,5 +4,59 @@
     Layout = "~/Views/Shared/_ManagerLayout.cshtml";
 }
 
-<h2>QuanLyDia</h2>
+<div class="section">
+    <div class="fade modal" id="delete-disk-modal" tabindex="-1" role="dialog" aria-labelledby="dekete-disk-label">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="delete-disk-label">Xóa đĩa</h4>
+                </div>
+                <div class="modal-body">
+                    <h2 class="danger">Bạn có chắc chắn muốn xóa!</h2>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-danger">Có</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <p class="box-title">Danh sách đĩa</p>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool"data-widget="collapse">
+                        <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Mã số</th>
+                                <th>Tiêu đề</th>
+                                <th>Tình trạng</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>001</td>
+                                <td>LOL game</td>
+                                <td>Còn hàng</td>
+                                <td>
+                                    <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete-disk-modal">Xóa</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
