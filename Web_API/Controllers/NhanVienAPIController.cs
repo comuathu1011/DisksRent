@@ -8,10 +8,10 @@ using Web_API.Models;
 
 namespace Web_API.Controllers
 {
-    public class NhanVienController : ApiController
+    public class NhanVienAPIController : ApiController
     {
         VideoRentalDb db;
-        public NhanVienController()
+        public NhanVienAPIController()
         {
             db = new VideoRentalDb();
         }

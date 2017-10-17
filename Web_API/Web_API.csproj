@@ -96,16 +96,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\NhanVienController.cs" />
+    <Compile Include="Controllers\DiaAPIController.cs" />
+    <Compile Include="Controllers\KhachHangAPIController.cs" />
+    <Compile Include="Controllers\NhanVienAPIController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710170513303_db.cs" />
+    <Compile Include="Migrations\201710170513303_db.Designer.cs">
+      <DependentUpon>201710170513303_db.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DanhMuc.cs" />
-    <Compile Include="Models\DatHang.cs" />
     <Compile Include="Models\Dia.cs" />
+    <Compile Include="Models\DsChoThue.cs" />
+    <Compile Include="Models\DsDatHang.cs" />
+    <Compile Include="Models\Enums\TinhTrangThueCollection.cs" />
     <Compile Include="Models\KhachHang.cs" />
     <Compile Include="Models\NhanVien.cs" />
-    <Compile Include="Models\ThueDia.cs" />
     <Compile Include="Models\TieuDe.cs" />
     <Compile Include="Models\VideoRentalDb.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -121,6 +129,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201710170513303_db.resx">
+      <DependentUpon>201710170513303_db.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
