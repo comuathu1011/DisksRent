@@ -96,9 +96,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\DatHangController.cs" />
     <Compile Include="Controllers\DiaAPIController.cs" />
     <Compile Include="Controllers\KhachHangAPIController.cs" />
     <Compile Include="Controllers\NhanVienAPIController.cs" />
+    <Compile Include="Controllers\PhiTreAPIController.cs" />
+    <Compile Include="Controllers\ThueDiaAPIController.cs" />
+    <Compile Include="Controllers\TieuDeAPIController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -111,6 +115,7 @@
     <Compile Include="Models\Dia.cs" />
     <Compile Include="Models\DsChoThue.cs" />
     <Compile Include="Models\DsDatHang.cs" />
+    <Compile Include="Models\Enums\TinhTrangDatHangCollection.cs" />
     <Compile Include="Models\Enums\TinhTrangThueCollection.cs" />
     <Compile Include="Models\KhachHang.cs" />
     <Compile Include="Models\NhanVien.cs" />

@@ -48,9 +48,9 @@ namespace Web_API.Migrations
                         MaDia = c.Int(nullable: false),
                         MaKhachHang = c.Int(nullable: false),
                         NgayThue = c.DateTime(nullable: false),
-                        NgayTra = c.DateTime(nullable: false),
-                        PhiTre = c.Decimal(nullable: false, precision: 18, scale: 2),
-                        DaThanhToanPhiTre = c.Boolean(nullable: false),
+                        NgayTra = c.DateTime(nullable: true),
+                        PhiTre = c.Decimal(nullable: true, precision: 18, scale: 2),
+                        DaThanhToanPhiTre = c.Boolean(nullable: true),
                     })
                 .PrimaryKey(t => new { t.MaDia, t.MaKhachHang })
                 .ForeignKey("dbo.Dias", t => t.MaDia, cascadeDelete: true)

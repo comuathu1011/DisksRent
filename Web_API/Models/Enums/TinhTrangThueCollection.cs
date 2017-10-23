@@ -8,13 +8,13 @@ namespace Web_API.Models.Enums
 {
     public enum TinhTrangThueCollection
     {
-        [Description("Dang co san")]
+        [Description("Đang có sẵn")]
         CoSan = 1,
 
-        [Description("Dang duoc thue")]
+        [Description("Đang được thuê")]
         DangThue = 2,
 
-        [Description("Dang giu cho khach")]
+        [Description("Đang giữ cho khách")]
         DangGiu = 3
     }
 }

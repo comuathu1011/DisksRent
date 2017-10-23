@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using Web_API.Models.Enums;
 
 namespace Web_API.Models
 {
@@ -14,6 +15,7 @@ namespace Web_API.Models
         [Key, Column(Order = 1)]
         public int MaTieuDe { get; set; }
         public int ThuTu { get; set; }
+        public TinhTrangDatHangCollection TinhTrang { get; set; }
 
         [ForeignKey("MaKhachHang")]
         public virtual KhachHang KhachHang { get; set; }

@@ -29,25 +29,33 @@ namespace Web_API.Controllers
             return Ok(lst);
         }
 
-        //them khach hang
+        //them dia
         [Route("api/dia/{maTieuDe}/{soLuong}")]
         public IHttpActionResult Post(int maTieuDe, int soLuong)
         {
-            //var tieuDe = db.TieuDes.Find(maTieuDe);
-            //var model = new Dia
-            //{
-            //    MaTieuDe = tieuDe.MaTieuDe,
-            //    TinhTrangThue = TinhTrangThueCollection.CoSan;
-            //}
-            //db.SaveChanges();
+            if (maTieuDe < 0 || soLuong < 0) return NotFound();
+            var tieuDe = db.TieuDes.Find(maTieuDe);
+            var list = new List<Dia>();
+            for (int i = 0; i < soLuong; i++)
+            {
+                var model = new Dia
+                {
+                    MaTieuDe = tieuDe.MaTieuDe,
+                    TinhTrangThue = TinhTrangThueCollection.CoSan
+                };
+                list.Add(model);
+            }
+
+            db.Dias.AddRange(list);
+            db.SaveChanges();
             return Ok();
         }
 
-        //xoa khach hang
-        [Route("api/khachhang/{id}")]
+        //xoa dia
+        [Route("api/dia/{id}")]
         public IHttpActionResult Delete(int id)
         {
-            db.KhachHangs.Remove(db.KhachHangs.Find(id));
+            db.Dias.Remove(db.Dias.Find(id));
             db.SaveChanges();
             return Ok();
         }

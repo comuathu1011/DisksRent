@@ -14,7 +14,8 @@ namespace Web_API.Models
         [Key, Column(Order = 1)]
         public int MaKhachHang { get; set; }
         public DateTime NgayThue { get; set; }
-        public DateTime NgayTra { get; set; }
+        public DateTime NgayPhaiTra { get; set; }
+        public DateTime NgayThucTra { get; set; }
         public decimal PhiTre { get; set; }
         public bool DaThanhToanPhiTre { get; set; }
 

@@ -9,7 +9,7 @@ namespace Web_API.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(Web_API.Models.VideoRentalDb context)
