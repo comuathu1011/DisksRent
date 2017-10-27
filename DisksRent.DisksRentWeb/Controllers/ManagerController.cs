@@ -9,10 +9,15 @@ namespace DisksRent.DisksRentWeb.Controllers
     public class ManagerController : Controller
     {
 
-        
+
         // GET: Manager
 
-        [Route("/")]
+
+        public ActionResult Index()
+        {
+            return View("QuanLyKhachHang");
+        }
+
         public ActionResult QuanLyKhachHang()
         {
             return View();
@@ -24,24 +29,30 @@ namespace DisksRent.DisksRentWeb.Controllers
         }
 
       
-        public ActionResult QuanLyTieuDe()
+        public ActionResult QuanLyTieuDeVaDia()
         {
             return View();
         }
 
-        public ActionResult QuanLyDatDia()
-        {
-            return View();
-        }
-
-        public ActionResult QuanLyDia()
-        {
-            return View();
-        }
         public ActionResult QuanLyPhiTre()
         {
             return View();
         }
 
+        public ActionResult QuanLyDatHang()
+        {
+            return View();
+        }
+
+        public ActionResult QuanLyBaoCao()
+        {
+            return View();
+        }
+
+        //Maybe delete
+        public ActionResult QuanLyDia()
+        {
+            return View();
+        }
     }
 }

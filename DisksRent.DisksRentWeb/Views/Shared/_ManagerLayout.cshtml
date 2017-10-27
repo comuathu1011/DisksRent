@@ -17,8 +17,21 @@
     <link href="~/admin-lte/css/skins/skin-blue.min.css" rel="stylesheet" />
     <!-- Google Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+    <!--Angular-->
+    <script src="~/Scripts/angular.js"></script>
+    <script src="~/Scripts/angular-animate.js"></script>
+    <script src="~/Scripts/angular-sanitize.js"></script>
+
+    <!--Bootrap UI support angular-->
+    <script src="~/Scripts/angular-ui/ui-bootstrap-tpls.js"></script>
+
+    <script src="~/Scripts/jquery-3.1.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/admin-lte/js/adminlte.min.js"></script>
+
 </head>
-<body class="hold-transition skin-blue sidebar-mini sidebar-collapse    ">
+<body class="hold-transition skin-blue sidebar-mini sidebar-collapse" ng-app="ManagerApp">
     <div class="wrapper">
 
             <!-- Main Header -->
@@ -88,38 +101,26 @@
                     <ul class="sidebar-menu" data-widget="tree">
                         <li class="header">Menu</li>
                         <!-- Optionally, you can add icons to the links -->
-                        <li class="active">
-                            <a href="@Url.Action("QuanLyThueTraDia", "Manager")">
-                            <i class="fa fa-money"></i> 
-                            <span>Quản lý thuê-trả đĩa</span>
-                            </a>
-                        </li>
 
-                        <li>
+                        <li class="active">
                             <a href="@Url.Action("QuanLyKhachHang", "Manager")">
                                 <i class="fa fa-user"></i>
                                 <span>Quản lý khách hàng</span>
                             </a>
                         </li>
 
+                        <li >
+                            <a href="@Url.Action("QuanLyThueTraDia", "Manager")">
+                            <i class="fa fa-money"></i> 
+                            <span>Quản lý thuê và trả đĩa</span>
+                            </a>
+                        </li>
+                        
+
                         <li>
-                            <a href="@Url.Action("QuanLyTieuDe", "Manager")">
+                            <a href="@Url.Action("QuanLyTieuDeVaDia", "Manager")">
                                 <i class="fa fa-align-center"></i>
-                                <span>Quản lý tiêu đề</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="@Url.Action("QuanLyDatDia", "Manager")">
-                                <i class="fa fa-cart-plus"></i>
-                                <span>Quản lý đặt đĩa</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="@Url.Action("QuanLyDia", "Manager")">
-                                <i class="fa fa-database"></i>
-                                <span>Quản lý đĩa</span>
+                                <span>Quản lý tiêu đề và đĩa</span>
                             </a>
                         </li>
 
@@ -130,8 +131,33 @@
                             </a>
                         </li>
 
-                     
+                        <li>
+                            <a href="@Url.Action("QuanLyDatHang", "Manager")">
+                                <i class="fa fa-cart-plus"></i>
+                                <span>Quản lý đặt hàng</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="@Url.Action("QuanLyDia", "Manager")">
+                                <i class="fa fa-table" aria-hidden="true"></i>
+                                <span>Xuất báo cáo</span>
+                            </a>
+                        </li>
+
                         <!--
+
+                        <li>
+                            <a href="@Url.Action("QuanLyDia", "Manager")">
+                                <i class="fa fa-database"></i>
+                                <span>Quản lý đĩa</span>
+                            </a>
+                        </li>
+
+                       
+
+                     
+                        
                              <li class="treeview">
                             <a href="#">
                                 <i class="fa fa-link"></i> <span>Multilevel</span>
@@ -250,9 +276,8 @@
             <div class="control-sidebar-bg"></div>
         </div>
 
-
-    <script src="~/Scripts/jquery-3.1.1.min.js"></script>
-    <script src="~/Scripts/bootstrap.min.js"></script>
-    <script src="~/admin-lte/js/adminlte.min.js"></script>
+    <!--Angular controller and app-->
+    <script src="~/angular/manager/ManagerApp.js"></script>
+    <script src="~/angular/manager/QuanLyKhachHangCtrl.js"></script>
  </body>
 </html>

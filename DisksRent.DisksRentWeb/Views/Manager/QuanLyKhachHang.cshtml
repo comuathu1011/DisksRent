@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_ManagerLayout.cshtml";
 }
 
-<div class="section">
+<div class="section" ng-controller="QuanLyKhachHangCtrl">
 
     <div class="fade modal" id="add-customer-modal" tabindex="-1" role="dialog" aria-labelledby="dekete-disk-label">
         <div class="modal-dialog">
@@ -19,7 +19,7 @@
                             <label for="ho-va-ten" class="col-sm-3 control-label">Họ và tên</label>
 
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="ho-va-ten"/>
+                                <input type="text" class="form-control" ng-model="newKhachHang.Ten"/>
                             </div>
                         </div>
 
@@ -27,7 +27,7 @@
                             <label for="sdt" class="col-sm-3 control-label">Số điện thoại</label>
 
                             <div class="col-sm-9">
-                                <input type="tel" class="form-control" id="sdt" />
+                                <input type="tel" class="form-control" ng-model="newKhachHang.SoDienThoai" />
                             </div>
                         </div>
 
@@ -35,32 +35,33 @@
                             <label for="dia-chi" class="col-sm-3 control-label">Địa chỉ</label>
 
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="dia-chi" />
+                                <textarea rows="10" type="text" class="form-control" ng-model="newKhachHang.DiaChi"></textarea>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-                    <button type="button" class="btn btn-primary">Lưu</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" >Đóng</button>
+                    <button type="button" class="btn btn-primary" ng-click="confirmThemKhachHang()">Chấp nhận</button>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="fade modal" id="delete-customer-modal" tabindex="-1" role="dialog" aria-labelledby="dekete-customer-label">
-        <div class="modal-dialog modal-sm">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="delete-customer-label">Xóa khách hàng</h4>
                 </div>
                 <div class="modal-body">
-                    <h2 class="danger">Bạn có chắc chắn muốn xóa!</h2>
+                    <h4 class="danger">Bạn có chắc chắn muốn xóa!</h4>
+                    <h2 class="danger">Khách hàng: {{khachHangSelected.Ten}}</h2>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-                    <button type="button" class="btn btn-danger">Có</button>
+                    <button type="button" class="btn btn-danger" ng-click="confirmXoaKhachHang()">Có</button>
                 </div>
             </div>
         </div>
@@ -68,12 +69,14 @@
 
     <div class="row margin-bottom">
         <div class="col-md-12">
-            <button class="btn btn-primary" data-target="#add-customer-modal" data-toggle="modal">Thêm khách hàng</button>
+            <button class="btn btn-primary" data-target="#add-customer-modal" data-toggle="modal" ng-click="resetThemKhachHang()">
+                Thêm khách hàng
+            </button>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-md-6  col-sm-12">
+        <div class="col-md-4  col-sm-12">
             <div class="box box-primary">
                 <div class="box-header">
                     <p class="box-title">Danh sách khách hàng</p>
@@ -81,28 +84,42 @@
                         <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                     </div>
                 </div>
-                <div class="box-body">
+                <div class="box-body" id="body-box-list">
                     <table class="table table-bordered table-hover">
                         <thead>
                             <tr>
                                 <th>Mã số</th>
                                 <th>Họ và tên</th>
-                                <th>Số điện thoại</th>
+                                
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>0001</td>
-                                <td>Hồ Quốc Vửng</td>
-                                <td>0966 301 054</td>
+                            <tr ng-repeat="khachHang in listKhachHang track by $index"
+                                ng-click="listKhachHangClicked(khachHang)">
+                                <td>{{khachHang.MaKhachHang}}</td>
+                                <td>{{khachHang.Ten}}</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
+                <div class="box-footer">
+                    <div class="col-md-12">
+                        <ul uib-pagination 
+                            ng-change="khachHangPageChange()"
+                            total-items="khachHangPagination.totalItem" 
+                            ng-model="khachHangPagination.model"
+                            max-size="khachHangPagination.maxPage" 
+                            items-per-page="khachHangPagination.perPage"
+                            class="pagination-sm pull-right"
+                            boundary-link-numbers="true" 
+                            rotate="false">
+                        </ul>   
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="col-md-6  col-sm-12">
+        <div class="col-md-8  col-sm-12">
             <div class="box box-primary">
                 <div class="box-header">
                     <p class="box-title">Thông tin chi tiết khách hàng</p>
@@ -110,13 +127,13 @@
                         <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                     </div>
                 </div>
-                <div class="box-body">
+                <div class="box-body" id="body-box-info">
                     <form class="form-horizontal">
                         <div class="form-group">
                             <label for="ho-va-ten-view" class="col-sm-3 control-label">Họ và tên</label>
 
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" value="Hồ Quôc Vửng" id="ho-va-ten-view" disabled />
+                                <input type="text" class="form-control" ng-disabled="updateFiled" ng-model="khachHangSelected.Ten"  />
                             </div>
                         </div>
 
@@ -124,7 +141,7 @@
                             <label for="sdt-view" class="col-sm-3 control-label" >Số điện thoại</label>
 
                             <div class="col-sm-9">
-                                <input type="tel" class="form-control" id="sdt-view" value="0966 301 043" disabled/>
+                                <input type="tel" class="form-control" ng-disabled="updateFiled" ng-model="khachHangSelected.SoDienThoai" />
                             </div>
                         </div>
 
@@ -132,7 +149,7 @@
                             <label for="dia-chi-view" class="col-sm-3 control-label">Địa chỉ</label>
 
                             <div class="col-sm-9">
-                                <textarea class="form-control" id="dia-chi-view" rows="10" disabled>Phường 5, Gò Vấp, Tp Hồ Chí Minh
+                                <textarea class="form-control" ng-disabled="updateFiled" ng-model="khachHangSelected.DiaChi" rows="14" >Phường 5, Gò Vấp, Tp Hồ Chí Minh
                                 </textarea>
                             </div>
                         </div>
@@ -140,7 +157,8 @@
                 </div>
                 <div class="box-footer">
                     <div class="col-md-12">
-                        <button class="btn btn-default pull-right">Sửa thông tin</button>
+                        <button class="btn btn-default pull-right" ng-click="updateClicked()">{{updateFiledName}}</button>
+                        <button class="btn btn-default pull-right" style="margin-right:5px" ng-click="cancelUpdate()" ng-show="!updateFiled">Hủy</button>
                         <button class="btn btn-danger pull-right" style="margin-right:5px" data-toggle="modal" data-target="#delete-customer-modal">Xóa</button>
                     </div>
                 </div>
@@ -148,3 +166,9 @@
         </div>
     </div>
 </div>
+
+<script>
+    /*
+    body-box-info
+    */
+</script>
