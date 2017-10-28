@@ -164,6 +164,14 @@
     <Content Include="angular\manager\QuanLyThueTraDiaCtrl.js" />
     <Content Include="angular\manager\QuanLyTieuDeVaDiaCtrl.js" />
     <Content Include="angular\manager\QuanLyXuatBaoCaoCtrl.js" />
+    <Content Include="angular\service\manager\DanhMucService.js" />
+    <Content Include="angular\service\manager\DatHangService.js" />
+    <Content Include="angular\service\manager\DiaService.js" />
+    <Content Include="angular\service\manager\KhachHangService.js" />
+    <Content Include="angular\service\manager\NhanVienService.js" />
+    <Content Include="angular\service\manager\PhiTreService.js" />
+    <Content Include="angular\service\manager\ThueDiaService.js" />
+    <Content Include="angular\service\manager\TieuDeService.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -1040,6 +1048,8 @@
   <ItemGroup>
     <Folder Include="angular\clerk\" />
     <Folder Include="angular\login\" />
+    <Folder Include="angular\service\clerk\" />
+    <Folder Include="angular\service\public\" />
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
     <Folder Include="Views\Clerks\" />

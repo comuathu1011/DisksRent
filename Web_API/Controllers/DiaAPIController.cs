@@ -26,7 +26,19 @@ namespace Web_API.Controllers
             {
                 return NotFound();
             }
-            return Ok(lst);
+
+            List<Dia> result = new List<Dia>();
+
+            lst.ForEach(item =>
+            {
+                Dia dia = new Dia();
+                dia.MaDia = item.MaDia;
+                dia.MaTieuDe = item.MaTieuDe;
+                dia.TinhTrangThue = item.TinhTrangThue;
+                result.Add(dia);
+            });
+
+            return Ok(result);
         }
 
         //them dia

@@ -48,7 +48,7 @@ namespace Web_API.Controllers
         }
 
         //xoa tieu de
-        [Route("api/khachhang/{id}")]
+        [Route("api/tieude/{id}")]
         public IHttpActionResult Delete(int id)
         {
             db.TieuDes.Remove(db.TieuDes.Find(id));
