@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "QuanLyKhachHang";
+    ViewBag.Title = "Quản lý khách hàng";
     Layout = "~/Views/Shared/_ManagerLayout.cshtml";
 }
 
@@ -104,13 +104,14 @@
                 </div>
                 <div class="box-footer">
                     <div class="col-md-12">
-                        <ul uib-pagination 
+                        <ul style="margin: 0"
+                            uib-pagination 
                             ng-change="khachHangPageChange()"
                             total-items="khachHangPagination.totalItem" 
                             ng-model="khachHangPagination.model"
                             max-size="khachHangPagination.maxPage" 
                             items-per-page="khachHangPagination.perPage"
-                            class="pagination-sm pull-right"
+                            class="pagination pull-right"
                             boundary-link-numbers="true" 
                             rotate="false">
                         </ul>   
@@ -170,5 +171,17 @@
 <script>
     /*
     body-box-info
+    body-box-list
     */
+    $(document).ready(() => {
+        let infoHeight = $('#body-box-info').height();
+        let listHeight = $('#body-box-list').height();
+
+        if (infoHeight > listHeight) {
+            $('#body-box-list').height(infoHeight);
+        } else {
+            $('#body-box-info').height(listHeight);
+        }
+    });
+    
 </script>

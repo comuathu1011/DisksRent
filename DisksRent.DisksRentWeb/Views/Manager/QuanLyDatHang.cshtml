@@ -1,8 +1,185 @@
 ﻿
 @{
-    ViewBag.Title = "QuanLyDatDia";
+    ViewBag.Title = "Quản lý đặt hàng";
     Layout = "~/Views/Shared/_ManagerLayout.cshtml";
 }
 
-<h2>QuanLyDatDia</h2>
+<div class="session" ng-controller="QuanLyDatHangCtrl">
+    <div class="fade modal" id="add-booking-disk-modal" tabindex="-1" role="dialog" aria-labelledby="dekete-customer-label">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="delete-customer-label">Xóa khách hàng</h4>
+                </div>
+                <div class="modal-body">
+                    <h4 class="danger">Bạn có chắc chắn muốn xóa!</h4>
+                    <h2 class="danger">Khách hàng: {{khachHangSelected.Ten}}</h2>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-danger" ng-click="confirmXoaKhachHang()">Có</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fade modal" id="cancel-booking-disk-modal" tabindex="-1" role="dialog" aria-labelledby="dekete-customer-label">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="delete-customer-label">Xóa khách hàng</h4>
+                </div>
+                <div class="modal-body">
+                    <h4 class="danger">Bạn có chắc chắn muốn xóa!</h4>
+                    <h2 class="danger">Khách hàng: {{khachHangSelected.Ten}}</h2>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-danger" ng-click="confirmXoaKhachHang()">Có</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row margin-bottom">
+        <div class="col-md-12">
+            <button class="btn btn-primary" data-toggle="modal" data-target="#add-booking-disk-modal">Thêm đặt hàng</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="box">
+                <div class="box-header">
+                    <p class="box-title">Danh sách khách hàng</p>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div>
+                <div class="box-body" id="body-box-phi-tre">
+                    <div class="col-md-6 col-sm-12 col-sx-12 margin-bottom pull-right">
+                        <div class="inputform-group">
+                            <div class="input-group input-group-sm">
+                                <input type="text" ng-model="searchPatientInputModel"
+                                       ng-keyup="searchPatient($event)"
+                                       class="form-control pull-right ng-pristine ng-valid ng-empty ng-touched"
+                                       placeholder="Lọc theo mã khách hàng...">
+
+                                <div class="input-group-btn">
+                                    <button ng-click="refreshSearchResult()" data-toggle="tooltip"
+                                            data-placement="top" title="Sắp xếp" type="submit"
+                                            class="btn btn-default togo" data-original-title="Bỏ tìm kiếm">
+                                        <i class="fa fa-user" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-12 col-sx-12 margin-bottom pull-right">
+                        <div class="inputform-group">
+                            <div class="input-group input-group-sm">
+                                <input type="text" ng-model="searchPatientInputModel"
+                                       ng-keyup="searchPatient($event)"
+                                       class="form-control pull-right ng-pristine ng-valid ng-empty ng-touched"
+                                       placeholder="Lọc theo mã tiêu đề...">
+
+                                <div class="input-group-btn">
+                                    <button ng-click="refreshSearchResult()" data-toggle="tooltip"
+                                            data-placement="top" title="Sắp xếp" type="submit"
+                                            class="btn btn-default togo" data-original-title="Bỏ tìm kiếm">
+                                        <i class="fa fa-file-video-o" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Mã khách hàng</th>
+                                    <th>Mã tiêu đề</th>
+                                    <th>Thứ tự</th>
+                                    <th>Trạng thái</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <div class="col-md-12">
+                        <ul style="margin: 0"
+                            uib-pagination
+                            ng-change="khachHangPageChange()"
+                            total-items="khachHangPagination.totalItem"
+                            ng-model="khachHangPagination.model"
+                            max-size="khachHangPagination.maxPage"
+                            items-per-page="khachHangPagination.perPage"
+                            class="pagination-sm pull-right"
+                            boundary-link-numbers="true"
+                            rotate="false"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="box">
+                <div class="box-header">
+                    <p class="box-title">Chi tiết đặt hàng</p>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div>
+
+                <div class="box-body" id="body-box-thong-tin-phi-tre">
+                    <div class="col-md-12">
+                        <h3>Trạng thái: <strong>20$</strong></h3>
+                        <hr />
+                        <p><strong>Thông tin Khách hàng</strong></p>
+                        <p>Anh (chị): <strong>Nguyễn Văn A</strong></p>
+                        <p>Mã khách hàng: <strong>A0001</strong></p>
+                        <p>Số điện thoại: <strong>012122</strong></p>
+                        <p>Địa chỉ: <strong>Nguyễn văn</strong></p>
+                        <hr />
+                        <p><strong>Thông tin đĩa</strong></p>
+                        <p>Tên đĩa: <strong>LOL</strong></p>
+                        <p>Thể loại: <strong>Nguyễn văn</strong></p>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <div class="col-md-12">
+                        <button class="btn btn-danger btn-sm pull-right"
+                                data-toggle="modal" 
+                                data-target="#cancel-booking-disk-modal" 
+                                style="margin-right: 5px">Hủy đặt hàng</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(() => {
+        let boxPhiTre = $('#body-box-phi-tre').height();
+        let boxThongTinPhiTre = $('#body-box-thong-tin-phi-tre').height();
+
+        if (boxPhiTre > boxThongTinPhiTre) {
+            $('#body-box-thong-tin-phi-tre').height(boxPhiTre);
+        } else {
+            $('#body-box-phi-tre').height(boxThongTinPhiTre);
+        }
+    });
+</script>
 

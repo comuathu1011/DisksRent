@@ -1,10 +1,10 @@
 ﻿
 @{
-    ViewBag.Title = "QuanLyTieuDe";
+    ViewBag.Title = "Quản lý tiêu đề và đĩa";
     Layout = "~/Views/Shared/_ManagerLayout.cshtml";
 }
 
-<div class="section">
+<div class="section" ng-controller="QuanLyTieuDeVaDiaCtrl">
     <div class="modal fade" id="add-title-modal" tabindex="-1" role="dialog" aria-labelledby="add-title-label">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -36,14 +36,14 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary">Lưu</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="modal fade" id="add-number-title-modal" tabindex="-1" role="dialog" aria-labelledby="add-title-label">
+    <div class="modal fade" id="add-disk-for-title-modal" tabindex="-1" role="dialog" aria-labelledby="add-title-label">
         <div class="modal-dialog modal-sm" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -87,9 +87,46 @@
         </div>
     </div>
 
+    <div class="fade modal" id="type-manager-modal" tabindex="-1" role="dialog" aria-labelledby="dekete-title-label">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="delete-title-label">Xóa đĩa</h4>
+                </div>
+                <div class="modal-body">
+                    <h2 class="danger">Bạn có chắc chắn muốn xóa!</h2>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-danger">Có</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fade modal" id="delete-disk-modal" tabindex="-1" role="dialog" aria-labelledby="dekete-title-label">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="delete-title-label">Xóa đĩa</h4>
+                </div>
+                <div class="modal-body">
+                    <h2 class="danger">Bạn có chắc chắn muốn xóa!</h2>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-danger">Có</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-md-12">
-            <button class="btn btn-primary margin-bottom" data-toggle="modal" data-target="#add-title-modal">Thêm mới tiêu đề</button>
+            <button class="btn btn-primary margin-bottom" style="margin-right: 5px" data-toggle="modal" data-target="#add-title-modal">Thêm mới tiêu đề</button>
+            <button class="btn btn-primary margin-bottom" data-toggle="modal" data-target="#type-manager-modal">Quản lý giá danh mục</button>
         </div>
     </div>
     <div class="row">
@@ -108,7 +145,6 @@
                                 <th>Mã số</th>
                                 <th>Loại</th>
                                 <th>Tên</th>
-                                <th>Action</th>
                             </tr>
                         </thead>
 
@@ -117,32 +153,52 @@
                                 <td>0001</td>
                                 <td>Game</td>
                                 <td>LOL</td>
-                                <td>
-                                    <div class="input-group-btn btn-group-sm">
-                                        <button class="btn btn-primary" data-target="#add-number-title-modal" data-toggle="modal">Thêm</button>
-                                        <button class="btn btn-danger" data-toggle="modal" data-target="#delete-title-modal">Xóa</button>
-                                    </div>
-                                </td>
                             </tr>
                         </tbody>
                     </table>
                 </div><!-- /.box-body -->
+            <div class="box-footer">
+                <div class="col-md-12">
+                    <button class="btn btn-sm btn-danger pull-right" data-toggle="modal" data-target="#delete-title-modal">Xóa tiêu đề</button>
+                </div>
+            </div>
             </div><!-- /.box -->
         </div>
 
         <div class="col-md-6 col-sm-12">
             <div class="box box-default">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Báo cáo cáo chi tiết</h3>
+                    <h3 class="box-title">Danh sách đĩa</h3>
                     <div class="box-tools pull-right">
                         <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                     </div><!-- /.box-tools -->
                 </div><!-- /.box-header -->
                 <div class="box-body">
-                   <h1>Giao diện mẫu báo cáo</h1>
+                  <div class="col-md-12">
+                      <table class="table table-hover table-bordered">
+                          <thead>
+                              <tr>
+                                  <th>Mã số</th>
+                                  <th>Tình trạng</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr>
+                                  <td>0001</td>
+                                  <td>Game</td>
+                                  <td>LOL</td>
+                              </tr>
+                          </tbody>
+                      </table>
+                  </div>
                 </div><!-- /.box-body -->
                 <div class="box-footer ">
-                    <button class="btn btn-default pull-right">Xuất báo cáo</button>
+                    <div class="col-md-6">
+                        <button class="btn btn-sm btn-danger pull-left" data-target="#delete-disk-modal" data-toggle="modal">Xóa đĩa</button>     
+                    </div>
+                    <div class="col-md-6">
+                        <button class="btn btn-sm btn-primary pull-right" data-target="#add-disk-for-title-modal" data-toggle="modal">Thêm đĩa</button>
+                    </div>
                 </div>
             </div><!-- /.box -->
         </div>

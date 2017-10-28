@@ -1,8 +1,60 @@
 ﻿
 @{
-    ViewBag.Title = "QuanLyBaoCao";
+    ViewBag.Title = "Quản lý xuất báo cáo";
     Layout = "~/Views/Shared/_ManagerLayout.cshtml";
 }
 
-<h2>QuanLyBaoCao</h2>
-
+<div class="session">
+    <div class="col-md-12">
+        <!-- Custom Tabs -->
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#tab-khach-hang" data-toggle="tab" aria-expanded="true">Khách hàng</a></li>
+                <li class=""><a href="#tab-tieu-de" data-toggle="tab" aria-expanded="false">Tiêu đề</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab-khach-hang">
+                   <table class="table table-bordered table-hover">
+                       <thead>
+                           <tr>
+                               <th>Mã khách hàng</th>
+                               <th>Họ và tên</th>
+                               <th>Số điện thoại</th>
+                               <th>Địa chỉ</th>
+                           </tr>
+                       </thead>
+                       <tbody>
+                           <tr>
+                               <td>Mã khách hàng</td>
+                               <td>Họ và tên</td>
+                               <td>Số điện thoại</td>
+                               <td>Địa chỉ</td>
+                           </tr>
+                       </tbody>
+                   </table>
+                </div>
+                <!-- /.tab-pane -->
+                <div class="tab-pane" id="tab-tieu-de">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Mã tiêu đề</th>
+                                <th>Tên tiêu đề</th>
+                                <th>Danh mục</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Mã khách hàng</td>
+                                <td>Họ và tên</td>
+                                <td>Số điện thoại</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- /.tab-content -->
+        </div>
+        <!-- nav-tabs-custom -->
+    </div>
+</div>
