@@ -17,6 +17,7 @@ namespace Web_API.Controllers
         }
         //get danh sach khach hang
         [Route("api/khachhang")]
+        [HttpGet]
         public IHttpActionResult GetAll()
         {
             var lst = db.KhachHangs.ToList();
@@ -26,6 +27,39 @@ namespace Web_API.Controllers
             }
             return Ok(lst);
         }
+
+        //get so luong khach hang
+        [Route("api/khachhang/count")]
+        [HttpGet]
+        public IHttpActionResult GetCount()
+        {
+            return Json(db.KhachHangs.ToList().Count);
+        }
+
+        //get khach hang theo id
+        [Route("api/khachhang/{id}")]
+        [HttpGet]
+        public IHttpActionResult GetCust(int id)
+        {
+            var cust = db.KhachHangs.Find(id);
+            if (cust == null)
+            {
+                return NotFound();
+            }
+            return Ok(cust);
+        }
+
+        //get khach hang theo id
+        //[Route("api/khachhang/{limit}/{offset}")]
+        //public IHttpActionResult GetCust(int id)
+        //{
+        //    var cust = db.KhachHangs.Find(id);
+        //    if (cust == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return Ok(cust);
+        //}
 
         //them khach hang
         [Route("api/khachhang")]

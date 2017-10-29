@@ -96,6 +96,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\DanhMucAPIController.cs" />
     <Compile Include="Controllers\DatHangController.cs" />
     <Compile Include="Controllers\DiaAPIController.cs" />
     <Compile Include="Controllers\KhachHangAPIController.cs" />
