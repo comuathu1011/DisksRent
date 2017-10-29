@@ -5,8 +5,6 @@ VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DisksRent.DisksRentWeb", "DisksRent.DisksRentWeb\DisksRent.DisksRentWeb.csproj", "{87CA7C0E-C3FA-446A-8E43-8C0FEC706572}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DisksRent.DisksRentDataBase", "DisksRent.DisksRentDataBase\DisksRent.DisksRentDataBase.csproj", "{8A148292-0255-4029-BD76-A13B7CF9C9EF}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web_API", "Web_API\Web_API.csproj", "{21FBA61F-5A55-4B3A-8724-887159B2E8B7}"
 EndProject
 Global
@@ -19,10 +17,6 @@ Global
 		{87CA7C0E-C3FA-446A-8E43-8C0FEC706572}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{87CA7C0E-C3FA-446A-8E43-8C0FEC706572}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{87CA7C0E-C3FA-446A-8E43-8C0FEC706572}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8A148292-0255-4029-BD76-A13B7CF9C9EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8A148292-0255-4029-BD76-A13B7CF9C9EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8A148292-0255-4029-BD76-A13B7CF9C9EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8A148292-0255-4029-BD76-A13B7CF9C9EF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{21FBA61F-5A55-4B3A-8724-887159B2E8B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{21FBA61F-5A55-4B3A-8724-887159B2E8B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{21FBA61F-5A55-4B3A-8724-887159B2E8B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
