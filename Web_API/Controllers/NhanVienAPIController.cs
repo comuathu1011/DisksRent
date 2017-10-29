@@ -24,7 +24,7 @@ namespace Web_API.Controllers
             {
                 return NotFound();
             }
-            return Ok(lst);
+            return Json(lst);
         }
 
     }

@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DisksRent.DisksRentWeb", "DisksRent.DisksRentWeb\DisksRent.DisksRentWeb.csproj", "{87CA7C0E-C3FA-446A-8E43-8C0FEC706572}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "DisksRent.DisksRentDataBase", "DisksRent.DisksRentDataBase\DisksRent.DisksRentDataBase.xproj", "{8A148292-0255-4029-BD76-A13B7CF9C9EF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DisksRent.DisksRentDataBase", "DisksRent.DisksRentDataBase\DisksRent.DisksRentDataBase.csproj", "{8A148292-0255-4029-BD76-A13B7CF9C9EF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web_API", "Web_API\Web_API.csproj", "{21FBA61F-5A55-4B3A-8724-887159B2E8B7}"
 EndProject
@@ -30,5 +30,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {72427CFB-494C-41D4-B441-A5540D4DD537}
 	EndGlobalSection
 EndGlobal

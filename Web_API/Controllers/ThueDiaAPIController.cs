@@ -14,7 +14,7 @@ namespace Web_API.Controllers
         PhiTreAPIController phiTreController;
         DatHangController datHangController;
         int soNgayChoThueMoiDia = 7; //số ngày cho thuê của mỗi đĩa
-        
+
         public ThueDiaAPIController()
         {
             db = new VideoRentalDb();
@@ -26,7 +26,12 @@ namespace Web_API.Controllers
         [Route("api/muondia/{maKhachHang}/{maDia}")]
         public IHttpActionResult PostThueDia(int maKhachHang, int maDia)
         {
-            if (maDia < 0 || maKhachHang < 0) return NotFound();
+            var dia = db.Dias.Where(x => x.MaDia == maDia).FirstOrDefault();
+            var kh = db.KhachHangs.Where(x => x.MaKhachHang == maKhachHang).FirstOrDefault();
+            if (dia == null || kh == null)
+            {
+
+            }
             var model = new DsChoThue
             {
                 MaKhachHang = maKhachHang,
@@ -36,21 +41,58 @@ namespace Web_API.Controllers
             };
             db.DsChoThue.Add(model);
             db.SaveChanges();
-            return Ok();
+            return Json(model);
         }
         //tra dia
         [Route("api/muondia/{maDia}")]
         public IHttpActionResult PutThueDia(int maDia)
         {
             if (maDia < 0) return NotFound();
-            var model = db.DsChoThue.Where(x => x.MaDia == maDia).OrderByDescending(x=>x.NgayThue).FirstOrDefault();
+            var model = db.DsChoThue.Where(x => x.MaDia == maDia).OrderByDescending(x => x.NgayThue).FirstOrDefault();
             model.NgayThucTra = DateTime.Now;
             phiTreController.ThemPhiTre(model);
             db.Entry(model).State = System.Data.Entity.EntityState.Modified;
             db.SaveChanges();
-            datHangController.ChuyenTinhTrangDiaDangGiu(model.MaDia);//nếu đĩa đang được đặt hàng => thay đổi trạng thái đĩa
+            // datHangController.KiemTraTinhTrangDatHang(model.MaDia);//nếu đĩa đang được đặt hàng => thay đổi trạng thái đĩa
+            datHangController.KiemTraTinhTrangDatHang(maDia);
             return Ok();
         }
+
+        [Route("api/thue/{maKhachHang}/{limit}/{offset}")]
+        public IHttpActionResult GetLimit(int maKhachHang, int limit, int offset)
+        {
+            string err = null;
+            var kh = db.KhachHangs.Find(maKhachHang);
+            if (kh == null)
+            {
+                err = "Không tìm thấy khách hàng cần tìm";
+                return Json(err);
+            }
+            if (limit < 0 || offset < 0)
+            {
+                err = "Lỗi";
+                return Json(err);
+            }
+            var result = db.DsChoThue.Where(x => x.MaKhachHang == kh.MaKhachHang).Skip(offset).Take(limit).ToList();
+            return Json(result);
+        }
+
+        [Route("api/thue/{maKhachHang}/count")]
+        public IHttpActionResult GetCountByMaKh(int maKhachHang)
+        {
+            string err = null;
+            var kh = db.KhachHangs.Find(maKhachHang);
+            if (kh == null)
+            {
+                err = "Không tìm thấy khách hàng cần tìm";
+                return Json(err);
+            }
+
+            var result = db.DsChoThue.Where(x => x.MaKhachHang == kh.MaKhachHang).Count();
+            return Json(result);
+        }
+
+
 
     }
 }
