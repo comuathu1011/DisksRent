@@ -17,6 +17,7 @@ namespace Web_API.Controllers
         }
         //get danh sach tieu de
         [Route("api/tieude")]
+        [HttpGet]
         public IHttpActionResult GetAll()
         {
             var lst = db.TieuDes.ToList();
@@ -26,18 +27,39 @@ namespace Web_API.Controllers
             }
             return Ok(lst);
         }
-        //thong tin chi tiet tieu de
-        [Route("api/tieude/{id}")]
-        public IHttpActionResult GetOne(int id)
+        //get so luong tieu de
+        [Route("api/tieude/count")]
+        [HttpGet]
+        public IHttpActionResult GetCount()
         {
-            var model = db.TieuDes.Find(id);
-            if (model!=null)
+           return Json(db.TieuDes.ToList().Count);
+        }
+        //get tieu de theo id
+        [Route("api/tieude/{id}")]
+        [HttpGet]
+        public IHttpActionResult GetTitle(int id)
+        {
+            var title = db.TieuDes.Find(id);
+            if(title == null)
             {
                 return NotFound();
             }
-            return Ok(model);
+            return Ok(title);
         }
+        ////
+        //[Route("api/tieude/{limit}/{offset}")]
+        //public IHttpActionResult GetTitle()
+        //{
 
+        //}
+        //sua thong tin khach hang
+        //[Route("api/tieu")]
+        //public IHttpActionResult Put(KhachHang kh)
+        //{
+        //    db.Entry(kh).State = System.Data.Entity.EntityState.Modified;
+        //    db.SaveChanges();
+        //    return Ok();
+        //}
         //them tieu de
         [Route("api/tieude")]
         public IHttpActionResult Post(TieuDe t)
