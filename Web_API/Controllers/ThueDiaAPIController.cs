@@ -13,7 +13,7 @@ namespace Web_API.Controllers
         VideoRentalDb db;
         PhiTreAPIController phiTreController;
         DatHangController datHangController;
-        int soNgayChoThueMoiDia = 7; //số ngày cho thuê của mỗi đĩa
+        int soNgayChoThueMoiDia;
 
         public ThueDiaAPIController()
         {
@@ -26,11 +26,15 @@ namespace Web_API.Controllers
         [Route("api/muondia/{maKhachHang}/{maDia}")]
         public IHttpActionResult PostThueDia(int maKhachHang, int maDia)
         {
+            string err = null;
             var dia = db.Dias.Where(x => x.MaDia == maDia).FirstOrDefault();
+            var tieuDe = db.TieuDes.Find(dia.MaTieuDe);
+            soNgayChoThueMoiDia = db.DanhMucs.Find(tieuDe.MaDanhMuc).ThoiGianThue;
             var kh = db.KhachHangs.Where(x => x.MaKhachHang == maKhachHang).FirstOrDefault();
             if (dia == null || kh == null)
             {
-
+                err = "Lỗi";
+                return Json(err);
             }
             var model = new DsChoThue
             {
