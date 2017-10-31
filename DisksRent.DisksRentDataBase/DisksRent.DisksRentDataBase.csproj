@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>DisksRent.DisksRentDataBase Class Library</Description>
+    <Authors>vungho</Authors>
+    <TargetFramework>dotnet</TargetFramework>
+    <AssemblyName>DisksRent.DisksRentDataBase</AssemblyName>
+    <PackageId>DisksRent.DisksRentDataBase</PackageId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Collections" Version="4.0.11" />
+    <PackageReference Include="System.Linq" Version="4.1.0" />
+    <PackageReference Include="System.Threading" Version="4.0.11" />
+    <PackageReference Include="System.Runtime" Version="4.1.0" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.0.1" />
+  </ItemGroup>
+
+</Project>

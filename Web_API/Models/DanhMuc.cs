@@ -12,5 +12,6 @@ namespace Web_API.Models
         public int MaDanhMuc { get; set; }
         public string TenDanhMuc { get; set; }
         public decimal GiaThue { get; set; }
+        public int ThoiGianThue { get; set; }
     }
 }

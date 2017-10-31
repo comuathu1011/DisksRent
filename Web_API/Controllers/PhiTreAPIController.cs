@@ -41,20 +41,6 @@ namespace Web_API.Controllers
             return Ok(lst);
         }
 
-        //get danh sach phi tre theo ma kh
-        //[Route("api/phitre/{maTieuDe}")]
-        //public IHttpActionResult PutHuyPhiTre(int maTieuDe)
-        //{
-        //    if (maTieuDe < 0) return NotFound();
-        //    var lst = db.DsChoThue.Where(x => x.NgayPhaiTra < x.NgayThucTra && x.DaThanhToanPhiTre == false
-        //                                            && x.MaKhachHang == maKh).ToList();
-        //    if (lst.Count == 0)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return Ok(lst);
-        //}
-
         public void ThemPhiTre(DsChoThue model)
         {
             if(model.NgayPhaiTra < model.NgayThucTra)
@@ -64,5 +50,97 @@ namespace Web_API.Controllers
             }
         }
 
+        [Route("api/phitre/{limit}/{offset}")]
+        public IHttpActionResult GetPhitres(int limit, int offset)
+        {
+            var result = db.DsChoThue.Where(x => x.NgayPhaiTra < x.NgayThucTra).OrderByDescending(x=>x.NgayThue)
+                                .Skip(offset).Take(limit).ToList();
+            if (result.Count == 0)
+            {
+                return NotFound();
+            }
+            return Json(result);
+        }
+
+        [Route("api/phitre/count")]
+        public IHttpActionResult GetCount()
+        {
+            var result = db.DsChoThue.Where(x => x.NgayPhaiTra < x.NgayThucTra).ToList().Count;
+            return Json(result);
+        }
+
+        [Route("api/phitre/{maKh}/{limit}/{offset}")]
+        public IHttpActionResult GetPhitresByMaKH(int maKh,int limit, int offset)
+        {
+            string err = null;
+            var model = db.KhachHangs.Find(maKh);
+            if(model == null)
+            {
+                err = "Không tìm thấy khách hàng cần tìm";
+                return Json(err);
+            }
+            var result = db.DsChoThue.Where(x => x.NgayPhaiTra < x.NgayThucTra && x.MaKhachHang == maKh).OrderByDescending(x => x.NgayThue)
+                                .Skip(offset).Take(limit).ToList();
+            if (result.Count == 0)
+            {
+                return NotFound();
+            }
+            return Json(result);
+        }
+
+        [Route("api/phitre/{maKhachHang}/count")]
+        public IHttpActionResult GetCountByMaKh(int maKhachHang)
+        {
+            string err = null;
+            var model = db.KhachHangs.Find(maKhachHang);
+            if (model == null)
+            {
+                err = "Không tìm thấy khách hàng cần tìm";
+                return Json(err);
+            }
+            var result = db.DsChoThue.Where(x => x.NgayPhaiTra < x.NgayThucTra && x.MaKhachHang == maKhachHang).Count();
+            return Json(result);
+        }
+
+        [Route("api/phitre/thanhtoan")]
+        public IHttpActionResult PostThanhToan(DsChoThue entity)
+        {
+            string err = null;
+            if (entity == null)
+            {
+                err = "Không tìm thấy dữ liệu";
+                return Json(err);
+            }
+            var model = db.DsChoThue.Where(x => x.MaKhachHang == entity.MaKhachHang && x.MaDia == x.MaDia 
+                                    && x.NgayThue == entity.NgayThue).FirstOrDefault();
+            model.DaThanhToanPhiTre = true;
+            db.Entry(model).State = System.Data.Entity.EntityState.Modified;
+            return Ok();
+        }
+
+
+        [Route("api/phitre/huy")]
+        public IHttpActionResult PostHuy(DsChoThue entity)
+        {
+            string err = null;
+            if (entity == null)
+            {
+                err = "Không tìm thấy dữ liệu";
+                return Json(err);
+            }
+            var model = db.DsChoThue.Where(x => x.MaKhachHang == entity.MaKhachHang && x.MaDia == x.MaDia
+                                    && x.NgayThue == entity.NgayThue).FirstOrDefault();
+            if(model != null)
+            {
+                db.DsChoThue.Remove(model);
+                db.SaveChanges();
+            }
+            else
+            {
+                err = "Không xóa được";
+                return Json(err);
+            }
+            return Ok();
+        }
     }
 }

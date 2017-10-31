@@ -38,11 +38,12 @@ namespace Web_API.Controllers
                 result.Add(dia);
             });
 
-            return Ok(result);
+            return Json(result);
         }
 
         //them dia
         [Route("api/dia/{maTieuDe}/{soLuong}")]
+        [HttpPost]
         public IHttpActionResult Post(int maTieuDe, int soLuong)
         {
             if (maTieuDe < 0 || soLuong < 0) return NotFound();
@@ -64,12 +65,60 @@ namespace Web_API.Controllers
         }
 
         //xoa dia
-        [Route("api/dia/{id}")]
-        public IHttpActionResult Delete(int id)
+        [Route("api/dia/{maDia}")]
+        [HttpDelete]
+        public IHttpActionResult Delete(int maDia)
         {
-            db.Dias.Remove(db.Dias.Find(id));
-            db.SaveChanges();
-            return Ok();
+            string err = null;
+            try
+            {
+                db.Dias.Remove(db.Dias.Find(maDia));
+                db.SaveChanges();
+            }
+            catch (Exception)
+            {
+                err = "Lỗi";
+                return Json(err);
+            }
+            return Json(err);
+        }
+
+        //get so luong dia cua mot tieu de
+        [Route("api/{maTieuDe}/count")]
+        public IHttpActionResult GetCount(int maTieuDe)
+        {
+            if(maTieuDe < 0)
+            {
+                string err = "Không tìm thấy tiêu đề cần tìm";
+                return Json(err);
+            }
+            var result = db.Dias.Where(x => x.MaTieuDe == maTieuDe).Count();
+            return Json(result);
+        }
+
+        //get 
+        [Route("api/{maTieuDe}/{limit}/{offset}")]
+        public IHttpActionResult GetDias(int maTieuDe, int limit, int offset)
+        {
+            string err = null;
+            var tieuDe = db.TieuDes.Find(maTieuDe);
+            if (tieuDe == null)
+            {
+                err = "Không tìm thấy tiêu đề cần tìm";
+                return Json(err);
+            }
+            if (limit < 0 || offset < 0)
+            {
+                err = "Lỗi";
+                return Json(err);
+            }
+            var result = db.Dias.Where(x => x.MaTieuDe == maTieuDe).Skip(offset).Take(limit).ToList();
+            if (result.Count == 0)
+            {
+                err = "Không tìm thấy đĩa theo yêu cầu";
+                return Json(err);
+            }
+            return Json(result);
         }
     }
 }

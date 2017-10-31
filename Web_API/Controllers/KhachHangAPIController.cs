@@ -25,7 +25,7 @@ namespace Web_API.Controllers
             {
                 return NotFound();
             }
-            return Ok(lst);
+            return Json(lst);
         }
 
         //get so luong khach hang
