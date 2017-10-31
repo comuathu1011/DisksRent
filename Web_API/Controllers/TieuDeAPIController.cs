@@ -62,6 +62,7 @@ namespace Web_API.Controllers
         //}
         //them tieu de
         [Route("api/tieude")]
+        [HttpPost]
         public IHttpActionResult Post(TieuDe t)
         {
             db.TieuDes.Add(t);
@@ -71,6 +72,7 @@ namespace Web_API.Controllers
 
         //xoa tieu de
         [Route("api/tieude/{id}")]
+        [HttpDelete]
         public IHttpActionResult Delete(int id)
         {
             db.TieuDes.Remove(db.TieuDes.Find(id));

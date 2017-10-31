@@ -51,6 +51,7 @@ namespace Web_API.Controllers
 
         //get khach hang theo id
         //[Route("api/khachhang/{limit}/{offset}")]
+        //[HttpGet]
         //public IHttpActionResult GetCust(int id)
         //{
         //    var cust = db.KhachHangs.Find(id);
@@ -63,6 +64,7 @@ namespace Web_API.Controllers
 
         //them khach hang
         [Route("api/khachhang")]
+        [HttpPost]
         public IHttpActionResult Post(KhachHang kh)
         {
             db.KhachHangs.Add(kh);
@@ -72,6 +74,7 @@ namespace Web_API.Controllers
 
         //sua thong tin khach hang
         [Route("api/khachhang")]
+        [HttpPut]
         public IHttpActionResult Put(KhachHang kh)
         {
             db.Entry(kh).State = System.Data.Entity.EntityState.Modified;
@@ -81,6 +84,7 @@ namespace Web_API.Controllers
 
         //xoa khach hang
         [Route("api/khachhang/{id}")]
+        [HttpDelete]
         public IHttpActionResult Delete(int id)
         {
             db.KhachHangs.Remove(db.KhachHangs.Find(id));
