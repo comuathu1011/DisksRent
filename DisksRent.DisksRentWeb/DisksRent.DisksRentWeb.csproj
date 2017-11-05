@@ -1038,6 +1038,7 @@
     <Content Include="Views\Manager\QuanLyPhiTre.cshtml" />
     <Content Include="Views\Shared\_LoginLayout.cshtml" />
     <Content Include="Views\Manager\QuanLyBaoCao.cshtml" />
+    <Content Include="Views\Login\Authen.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

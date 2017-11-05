@@ -1,6 +1,6 @@
 ﻿/// <reference path="../../manager/ManagerApp.js" />
 ManagerApp.factory('PhiTreService', function ($http, $q) {
-    let API = 'http://http://localhost:49497/api/';
+    let API = 'http://localhost:49497/api/';
     function PhiTreService() {
         let self = this;
 
@@ -25,6 +25,36 @@ ManagerApp.factory('PhiTreService', function ($http, $q) {
             $http({
                 method: 'get',
                 url: API + 'phitre/' +maKh
+            }).then(function success(response) {
+                deferred.resolve(response);
+            }, function error(response) {
+                deferred.reject(response);
+            });
+
+            return deferred.promise;
+        }
+
+        self.getCountPhiTreByKhachHang = function (maKhachHang) {
+            let deferred = $q.defer();
+
+            $http({
+                method: 'GET',
+                url: API + 'phitre/' + maKhachHang + '/count'
+            }).then(function success(response) {
+                deferred.resolve(response);
+            }, function error(response) {
+                deferred.reject(response);
+            });
+
+            return deferred.promise;
+        }
+
+        self.getPhiTreByKhachHang = function (maKhachHang, limit, model) {
+            let deferred = $q.defer();
+
+            $http({
+                method: 'GET',
+                url: API + 'phitre/' + maKhachHang + '/' + limit + '/' + ((model - 1) * limit)
             }).then(function success(response) {
                 deferred.resolve(response);
             }, function error(response) {

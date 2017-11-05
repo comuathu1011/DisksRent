@@ -77,7 +77,7 @@ namespace Web_API.Controllers
                 err = "Lỗi";
                 return Json(err);
             }
-            var result = db.DsChoThue.Where(x => x.MaKhachHang == kh.MaKhachHang).Skip(offset).Take(limit).ToList();
+            var result = db.DsChoThue.Where(x => x.MaKhachHang == kh.MaKhachHang).ToList().Skip(offset).Take(limit).ToList();
             return Json(result);
         }
 

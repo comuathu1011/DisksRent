@@ -14,6 +14,7 @@ namespace Web_API.Migrations
                         MaDanhMuc = c.Int(nullable: false, identity: true),
                         TenDanhMuc = c.String(),
                         GiaThue = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        ThoiGianThue = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.MaDanhMuc);
             
@@ -48,9 +49,10 @@ namespace Web_API.Migrations
                         MaDia = c.Int(nullable: false),
                         MaKhachHang = c.Int(nullable: false),
                         NgayThue = c.DateTime(nullable: false),
-                        NgayTra = c.DateTime(nullable: true),
-                        PhiTre = c.Decimal(nullable: true, precision: 18, scale: 2),
-                        DaThanhToanPhiTre = c.Boolean(nullable: true),
+                        NgayPhaiTra = c.DateTime(nullable: false),
+                        NgayThucTra = c.DateTime(nullable: false),
+                        PhiTre = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        DaThanhToanPhiTre = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => new { t.MaDia, t.MaKhachHang })
                 .ForeignKey("dbo.Dias", t => t.MaDia, cascadeDelete: true)
@@ -76,6 +78,7 @@ namespace Web_API.Migrations
                         MaKhachHang = c.Int(nullable: false),
                         MaTieuDe = c.Int(nullable: false),
                         ThuTu = c.Int(nullable: false),
+                        TinhTrang = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => new { t.MaKhachHang, t.MaTieuDe })
                 .ForeignKey("dbo.KhachHangs", t => t.MaKhachHang, cascadeDelete: true)

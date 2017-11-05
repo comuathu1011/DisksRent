@@ -84,7 +84,7 @@ namespace Web_API.Controllers
         }
 
         //get so luong dia cua mot tieu de
-        [Route("api/{maTieuDe}/count")]
+        [Route("api/dia/{maTieuDe}/count")]
         public IHttpActionResult GetCount(int maTieuDe)
         {
             if(maTieuDe < 0)
@@ -97,7 +97,7 @@ namespace Web_API.Controllers
         }
 
         //get 
-        [Route("api/{maTieuDe}/{limit}/{offset}")]
+        [Route("api/dia/{maTieuDe}/{limit}/{offset}")]
         public IHttpActionResult GetDias(int maTieuDe, int limit, int offset)
         {
             string err = null;

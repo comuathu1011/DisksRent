@@ -1,11 +1,12 @@
-﻿/// <reference path="ManagerApp.js" />
-ManagerApp.controller('QuanLyKhachHangCtrl', function ($scope) {
+﻿/// <reference path="../service/manager/KhachHangService.js" />
+/// <reference path="ManagerApp.js" />
+ManagerApp.controller('QuanLyKhachHangCtrl', function ($scope, KhachHangService) {
     
     //Danh sách khách hang lấy được từ cơ sở dữ liệu, phân trang được quyết định trong khachHangPagination
     $scope.listKhachHang = [
         {
-            MaKhachHang: '001',
-            Ten: 'Hồ Quốc Vửng',
+            MaKhachHang: '121',
+            Ten: 'Hồ Quốc Vửng saf',
             SoDienThoai: '01217432834',
             DiaChi: 'Phường 5, Quận Gò Vấp, Tp Hồ Chí Minh'
         }
@@ -66,14 +67,20 @@ ManagerApp.controller('QuanLyKhachHangCtrl', function ($scope) {
     }
 
     $scope.khachHangPageChange = function (){
-        init();
+        getListKhachHang();
     }
 
     /*
         Sự kiện diễn ra khi người dùng xác nhận xóa khách hàng đã chọn. Hàm gửi mã khách hàng lên Server
     */
     $scope.confirmXoaKhachHang = function () {
-
+        KhachHangService.deleteKhachHang($scope.khachHangSelected.MaKhachHang).then(
+            function () {
+                console.log(response)
+            },
+            function(err){
+                console.log(err)
+            })
     }
 
     /*
@@ -84,6 +91,14 @@ ManagerApp.controller('QuanLyKhachHangCtrl', function ($scope) {
         //Kiễm tra dữ liệu hợp lệ
         if (checkKhachHang()) {
             //Gửi lên server
+            KhachHangService.postKhachHang($scope.newKhachHang).then(
+                function (response) {
+                    console.log(response)
+                },
+                function (err) {
+                    console.log(err);
+                }
+            )
         } else {
             //Thông báo lỗi
         }
@@ -121,7 +136,31 @@ ManagerApp.controller('QuanLyKhachHangCtrl', function ($scope) {
     }
 
     function loadKhachHang() {
-
+        //Load pagination
+        KhachHangService.getCountKhachHang().then(
+                function (response) {
+                    console.log(response);
+                    $scope.khachHangPagination.totalItem = response.data;
+                    getListKhachHang();
+                },
+                function (err) {
+                    console.log(err);
+                }
+            )
+    }
+    function getListKhachHang() {
+        KhachHangService.getKhachHangByLimitAndOffset($scope.khachHangPagination.perPage, $scope.khachHangPagination.model).then(
+            function (response) {
+                console.log(response)
+                $scope.listKhachHang = response.data;
+                $scope.khachHangSelected = $scope.listKhachHang[0];
+            },
+            function (err) {
+                console.log(err)
+                $scope.listKhachHang = [];
+                $scope.khachHangSelected = {};
+            }
+        )
     }
 
     //Tổng kiểm tra các điều kiện khách hàng
