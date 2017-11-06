@@ -59,6 +59,28 @@ ManagerApp.controller('QuanLyThueTraDiaCtrl', ($scope, KhachHangService, ThueDia
     $scope.diaThuePageChange = function () {
         getDsDiaThue();
     }
+
+    $scope.confirmTraDia = async function () {
+        for (let dia in $scope.dsDiaThue) {
+            let x = await traDia($scope.dsDiaThue[dia].MaDia);
+            console.log(x)
+        }
+    }
+
+    function traDia(MaDia){
+        return new Promise(
+            resolve => {
+                ThueDiaService.putTraDia(MaDia).then(
+                    function (response) {
+                        resolve(response.data);
+                    },
+                    function (err) {
+                        reject(err);
+                    }
+                )
+            }
+        );
+    }
     
     function configDsDiaThue() {
         ThueDiaService.getCountDiaThueByKhachHang($scope.khachHang.MaKhachHang).then(

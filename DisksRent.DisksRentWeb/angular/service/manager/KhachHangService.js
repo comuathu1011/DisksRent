@@ -105,18 +105,6 @@ ManagerApp.factory('KhachHangService', function ($http, $q) {
                 }, function error(response) {
                     deferred.reject(response);
                 });
-
-            /*
-            $http({
-                method: 'DELETE',
-                url: API + 'KhachHangs/' + maKhachHang
-            }).then(function success(response) {
-                deferred.resolve(response);
-            }, function error(response) {
-                deferred.reject(response);
-            });
-            */
-
             return deferred.promise;
         }
     }

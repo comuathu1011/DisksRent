@@ -19,12 +19,15 @@ ManagerApp.factory('ThueDiaService', function ($http, $q) {
             return deferred.promise;
         }
 
-        self.traDia = function (maDia) {
+        self.putTraDia = function (maDia) {
             let deferred = $q.defer();
 
             $http({
-                method: 'GET',
-                url: API + 'muondia/' + maDia
+                method: 'PUT',
+                url: API + 'muondia',
+                data: {
+                    maDia: maDia
+                }
             }).then(function success(response) {
                 deferred.resolve(response);
             }, function error(response) {

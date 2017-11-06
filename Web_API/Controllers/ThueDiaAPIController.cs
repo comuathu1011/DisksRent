@@ -48,7 +48,7 @@ namespace Web_API.Controllers
             return Json(model);
         }
         //tra dia
-        [Route("api/muondia/{maDia}")]
+        [Route("api/muondia")]
         public IHttpActionResult PutThueDia(int maDia)
         {
             if (maDia < 0) return NotFound();

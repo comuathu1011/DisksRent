@@ -246,12 +246,20 @@ ManagerApp.controller('QuanLyKhachHangCtrl', function ($scope, $timeout, KhachHa
             $scope.updateFiledName = 'Cập nhật thông tin';
         } else {
             $scope.updateFiledName = 'Sửa thông tin';
+            comfirmUpdate();
         }
 
         $scope.updateFiled = !$scope.updateFiled;
     }
 
     function comfirmUpdate() {
-        
+        KhachHangService.putKhachHang($scope.khachHangSelected).then(
+            function (response) {
+                console.log(response)
+            },
+            function (err) {
+                console.log(err);
+                alert('Lỗi: ' +err.data)
+            });
     }
 });
