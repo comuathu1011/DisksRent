@@ -99,6 +99,7 @@
     <Compile Include="Controllers\DatHangController.cs" />
     <Compile Include="Controllers\DiaAPIController.cs" />
     <Compile Include="Controllers\KhachHangAPIController.cs" />
+    <Compile Include="Controllers\KhachHangsController.cs" />
     <Compile Include="Controllers\NhanVienAPIController.cs" />
     <Compile Include="Controllers\PhiTreAPIController.cs" />
     <Compile Include="Controllers\ThueDiaAPIController.cs" />

@@ -102,7 +102,7 @@ ManagerApp.factory('KhachHangService', function ($http, $q) {
 
             $http({
                 method: 'DELETE',
-                url: API + 'khachhang/' + maKhachHang
+                url: API + 'KhachHangs/' + maKhachHang
             }).then(function success(response) {
                 deferred.resolve(response);
             }, function error(response) {
