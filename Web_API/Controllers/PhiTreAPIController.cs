@@ -20,7 +20,7 @@ namespace Web_API.Controllers
         [Route("api/phitre")]
         public IHttpActionResult GetAll()
         {
-            var lst = db.DsChoThue.Where(x => x.NgayPhaiTra < x.NgayThucTra && x.DaThanhToanPhiTre == false).ToList();
+            var lst = db.DsChoThue.Where(x => x.NgayPhaiTra < x.NgayThucTra && x.DaThanhToanPhiTre == false).OrderByDescending(x=>x.NgayThue).ToList();
             if (lst.Count == 0)
             {
                 return NotFound();
@@ -33,7 +33,7 @@ namespace Web_API.Controllers
         {
             if (maKh < 0 ) return NotFound();
             var lst = db.DsChoThue.Where(x => x.NgayPhaiTra < x.NgayThucTra && x.DaThanhToanPhiTre == false 
-                                                    && x.MaKhachHang == maKh).ToList();
+                                                    && x.MaKhachHang == maKh).OrderByDescending(x => x.NgayThue).ToList();
             if (lst.Count == 0)
             {
                 return NotFound();

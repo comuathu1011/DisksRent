@@ -20,7 +20,7 @@ namespace Web_API.Controllers
         [HttpGet]
         public IHttpActionResult GetAll()
         {
-            var lst = db.TieuDes.ToList();
+            var lst = db.TieuDes.OrderBy(x=>x.Ten).ToList();
             if (lst.Count == 0)
             {
                 return NotFound();

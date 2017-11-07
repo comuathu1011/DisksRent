@@ -19,7 +19,7 @@ namespace Web_API.Controllers
         [Route("api/nhanvien")]
         public IHttpActionResult GetAll()
         {
-            var lst = db.NhanViens.ToList();
+            var lst = db.NhanViens.OrderBy(x=>x.TenDangNhap).ToList();
             if (lst.Count == 0)
             {
                 return NotFound();

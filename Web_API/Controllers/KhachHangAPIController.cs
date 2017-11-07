@@ -20,7 +20,7 @@ namespace Web_API.Controllers
         [HttpGet]
         public IHttpActionResult GetAll()
         {
-            var lst = db.KhachHangs.ToList();
+            var lst = db.KhachHangs.OrderBy(x=>x.Ten).ToList();
             if (lst.Count == 0)
             {
                 return NotFound();
@@ -28,12 +28,12 @@ namespace Web_API.Controllers
             return Json(lst);
         }
 
-        //get khach hang theo id
+        
         [Route("api/khachhang/{limit}/{offset}")]
         [HttpGet]
         public IHttpActionResult getKkhachHangBySizeAndOffset(int limit, int offset)
         {
-            var list = db.KhachHangs.ToList().Skip(offset).Take(limit).ToList();
+            var list = db.KhachHangs.ToList().Skip(offset).Take(limit).OrderBy(x=>x.Ten).ToList();
             if (list.Count == 0)
             {
                 return NotFound();
