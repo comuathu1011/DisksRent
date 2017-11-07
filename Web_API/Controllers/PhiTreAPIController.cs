@@ -53,7 +53,7 @@ namespace Web_API.Controllers
         [Route("api/phitre/{limit}/{offset}")]
         public IHttpActionResult GetPhitres(int limit, int offset)
         {
-            var result = db.DsChoThue.Where(x => x.NgayPhaiTra < x.NgayThucTra).OrderByDescending(x=>x.NgayThue)
+            var result = db.DsChoThue.Where(x => x.NgayPhaiTra.CompareTo(x.NgayThucTra) < 0 ? true: false).OrderByDescending(x=>x.NgayThue)
                                 .Skip(offset).Take(limit).ToList();
             if (result.Count == 0)
             {
@@ -65,7 +65,7 @@ namespace Web_API.Controllers
         [Route("api/phitre/count")]
         public IHttpActionResult GetCount()
         {
-            var result = db.DsChoThue.Where(x => x.NgayPhaiTra < x.NgayThucTra).ToList().Count;
+            var result = db.DsChoThue.Where(x => x.NgayPhaiTra.CompareTo(x.NgayThucTra) < 0 ? true : false).ToList().Count;
             return Json(result);
         }
 

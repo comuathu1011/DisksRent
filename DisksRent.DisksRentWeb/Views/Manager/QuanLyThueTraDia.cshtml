@@ -2,7 +2,6 @@
     ViewBag.Title = "Quản lý thuê và trả đĩa";
     Layout = "~/Views/Shared/_ManagerLayout.cshtml";
 }
-
 <div class="section" ng-controller="QuanLyThueTraDiaCtrl">
 
     <div class="fade modal" id="thue-dia-modal" tabindex="-1" role="dialog" aria-labelledby="dekete-disk-label">
@@ -105,10 +104,14 @@
         <div class="col-md-12">
             <form class="search-form">
                 <div class="input-group">
-                    <input type="text" name="search" class="form-control" placeholder="Tìm kiếm theo mã khách hàng">
-
+                    <input type="text" name="search" 
+                           ng-model="maKhachHangKeyword" 
+                           ng-keyup="timKiemKhachHangKeycode($event)" 
+                           class="form-control" placeholder="Tìm kiếm theo mã khách hàng">
                     <div class="input-group-btn">
-                        <button type="submit" name="submit" class="btn btn-primary ">
+                        <button type="button" 
+                                ng-click="timKiemKhachHangBtn()" 
+                                name="submit" class="btn btn-primary ">
                             <i class="fa fa-search"></i>
                         </button>
                     </div>
@@ -131,10 +134,18 @@
                     <div class="col-md-12">
                         <form class="form-horizontal">
                             <div class="form-group">
+                                <label for="ho-va-ten-view" class="col-sm-3 control-label">Mã khách hàng</label>
+
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-disabled="true" ng-model="khachHang.MaKhachHang" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 <label for="ho-va-ten-view" class="col-sm-3 control-label">Họ và tên</label>
 
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" ng-disabled="updateFiled" ng-model="khachHangSelected.Ten" />
+                                    <input type="text" class="form-control" ng-disabled="true" ng-model="khachHang.Ten" />
                                 </div>
                             </div>
 
@@ -142,7 +153,7 @@
                                 <label for="sdt-view" class="col-sm-3 control-label">Số điện thoại</label>
 
                                 <div class="col-sm-9">
-                                    <input type="tel" class="form-control" ng-disabled="updateFiled" ng-model="khachHangSelected.SoDienThoai" />
+                                    <input type="tel" class="form-control" ng-disabled="true" ng-model="khachHang.SoDienThoai" />
                                 </div>
                             </div>
 
@@ -150,7 +161,7 @@
                                 <label for="dia-chi-view" class="col-sm-3 control-label">Địa chỉ</label>
 
                                 <div class="col-sm-9">
-                                    <textarea class="form-control" ng-disabled="updateFiled" ng-model="khachHangSelected.DiaChi" rows="4">
+                                    <textarea class="form-control" ng-disabled="true" ng-model="khachHang.DiaChi" rows="4">
                                         Phường 5, Gò Vấp, Tp Hồ Chí Minh
                                     </textarea>
                                 </div>
@@ -184,24 +195,25 @@
                                     <th>
                                         
                                     </th>
-                                    <th>Mã số</th>
+                                    <th>Mã số đĩa</th>
+                                    <th>Tiêu đề</th>
+                                    <th>Ngày thuê</th>
+                                    <th>Ngày phải trả</th>
+                                    <th>Ngày thực trả</th>
                                     <th>Phí trễ</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                                <tr ng-repeat="dia in dsDiaThue track by $index">
                                     <th>
-                                        <input type="checkbox" />
+                                        <input type="checkbox" ng-model="dia.isDelete" />
                                     </th>
-                                    <th>0001</th>
-                                    <th>20$</th>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        <input type="checkbox" />
-                                    </th>
-                                    <th>0001</th>
-                                    <th>20$</th>
+                                    <th>{{dia.MaDia}}</th>
+                                    <th>{{dia.Dia.TieuDe.Ten}}</th>
+                                    <th>{{dia.NgayThue}}</th>
+                                    <th>{{dia.NgayPhaiTra}}</th>
+                                    <th>{{dia.NgayThucTra}}</th>
+                                    <th>{{dia.PhiTre}}</th>
                                 </tr>
                             </tbody>
                         </table>
@@ -209,16 +221,16 @@
                 </div>
                 <div class="box-footer">
                     <div class="col-md-12">
-                        <button class="btn btn-primary btn-sm pull-left" data-toggle="modal" data-target="#delete-dia-thue-modal">
+                        <button class="btn btn-sm pull-left" data-toggle="modal" data-target="#delete-dia-thue-modal">
                             Trả đĩa
                         </button>
                         <ul style="margin: 0"
                             uib-pagination
-                            ng-change="khachHangPageChange()"
-                            total-items="khachHangPagination.totalItem"
-                            ng-model="khachHangPagination.model"
-                            max-size="khachHangPagination.maxPage"
-                            items-per-page="khachHangPagination.perPage"
+                            ng-change="diaThuePageChange()"
+                            total-items="dsDiaThuePaginaion.total"
+                            ng-model="dsDiaThuePaginaion.model"
+                            max-size="dsDiaThuePaginaion.maxSize"
+                            items-per-page="dsDiaThuePaginaion.itemsPerPage"
                             class="pagination-sm pull-right"
                             boundary-link-numbers="true"
                             rotate="false"></ul>
@@ -230,7 +242,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-5  col-sm-12">
+        <div class="col-md-6  col-sm-12">
             <div class="box box-primary">
                 <div class="box-header">
                     <p class="box-title">Danh sách phí trả trễ</p>
@@ -244,26 +256,24 @@
                             <thead>
                                 <tr>
                                     <th>
-                                        
+
                                     </th>
-                                    <th>Mã số</th>
+                                    <th>Mã số đĩa</th>
+                                    <th>Tiêu đề</th>
+                                    <th>Ngày thuê</th>
                                     <th>Phí trễ</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                                <tr ng-repeat="dia in dsPhiTre track by $index"
+                                    ng-click="dsPhiTreSelected(dia)">
                                     <th>
-                                        <input type="checkbox" />
+                                        <input type="checkbox" ng-model="dia.isDelete" />
                                     </th>
-                                    <th>0001</th>
-                                    <th>20$</th>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        <input type="checkbox" />
-                                    </th>
-                                    <th>0001</th>
-                                    <th>20$</th>
+                                    <th>{{dia.MaDia}}</th>
+                                    <th>{{dia.Dia.TieuDe.Ten}}</th>
+                                    <th>{{dia.NgayThue}}</th>
+                                    <th>{{dia.PhiTre}}</th>
                                 </tr>
                             </tbody>
                         </table>
@@ -271,16 +281,16 @@
                 </div>
                 <div class="box-footer">
                     <div class="col-md-12">
-                        <button class="btn btn-danger btn-sm pull-left" data-target="#delete-phi-tre-modal" data-toggle="modal">
+                        <button class="btn  btn-sm pull-left" data-target="#delete-phi-tre-modal" data-toggle="modal">
                             Xóa
                         </button>
                         <ul style="margin: 0"
                             uib-pagination
-                            ng-change="khachHangPageChange()"
-                            total-items="khachHangPagination.totalItem"
-                            ng-model="khachHangPagination.model"
-                            max-size="khachHangPagination.maxPage"
-                            items-per-page="khachHangPagination.perPage"
+                            ng-change="phiTrePageChange()"
+                            total-items="dsPhiTrePaginaion.total"
+                            ng-model="dsPhiTrePaginaion.model"
+                            max-size="dsPhiTrePaginaion.maxSize"
+                            items-per-page="dsPhiTrePaginaion.itemsPerPage"
                             class="pagination-sm pull-right"
                             boundary-link-numbers="true"
                             rotate="false"></ul>
@@ -289,7 +299,7 @@
             </div>
         </div>
 
-        <div class="col-md-7  col-sm-12">
+        <div class="col-md-6  col-sm-12">
             <div class="box box-primary">
                 <div class="box-header">
                     <p class="box-title">Chi tiết phí trễ</p>
@@ -298,33 +308,25 @@
                     </div>
                 </div>
                 <div class="box-body" id="body-box-info">
-                    <form class="form-horizontal">
-                        <div class="form-group">
-                            <label for="ho-va-ten-view" class="col-sm-3 control-label">Họ và tên</label>
-
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" ng-disabled="updateFiled" ng-model="khachHangSelected.Ten" />
-                            </div>
+                    <div class="box-body" id="body-box-thong-tin-phi-tre">
+                        <div class="col-md-12">
+                            <h3>Phí: <strong>{{chiTietPhiTre.PhiTre}}</strong></h3>
+                            <hr />
+                            <p><strong>Thông tin Khách hàng</strong></p>
+                            <p>Anh (chị): <strong>{{chiTietPhiTre.KhachHang.Ten}}</strong></p>
+                            <p>Mã khách hàng: <strong>{{chiTietPhiTre.KhachHang.MaKhachHang}}</strong></p>
+                            <p>Số điện thoại: <strong>{{chiTietPhiTre.KhachHang.SoDienThoai}}</strong></p>
+                            <p>Địa chỉ: <strong>{{chiTietPhiTre.KhachHang.DiaChi}}</strong></p>
+                            <hr />
+                            <p><strong>Thông tin đĩa</strong></p>
+                            <p>Tên đĩa: <strong>{{chiTietPhiTre.Dia.TieuDe.Ten}}</strong></p>
+                            <p>Mã đĩa: <strong>{{chiTietPhiTre.Dia.MaDia}}</strong></p>
+                            <p>Ngày thuê: <strong>{{chiTietPhiTre.NgayThue}}</strong></p>
+                            <p>Ngày phải trả: <strong>{{chiTietPhiTre.NgayPhaiTra}}</strong></p>
+                            <p>Ngày trả thực: <strong>{{chiTietPhiTre.NgayThucTra}}</strong></p>
+                            <p>Trạng thái: <strong>{{chiTietPhiTre.DaThanhToanPhiTre ? 'Đã thanh toán phí trể' : 'Chưa thanh toán phí trễ'}}</strong></p>
                         </div>
-
-                        <div class="form-group">
-                            <label for="sdt-view" class="col-sm-3 control-label">Số điện thoại</label>
-
-                            <div class="col-sm-9">
-                                <input type="tel" class="form-control" ng-disabled="updateFiled" ng-model="khachHangSelected.SoDienThoai" />
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="dia-chi-view" class="col-sm-3 control-label">Địa chỉ</label>
-
-                            <div class="col-sm-9">
-                                <textarea class="form-control" ng-disabled="updateFiled" ng-model="khachHangSelected.DiaChi" rows="4">
-                                    Phường 5, Gò Vấp, Tp Hồ Chí Minh
-                                </textarea>
-                            </div>
-                        </div>
-                    </form>
+                    </div>
                 </div>
                 <div class="box-footer">
                     <div class="col-md-12">

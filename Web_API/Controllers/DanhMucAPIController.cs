@@ -41,21 +41,23 @@ namespace Web_API.Controllers
             return Ok(dm);
         }
 
-        //cap nhat gia
-        [Route("api/danhmuc/{id}/{gia}")]
-        public IHttpActionResult PostCost(KhachHang kh)
-        {
-            db.Entry(kh).State = System.Data.Entity.EntityState.Modified;
-            db.SaveChanges();
-            return Ok();
-        }
-        // cap nhat thoi gian
-        [Route("api/danhmuc/{id}/{gia}")]
-        public IHttpActionResult PostTime(KhachHang kh)
-        {
-            db.Entry(kh).State = System.Data.Entity.EntityState.Modified;
-            db.SaveChanges();
-            return Ok();
-        }
+        ////cap nhat gia
+        //[Route("api/danhmuc/{id}/{gia}")]
+        //[HttpPost]
+        //public IHttpActionResult PostCost(KhachHang kh)
+        //{
+        //    db.Entry(kh).State = System.Data.Entity.EntityState.Modified;
+        //    db.SaveChanges();
+        //    return Ok();
+        //}
+        //// cap nhat thoi gian
+        //[Route("api/danhmuc/{id}/{gia}")]
+        //[HttpPost]
+        //public IHttpActionResult PostTime(KhachHang kh)
+        //{
+        //    db.Entry(kh).State = System.Data.Entity.EntityState.Modified;
+        //    db.SaveChanges();
+        //    return Ok();
+        //}
     }
 }

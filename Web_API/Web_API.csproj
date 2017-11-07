@@ -99,6 +99,7 @@
     <Compile Include="Controllers\DatHangController.cs" />
     <Compile Include="Controllers\DiaAPIController.cs" />
     <Compile Include="Controllers\KhachHangAPIController.cs" />
+    <Compile Include="Controllers\KhachHangsController.cs" />
     <Compile Include="Controllers\NhanVienAPIController.cs" />
     <Compile Include="Controllers\PhiTreAPIController.cs" />
     <Compile Include="Controllers\ThueDiaAPIController.cs" />
@@ -106,9 +107,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201710170513303_db.cs" />
-    <Compile Include="Migrations\201710170513303_db.Designer.cs">
-      <DependentUpon>201710170513303_db.cs</DependentUpon>
+    <Compile Include="Migrations\201711050240185_db.cs" />
+    <Compile Include="Migrations\201711050240185_db.Designer.cs">
+      <DependentUpon>201711050240185_db.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DanhMuc.cs" />
@@ -136,8 +137,8 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201710170513303_db.resx">
-      <DependentUpon>201710170513303_db.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201711050240185_db.resx">
+      <DependentUpon>201711050240185_db.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
