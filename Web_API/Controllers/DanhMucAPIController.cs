@@ -41,6 +41,22 @@ namespace Web_API.Controllers
             return Ok(dm);
         }
 
+        // POST: api/DanhMucs
+        [Route("api/danhmuc")]
+        public IHttpActionResult PostDanhMuc(DanhMuc danhMuc)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            db.DanhMucs.Add(danhMuc);
+            db.SaveChanges();
+
+            return Json(danhMuc);
+        }
+
+
         ////cap nhat gia
         //[Route("api/danhmuc/{id}/{gia}")]
         //[HttpPost]

@@ -18,7 +18,7 @@
                                 <label class="col-sm-3 control-label">Mã đĩa</label>
 
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" ng-model="newKhachHang.Ten" />
+                                    <input type="text" ng-keyup="timDia($event)" class="form-control" ng-model="maDiaThue" />
                                 </div>
                             </div>
                              
@@ -28,26 +28,33 @@
                     <div class="col-md-12">
                         <form class="form-horizontal">
                             <div class="form-group">
-                                <label for="ho-va-ten" class="col-sm-3 control-label">Họ và tên</label>
+                                <label for="ho-va-ten" class="col-sm-3 control-label">Tiêu đề</label>
 
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" ng-model="newKhachHang.Ten" />
+                                    <input type="text" class="form-control" ng-model="diaFindResult.TieuDe.Ten" />
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label for="sdt" class="col-sm-3 control-label">Số điện thoại</label>
+                                <label for="sdt" class="col-sm-3 control-label">Danh mục</label>
 
                                 <div class="col-sm-9">
-                                    <input type="tel" class="form-control" ng-model="newKhachHang.SoDienThoai" />
+                                    <input type="tel" class="form-control" ng-model="diaFindResult.TieuDe.DanhMuc.TenDanhMuc" />
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label for="dia-chi" class="col-sm-3 control-label">Địa chỉ</label>
+                                <label for="dia-chi" class="col-sm-3 control-label">Giá thuê</label>
+                                <div class="col-sm-9">
+                                    <input type="tel" class="form-control" ng-model="diaFindResult.TieuDe.DanhMuc.GiaThue" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="dia-chi" class="col-sm-3 control-label">Thời gian thuê</label>
 
                                 <div class="col-sm-9">
-                                    <textarea rows="10" type="text" class="form-control" ng-model="newKhachHang.DiaChi"></textarea>
+                                    <input type="tel" class="form-control" ng-model="diaFindResult.TieuDe.DanhMuc.ThoiGianThue" />
                                 </div>
                             </div>
                         </form>
@@ -56,7 +63,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-                    <button type="button" class="btn btn-primary" ng-click="confirmThemKhachHang()">Chấp nhận</button>
+                    <button type="button" ng-disabled="!diaFindResult" class="btn btn-primary" ng-click="confirmThueDia()">Thuê</button>
                 </div>
             </div>
         </div>
@@ -67,15 +74,32 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="delete-customer-label">Xóa khách hàng</h4>
+                    <h4 class="modal-title" id="delete-customer-label">Hủy</h4>
                 </div>
                 <div class="modal-body">
-                    <h4 class="danger">Bạn có chắc chắn muốn xóa!</h4>
-                    <h2 class="danger">Khách hàng: {{khachHangSelected.Ten}}</h2>
+                    <h4 class="danger">Bạn có chắc chắn muốn hủy phí trễ!</h4>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-                    <button type="button" class="btn btn-danger" ng-click="confirmXoaKhachHang()">Có</button>
+                    <button type="button" class="btn btn-danger" ng-click="confirmHuyPhiTre()">Có</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fade modal" id="pay-phi-tre-modal" tabindex="-1" role="dialog" aria-labelledby="dekete-customer-label">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="delete-customer-label">Thanh toán</h4>
+                </div>
+                <div class="modal-body">
+                    <h4 class="danger">Bạn có chắc chắn muốn thanh toán!</h4>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-danger" ng-click="confirmThanhToanPhiTre()">Có</button>
                 </div>
             </div>
         </div>
@@ -86,7 +110,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="delete-customer-label">Xóa khách hàng</h4>
+                    <h4 class="modal-title" id="delete-customer-label">Trả đĩa</h4>
                 </div>
                 <div class="modal-body">
                     <h4 class="danger">Bạn có chắc chắn muốn trả đĩa!</h4>
@@ -170,7 +194,7 @@
                 </div>
                 <div class="box-footer">
                     <div class="col-md-12 ">
-                        <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#thue-dia-modal">Thuê đĩa</button>
+                        <button class="btn btn-primary pull-right" ng-disabled="!khachHang" data-toggle="modal" data-target="#thue-dia-modal">Thuê đĩa</button>
                     </div>
                 </div>
             </div>
@@ -280,8 +304,11 @@
                 </div>
                 <div class="box-footer">
                     <div class="col-md-12">
-                        <button class="btn  btn-sm pull-left" data-target="#delete-phi-tre-modal" data-toggle="modal">
-                            Xóa
+                        <button style="margin-right: 5px" class="btn  btn-sm pull-left" data-target="#delete-phi-tre-modal" data-toggle="modal">
+                            Hủy phí trễ
+                        </button>
+                        <button class="btn  btn-sm pull-left" data-target="#pay-phi-tre-modal" data-toggle="modal">
+                            Thanh toán phí trễ
                         </button>
                         <ul style="margin: 0"
                             uib-pagination

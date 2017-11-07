@@ -29,7 +29,7 @@ namespace Web_API.Controllers
             string err = null;
             var dia = db.Dias.Where(x => x.MaDia == maDia).FirstOrDefault();
             var tieuDe = db.TieuDes.Find(dia.MaTieuDe);
-            soNgayChoThueMoiDia = db.DanhMucs.Find(tieuDe.MaDanhMuc).ThoiGianThue;
+            var soNgayChoThueMoiDia = db.DanhMucs.Find(tieuDe.MaDanhMuc).ThoiGianThue;
             var kh = db.KhachHangs.Where(x => x.MaKhachHang == maKhachHang).FirstOrDefault();
             if (dia == null || kh == null)
             {
@@ -48,7 +48,7 @@ namespace Web_API.Controllers
             return Json(model);
         }
         //tra dia
-        [Route("api/muondia")]
+        [Route("api/muondia/{maDia}")]
         public IHttpActionResult PutThueDia(int maDia)
         {
             if (maDia < 0) return NotFound();

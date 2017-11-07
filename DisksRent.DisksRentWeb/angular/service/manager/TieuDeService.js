@@ -1,15 +1,30 @@
 ﻿/// <reference path="../../manager/ManagerApp.js" />
 ManagerApp.factory('TieuDeService', function ($http, $q) {
-    let API = 'http://http://localhost:49497/api/';
+    let API = 'http://localhost:49497/api/';
     function TieuDeService() {
         let self = this;
 
-        self.getAllTieuDe = function () {
+        self.getCountTieuDe = function () {
             let deferred = $q.defer();
 
             $http({
                 method: 'GET',
-                url: API + 'tieude'
+                url: API + 'tieude/count'
+            }).then(function success(response) {
+                deferred.resolve(response);
+            }, function error(response) {
+                deferred.reject(response);
+            });
+
+            return deferred.promise;
+        }
+
+        self.getTieuDeByLimitAndOffset = function (limit, model) {
+            let deferred = $q.defer();
+
+            $http({
+                method: 'GET',
+                url: API + 'tieude/'+ limit +'/' + ((model - 1)*model)
             }).then(function success(response) {
                 deferred.resolve(response);
             }, function error(response) {
@@ -38,7 +53,7 @@ ManagerApp.factory('TieuDeService', function ($http, $q) {
             let deferred = $q.defer();
 
             $http({
-                method: 'GET',
+                method: 'POST',
                 url: API + 'tieude',
                 data: tieude
             }).then(function success(response) {

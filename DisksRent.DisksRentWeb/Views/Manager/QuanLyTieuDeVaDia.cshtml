@@ -18,9 +18,8 @@
                             <label for="loai-tieu-de" class="col-sm-2 control-label">Loại</label>
 
                             <div class="col-sm-10">
-                                <select class="form-control" id="loai-tieu-de">
-                                    <option>Game</option>
-                                    <option>Video</option>
+                                <select class="form-control" id="loai-tieu-de" ng-model="newTile.MaDanhMuc">
+                                    <option ng-repeat="danhMuc in dsDanhMuc" value="{{danhMuc.MaDanhMuc}}">{{danhMuc.TenDanhMuc}}</option>
                                 </select>
                               
                             </div>
@@ -30,14 +29,14 @@
                             <label for="loai-tieu-de" class="col-sm-2 control-label">Tên tiêu đề</label>
 
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="ten-tieu-de" placeholder="">
+                                <input type="text" class="form-control" ng-model="newTile.Ten" id="ten-tieu-de" placeholder="">
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-                    <button type="button" class="btn btn-primary">Lưu</button>
+                    <button type="button" class="btn btn-primary" ng-click="confirmLuuTieuDe()">Lưu</button>
                 </div>
             </div>
         </div>
@@ -46,21 +45,10 @@
     <div class="modal fade" id="add-disk-for-title-modal" tabindex="-1" role="dialog" aria-labelledby="add-title-label">
         <div class="modal-dialog modal-sm" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="add-title-label">Thêm số lương tiêu đề</h4>
-                </div>
                 <div class="modal-body">
-                    <form class="form-horizontal">
-                        <div class="form-group">
-                            <label for="so-luong-tieu-de" class="col-sm-4 control-label">Số lượng</label>
-
-                            <div class="col-sm-8">
-                                <input type="number" class="form-control" id="so-luong-tieu-de"/>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                    <div class="modal-body">
+                        <h2>Đã phát sinh mã đĩa: {{tieuDeSelected.Ten}}</h2>
+                    </div></div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
                     <button type="button" class="btn btn-primary">Lưu</button>
@@ -77,29 +65,11 @@
                     <h4 class="modal-title" id="delete-title-label">Xóa đĩa</h4>
                 </div>
                 <div class="modal-body">
-                    <h2 class="danger">Bạn có chắc chắn muốn xóa!</h2>
+                    <h2 class="danger">Bạn có chắc chắn muốn xóa tiêu để: {{tieuDeSelected.Ten}}</h2>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-                    <button type="button" class="btn btn-danger">Có</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="fade modal" id="type-manager-modal" tabindex="-1" role="dialog" aria-labelledby="dekete-title-label">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="delete-title-label">Xóa đĩa</h4>
-                </div>
-                <div class="modal-body">
-                    <h2 class="danger">Bạn có chắc chắn muốn xóa!</h2>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-                    <button type="button" class="btn btn-danger">Có</button>
+                    <button type="button" class="btn btn-danger" ng-click="confirmDeletaTitle()">Có</button>
                 </div>
             </div>
         </div>
@@ -113,11 +83,11 @@
                     <h4 class="modal-title" id="delete-title-label">Xóa đĩa</h4>
                 </div>
                 <div class="modal-body">
-                    <h2 class="danger">Bạn có chắc chắn muốn xóa!</h2>
+                    <h2 class="danger">Bạn có chắc chắn muốn xóa đĩa: {{disSelected.MaDia}}</h2>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-                    <button type="button" class="btn btn-danger">Có</button>
+                    <button type="button" class="btn btn-danger" ng-click="confirmDeleteDisk()">Có</button>
                 </div>
             </div>
         </div>
@@ -126,11 +96,10 @@
     <div class="row">
         <div class="col-md-12">
             <button class="btn btn-primary margin-bottom" style="margin-right: 5px" data-toggle="modal" data-target="#add-title-modal">Thêm mới tiêu đề</button>
-            <button class="btn btn-primary margin-bottom" data-toggle="modal" data-target="#type-manager-modal">Quản lý giá danh mục</button>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-6 col-sm-12">
+        <div class="col-md-7 col-sm-12">
             <div class="box box-default">
                 <div class="box-header with-border">
                     <h3 class="box-title">Danh sách tiêu đề</h3>
@@ -139,36 +108,56 @@
                     </div><!-- /.box-tools -->
                 </div><!-- /.box-header -->
                 <div class="box-body">
-                    <table class="table table-hover table-bordered">
-                        <thead>
-                            <tr>
-                                <th>Mã số</th>
-                                <th>Loại</th>
-                                <th>Tên</th>
-                            </tr>
-                        </thead>
+                    <div class="col-md-12">
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Mã tiêu đề</th>
+                                    <th>Tên tiêu đề</th>
+                                    <th>Danh mục</th>
+                                    <th>Giá thuê</th>
+                                    <th>Thời gian thuê</th>
+                                </tr>
+                            </thead>
 
-                        <tbody>
-                            <tr>
-                                <td>0001</td>
-                                <td>Game</td>
-                                <td>LOL</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                            <tbody>
+                                <tr ng-repeat="tieuDe in dsTieuDe track by $index"
+                                    ng-click="tieuDeRowClick(tieuDe)">
+                                    <td>{{tieuDe.MaTieuDe}}</td>
+                                    <td>{{tieuDe.Ten}}</td>
+                                    <td>{{tieuDe.DanhMuc.TenDanhMuc}}</td>
+                                    <td>{{tieuDe.DanhMuc.GiaThue}}</td>
+                                    <td>{{tieuDe.DanhMuc.ThoiGianThue}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div><!-- /.box-body -->
             <div class="box-footer">
-                <div class="col-md-12">
-                    <button class="btn btn-sm btn-danger pull-right" data-toggle="modal" data-target="#delete-title-modal">Xóa tiêu đề</button>
+                <div class="col-md-6">
+                    <button class="btn btn-sm" data-toggle="modal" data-target="#delete-title-modal">Xóa tiêu đề</button>
+                </div>
+                <div class="col-md-6">
+                    <ul style="margin: 0"
+                        uib-pagination
+                        ng-change="tieuDePageChange()"
+                        total-items="dsTieuDePagination.total"
+                        ng-model="dsTieuDePagination.model"
+                        max-size="dsTieuDePagination.maxSize"
+                        items-per-page="dsTieuDePagination.itemsPerPage"
+                        class="pagination-sm pull-right"
+                        boundary-link-numbers="true"
+                        rotate="false">
+                    </ul>
                 </div>
             </div>
             </div><!-- /.box -->
         </div>
 
-        <div class="col-md-6 col-sm-12">
+        <div class="col-md-5 col-sm-12">
             <div class="box box-default">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Danh sách đĩa</h3>
+                    <h3 class="box-title">Danh sách đĩa: {{tieuDeSelected.Ten}}</h3>
                     <div class="box-tools pull-right">
                         <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                     </div><!-- /.box-tools -->
@@ -183,10 +172,10 @@
                               </tr>
                           </thead>
                           <tbody>
-                              <tr>
-                                  <td>0001</td>
-                                  <td>Game</td>
-                                  <td>LOL</td>
+                              <tr ng-repeat="dia in dsDia track by $index" 
+                                  ng-click="diaRowClick(dia)">
+                                  <td>{{dia.MaDia}}</td>
+                                  <td>{{dia.TinhTrangThue}}</td>
                               </tr>
                           </tbody>
                       </table>
@@ -194,10 +183,20 @@
                 </div><!-- /.box-body -->
                 <div class="box-footer ">
                     <div class="col-md-6">
-                        <button class="btn btn-sm btn-danger pull-left" data-target="#delete-disk-modal" data-toggle="modal">Xóa đĩa</button>     
+                        <button class="btn btn-sm pull-left" style="margin-right: 5px" data-target="#delete-disk-modal" data-toggle="modal">Xóa đĩa</button>    
+                        <button class="btn btn-sm btn-primary pull-left" data-target="#add-disk-for-title-modal" data-toggle="modal">Thêm đĩa</button>
                     </div>
                     <div class="col-md-6">
-                        <button class="btn btn-sm btn-primary pull-right" data-target="#add-disk-for-title-modal" data-toggle="modal">Thêm đĩa</button>
+                        <ul style="margin: 0"
+                            uib-pagination
+                            ng-change="diaPageChange()"
+                            total-items="dsDiaPagination.total"
+                            ng-model="dsDiaPagination.model"
+                            max-size="dsDiaPagination.maxSize"
+                            items-per-page="dsDiaPagination.itemsPerPage"
+                            class="pagination-sm pull-right"
+                            boundary-link-numbers="true"
+                            rotate="false"></ul>
                     </div>
                 </div>
             </div><!-- /.box -->

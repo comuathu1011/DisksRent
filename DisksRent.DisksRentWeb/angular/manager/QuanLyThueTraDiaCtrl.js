@@ -1,9 +1,9 @@
 ﻿/// <reference path="ManagerApp.js" />
-ManagerApp.controller('QuanLyThueTraDiaCtrl', ($scope, KhachHangService, ThueDiaService, PhiTreService) => {
+ManagerApp.controller('QuanLyThueTraDiaCtrl', ($scope, KhachHangService, ThueDiaService, PhiTreService, DiaService) => {
     //Từ khóa tìm kiếm khách hàng
     $scope.maKhachHangKeyword = '';
     //khách hàng hiện tại tìm kiếm được
-    $scope.khachHang = {};
+    $scope.khachHang = undefined;
     //Danh sách dĩa thuê của khách hàng
     $scope.dsDiaThue = [];
     //Danh sách phí trễ của khách hàng
@@ -62,17 +62,20 @@ ManagerApp.controller('QuanLyThueTraDiaCtrl', ($scope, KhachHangService, ThueDia
 
     $scope.confirmTraDia = async function () {
         for (let dia in $scope.dsDiaThue) {
-            let x = await traDia($scope.dsDiaThue[dia].MaDia);
-            console.log(x)
+            if ($scope.dsDiaThue[dia].isDelete){
+                let x = await traDia($scope.dsDiaThue[dia].MaDia);
+            }
         }
+        configDsDiaThue();
+        $('#delete-dia-thue-modal').modal('hide');
     }
 
     function traDia(MaDia){
         return new Promise(
-            resolve => {
+            (resolve, reject) => {
                 ThueDiaService.putTraDia(MaDia).then(
                     function (response) {
-                        resolve(response.data);
+                        resolve(response);
                     },
                     function (err) {
                         reject(err);
@@ -140,6 +143,60 @@ ManagerApp.controller('QuanLyThueTraDiaCtrl', ($scope, KhachHangService, ThueDia
         getDsPhiTre();
     }
 
+    //-------------------------------------------------> Hủy phí trễ
+    $scope.confirmHuyPhiTre = async function () {
+        for (let dia in $scope.dsPhiTre) {
+            if ($scope.dsPhiTre[dia].isDelete){
+                let x = await huyPhiTre($scope.dsPhiTre[dia]);
+                console.log(x)
+            }
+        }
+        configDsPhiTre();
+        $('#delete-phi-tre-modal').modal('hide');
+    }
+
+    function huyPhiTre(entity){
+        return new Promise(
+            (resolve, reject) => {
+                PhiTreService.postHuyPhiTre(entity).then(
+                    function (response) {
+                        resolve(response);
+                    },
+                    function (err) {
+                        reject(err);
+                    }
+                )
+            }
+        );
+    }
+
+    //-------------------------------------------------> Thanh toán phí trễ
+    $scope.confirmThanhToanPhiTre = async function () {
+        for (let dia in $scope.dsPhiTre) {
+            if ($scope.dsPhiTre[dia].isDelete){
+                let x = await thanhToanPhiTre($scope.dsPhiTre[dia]);
+                console.log(x)
+            }
+        }
+        configDsPhiTre();
+        $('#pay-phi-tre-modal').modal('hide');
+    }
+
+    function thanhToanPhiTre(entity){
+        return new Promise(
+            (resolve, reject) => {
+                PhiTreService.postThanhToanPhiTre(entity).then(
+                    function (response) {
+                        resolve(response);
+                    },
+                    function (err) {
+                        reject(err);
+                    }
+                )
+            }
+        );
+    }
+
     function configDsPhiTre() {
         PhiTreService.getCountPhiTreByKhachHang($scope.khachHang.MaKhachHang).then(
             function (response) {
@@ -183,6 +240,13 @@ ManagerApp.controller('QuanLyThueTraDiaCtrl', ($scope, KhachHangService, ThueDia
         }
     }
 
+    function reConfigPhiTre(){
+        if ($scope.dsPhiTre.length == 1){
+            $scope.dsPhiTrePaginaion.model --;
+            $scope.dsPhiTrePaginaion.total --;
+        }
+    }
+
     function configPhiTrePagination(total) {
         $scope.dsPhiTrePaginaion = {
             model: 1,
@@ -192,4 +256,37 @@ ManagerApp.controller('QuanLyThueTraDiaCtrl', ($scope, KhachHangService, ThueDia
         }
     }
 
+    //---------------------------------------------> Thue đĩa
+    $scope.maDiaThue = undefined;
+    $scope.diaFindResult = undefined;
+
+    $scope.timDia = function(event){
+        if (event.keyCode === 13){
+            //Nhấn phím enter
+            if ($scope.maDiaThue){
+                DiaService.getDiaById($scope.maDiaThue).then(
+                    function(response){
+                        console.log(response)
+                        $scope.diaFindResult = response.data;
+                    },
+                    function(err){
+                        console.log(err);
+                        $scope.diaFindResult = undefined;
+                        alert('Không tìm thấy đĩa tương ứng')
+                    }
+                )
+            }
+        }
+    }
+
+    $scope.confirmThueDia = function(){
+        ThueDiaService.thueDia($scope.khachHang.MaKhachHang, $scope.diaFindResult.MaDia).then(
+            function(response){
+                console.log(response);
+            },
+            function(err){
+                console.log(err)
+            }
+        )
+    }
 });
