@@ -5,39 +5,38 @@
 }
 
 <div class="section" ng-controller="QuanLyPhiTreCtrl">
-    <div class="fade modal" id="destroy-late-pay-modal" tabindex="-1" role="dialog" aria-labelledby="dekete-customer-label">
+   
+    <div class="fade modal" id="delete-phi-tre-modal" tabindex="-1" role="dialog" aria-labelledby="dekete-customer-label">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="delete-customer-label">Xóa khách hàng</h4>
+                    <h4 class="modal-title" id="delete-customer-label">Hủy</h4>
                 </div>
                 <div class="modal-body">
-                    <h4 class="danger">Bạn có chắc chắn muốn xóa!</h4>
-                    <h2 class="danger">Khách hàng: {{khachHangSelected.Ten}}</h2>
+                    <h4 class="danger">Bạn có chắc chắn muốn hủy phí trễ!</h4>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-                    <button type="button" class="btn btn-danger" ng-click="confirmXoaKhachHang()">Có</button>
+                    <button type="button" class="btn btn-danger" ng-click="confirmHuyPhiTre()">Có</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="fade modal" id="pay-late-pay-modal" tabindex="-1" role="dialog" aria-labelledby="dekete-customer-label">
+    <div class="fade modal" id="pay-phi-tre-modal" tabindex="-1" role="dialog" aria-labelledby="dekete-customer-label">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="delete-customer-label">Xóa khách hàng</h4>
+                    <h4 class="modal-title" id="delete-customer-label">Thanh toán</h4>
                 </div>
                 <div class="modal-body">
-                    <h4 class="danger">Bạn có chắc chắn muốn xóa!</h4>
-                    <h2 class="danger">Khách hàng: {{khachHangSelected.Ten}}</h2>
+                    <h4 class="danger">Bạn có chắc chắn muốn thanh toán!</h4>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-                    <button type="button" class="btn btn-danger" ng-click="confirmXoaKhachHang()">Có</button>
+                    <button type="button" class="btn btn-danger" ng-click="confirmThanhToanPhiTre()">Có</button>
                 </div>
             </div>
         </div>
@@ -56,14 +55,14 @@
                     <div class="col-md-12 col-sm-12 col-sx-12 margin-bottom pull-right">
                         <div class="inputform-group">
                             <div class="input-group input-group-sm">
-                                <input type="text" ng-model="searchPatientInputModel" 
-                                       ng-keyup="searchPatient($event)" 
+                                <input type="text" ng-model="maKhachHangSearch" 
+                                       ng-keyup="searchPhiTreByKhachHang($event)" 
                                        class="form-control pull-right ng-pristine ng-valid ng-empty ng-touched" 
                                        placeholder="Sắp xếp theo mã khách hàng...">
 
                                 <div class="input-group-btn">
                                     <button ng-click="refreshSearchResult()" data-toggle="tooltip" 
-                                            data-placement="top" title="Sắp xếp" type="submit" 
+                                            data-placement="top" title="Lọc" type="submit" 
                                             class="btn btn-default" data-original-title="Bỏ tìm kiếm">
                                         <i class="fa fa-user" aria-hidden="true"></i>
                                     </button>
@@ -71,20 +70,30 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="col-md-12">
                         <table class="table table-bordered table-hover">
                             <thead>
                                 <tr>
-                                    <th>Mã khách hàng</th>
-                                    <th>Mã đĩa</th>
+                                    <th>
+
+                                    </th>
+                                    <th>Mã số đĩa</th>
+                                    <th>Tiêu đề</th>
                                     <th>Ngày thuê</th>
                                     <th>Phí trễ</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
+                                <tr ng-repeat="dia in dsPhiTre track by $index"
+                                    ng-click="dsPhiTreSelected(dia)">
+                                    <th>
+                                        <input type="checkbox" ng-model="dia.isDelete" />
+                                    </th>
+                                    <th>{{dia.MaDia}}</th>
+                                    <th>{{dia.Dia.TieuDe.Ten}}</th>
+                                    <th>{{dia.NgayThue}}</th>
+                                    <th>{{dia.PhiTre}}</th>
                                 </tr>
                             </tbody>
                         </table>
@@ -92,16 +101,17 @@
                 </div>
                 <div class="box-footer">
                     <div class="col-md-12">
+                       
                         <ul style="margin: 0"
                             uib-pagination
-                            ng-change="khachHangPageChange()"
-                            total-items="khachHangPagination.totalItem"
-                            ng-model="khachHangPagination.model"
-                            max-size="khachHangPagination.maxPage"
-                            items-per-page="khachHangPagination.perPage"
+                            ng-change="phiTrePageChange()"
+                            total-items="dsPhiTrePaginaion.total"
+                            ng-model="dsPhiTrePaginaion.model"
+                            max-size="dsPhiTrePaginaion.maxSize"
+                            items-per-page="dsPhiTrePaginaion.itemsPerPage"
                             class="pagination-sm pull-right"
                             boundary-link-numbers="true"
-                            rotate="false"></ul>   
+                            rotate="false"></ul>
                     </div>
                 </div>
             </div>
@@ -118,26 +128,27 @@
 
                 <div class="box-body" id="body-box-thong-tin-phi-tre">
                     <div class="col-md-12">
-                        <h3>Phí: <strong>20$</strong></h3>
+                        <h3>Phí: <strong>{{chiTietPhiTre.PhiTre}}</strong></h3>
                         <hr />
                         <p><strong>Thông tin Khách hàng</strong></p>
-                        <p>Anh (chị): <strong>Nguyễn Văn A</strong></p>
-                        <p>Mã khách hàng: <strong>A0001</strong></p>
-                        <p>Số điện thoại: <strong>012122</strong></p>
-                        <p>Địa chỉ: <strong>Nguyễn văn</strong></p>
+                        <p>Anh (chị): <strong>{{chiTietPhiTre.KhachHang.Ten}}</strong></p>
+                        <p>Mã khách hàng: <strong>{{chiTietPhiTre.KhachHang.MaKhachHang}}</strong></p>
+                        <p>Số điện thoại: <strong>{{chiTietPhiTre.KhachHang.SoDienThoai}}</strong></p>
+                        <p>Địa chỉ: <strong>{{chiTietPhiTre.KhachHang.DiaChi}}</strong></p>
                         <hr />
                         <p><strong>Thông tin đĩa</strong></p>
-                        <p>Tên đĩa: <strong>LOL</strong></p>
-                        <p>Ngày thuê: <strong>A0001</strong></p>
-                        <p>Ngày phải trả: <strong>012122</strong></p>
-                        <p>Ngày trả thực: <strong>Nguyễn văn</strong></p>
-                        <p>Trạng thái: <strong>Nguyễn văn</strong></p>
+                        <p>Tên đĩa: <strong>{{chiTietPhiTre.Dia.TieuDe.Ten}}</strong></p>
+                        <p>Mã đĩa: <strong>{{chiTietPhiTre.Dia.MaDia}}</strong></p>
+                        <p>Ngày thuê: <strong>{{chiTietPhiTre.NgayThue}}</strong></p>
+                        <p>Ngày phải trả: <strong>{{chiTietPhiTre.NgayPhaiTra}}</strong></p>
+                        <p>Ngày trả thực: <strong>{{chiTietPhiTre.NgayThucTra}}</strong></p>
+                        <p>Trạng thái: <strong>{{chiTietPhiTre.DaThanhToanPhiTre ? 'Đã thanh toán phí trể' : 'Chưa thanh toán phí trễ'}}</strong></p>
                     </div>
                 </div>
                 <div class="box-footer">
                     <div class="col-md-12">
-                        <button class="btn btn-danger btn-sm pull-right" data-toggle="modal" data-target="#destroy-late-pay-modal" style="margin-right: 5px">Hủy phí trễ</button>
-                        <button class="btn btn-primary btn-sm pull-right" data-toggle="modal" data-target="#pay-late-pay-modal" style="margin-right: 5px">Thanh toán phí trễ</button>
+                        <button class="btn btn-danger btn-sm pull-right" data-toggle="modal" data-target="#delete-phi-tre-modal" style="margin-right: 5px">Hủy phí trễ</button>
+                        <button class="btn btn-sm pull-right" data-toggle="modal" data-target="#pay-phi-tre-modal" style="margin-right: 5px">Thanh toán phí trễ</button>
                     </div>
                 </div>
             </div>

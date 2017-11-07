@@ -4,12 +4,27 @@ ManagerApp.factory('PhiTreService', function ($http, $q) {
     function PhiTreService() {
         let self = this;
 
-        self.getAllPhiTre = function () {
+        self.getCountPhiTre = function () {
             let deferred = $q.defer();
 
             $http({
                 method: 'get',
-                url: API + 'phitre/'
+                url: API + 'phitre/count'
+            }).then(function success(response) {
+                deferred.resolve(response);
+            }, function error(response) {
+                deferred.reject(response);
+            });
+
+            return deferred.promise;
+        }
+
+        self.getPhiTre = function (limit, model) {
+            let deferred = $q.defer();
+
+            $http({
+                method: 'get',
+                url: API + 'phitre/' +limit + '/' +((model-1)*limit)
             }).then(function success(response) {
                 deferred.resolve(response);
             }, function error(response) {
