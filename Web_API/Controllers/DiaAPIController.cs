@@ -22,7 +22,7 @@ namespace Web_API.Controllers
         [Route("api/dia")]
         public IHttpActionResult GetAll()
         {
-            var lst = db.Dias.ToList();
+            var lst = db.Dias.OrderBy(x=>x.MaTieuDe).ToList();
             if (lst.Count == 0)
             {
                 return NotFound();
@@ -132,7 +132,7 @@ namespace Web_API.Controllers
                 err = "Lỗi";
                 return Json(err);
             }
-            var result = db.Dias.Where(x => x.MaTieuDe == maTieuDe).ToList().Skip(offset).Take(limit).ToList();
+            var result = db.Dias.Where(x => x.MaTieuDe == maTieuDe).ToList().Skip(offset).Take(limit).OrderBy(x=>x.MaTieuDe).ToList();
             
             return Json(result);
         }

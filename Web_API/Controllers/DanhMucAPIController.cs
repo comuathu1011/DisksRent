@@ -20,7 +20,7 @@ namespace Web_API.Controllers
         [HttpGet]
         public IHttpActionResult GetAll()
         {
-            var lst = db.DanhMucs.ToList();
+            var lst = db.DanhMucs.OrderBy(x=>x.TenDanhMuc).ToList();
             if (lst.Count == 0)
             {
                 return NotFound();
