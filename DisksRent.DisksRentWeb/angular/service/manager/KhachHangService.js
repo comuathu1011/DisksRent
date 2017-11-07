@@ -99,16 +99,12 @@ ManagerApp.factory('KhachHangService', function ($http, $q) {
 
         self.deleteKhachHang = function (maKhachHang) {
             let deferred = $q.defer();
-
-            $http({
-                method: 'DELETE',
-                url: API + 'KhachHangs/' + maKhachHang
-            }).then(function success(response) {
-                deferred.resolve(response);
-            }, function error(response) {
-                deferred.reject(response);
-            });
-
+            $http.delete(API + 'KhachHangs/' + maKhachHang).then(
+                function success(response) {
+                    deferred.resolve(response);
+                }, function error(response) {
+                    deferred.reject(response);
+                });
             return deferred.promise;
         }
     }

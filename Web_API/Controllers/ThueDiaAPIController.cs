@@ -29,7 +29,7 @@ namespace Web_API.Controllers
             string err = null;
             var dia = db.Dias.Find(maDia);
             var tieuDe = db.TieuDes.Find(dia.MaTieuDe);
-            soNgayChoThueMoiDia = db.DanhMucs.Find(tieuDe.MaDanhMuc).ThoiGianThue;
+            var soNgayChoThueMoiDia = db.DanhMucs.Find(tieuDe.MaDanhMuc).ThoiGianThue;
             var kh = db.KhachHangs.Where(x => x.MaKhachHang == maKhachHang).FirstOrDefault();
             if (dia == null || kh == null)
             {

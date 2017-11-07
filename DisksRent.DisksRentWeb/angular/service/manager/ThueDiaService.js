@@ -8,7 +8,7 @@ ManagerApp.factory('ThueDiaService', function ($http, $q) {
             let deferred = $q.defer();
 
             $http({
-                method: 'GET',
+                method: 'POST',
                 url: API + 'muondia/' + maKhachHang + '/' + maDia 
             }).then(function success(response) {
                 deferred.resolve(response);
@@ -19,12 +19,12 @@ ManagerApp.factory('ThueDiaService', function ($http, $q) {
             return deferred.promise;
         }
 
-        self.traDia = function (maDia) {
+        self.putTraDia = function (maDia) {
             let deferred = $q.defer();
 
             $http({
-                method: 'GET',
-                url: API + 'muondia/' + maDia
+                method: 'PUT',
+                url: API + 'muondia/' +maDia,
             }).then(function success(response) {
                 deferred.resolve(response);
             }, function error(response) {

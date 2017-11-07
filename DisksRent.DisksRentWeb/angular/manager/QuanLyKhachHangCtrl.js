@@ -1,6 +1,6 @@
 ﻿/// <reference path="../service/manager/KhachHangService.js" />
 /// <reference path="ManagerApp.js" />
-ManagerApp.controller('QuanLyKhachHangCtrl', function ($scope, KhachHangService) {
+ManagerApp.controller('QuanLyKhachHangCtrl', function ($scope, $timeout, KhachHangService) {
     
     //Danh sách khách hang lấy được từ cơ sở dữ liệu, phân trang được quyết định trong khachHangPagination
     $scope.listKhachHang = [
@@ -52,6 +52,13 @@ ManagerApp.controller('QuanLyKhachHangCtrl', function ($scope, KhachHangService)
     $scope.updateFiled = true;
     $scope.updateFiledName = 'Sửa thông tin';
 
+    //
+    $scope.deleteMess = '';
+    $scope.addMess = {
+        style: '',
+        mess: ''
+    }
+
     /*
         Các luồng sự kiện $scope.khachHangSelected
     */
@@ -75,10 +82,22 @@ ManagerApp.controller('QuanLyKhachHangCtrl', function ($scope, KhachHangService)
     */
     $scope.confirmXoaKhachHang = function () {
         KhachHangService.deleteKhachHang($scope.khachHangSelected.MaKhachHang).then(
-            function () {
-                console.log(response)
+            function (response) {
+                console.log(response);
+                if (response.data) {
+                    $scope.deleteMess = 'Thành công';
+
+                    $timeout(function () {
+                        $('#delete-customer-modal').modal('hide');
+                        $scope.deleteMess = '';
+                        loadKhachHang();
+                    }, 1000);
+                } else {
+                    $scope.deleteMess = 'Thất bại';
+                }
             },
-            function(err){
+            function (err) {
+                $scope.deleteMess = 'Thất bại';
                 console.log(err)
             })
     }
@@ -93,10 +112,21 @@ ManagerApp.controller('QuanLyKhachHangCtrl', function ($scope, KhachHangService)
             //Gửi lên server
             KhachHangService.postKhachHang($scope.newKhachHang).then(
                 function (response) {
-                    console.log(response)
+                    console.log(response);
+                    $scope.addMess.style = 'callout-success';
+                    $scope.addMess.mess = 'Thành công';
+
+                    $timeout(function () {
+                        $scope.addMess.style = '';
+                        $scope.addMess.mess = '';
+                        $('#add-customer-modal').modal('hide');
+                        loadKhachHang();
+                    }, 1500);
                 },
                 function (err) {
                     console.log(err);
+                    $scope.addMess.style = 'callout-danger';
+                    $scope.addMess.mess = 'Thất bại';
                 }
             )
         } else {
@@ -125,9 +155,7 @@ ManagerApp.controller('QuanLyKhachHangCtrl', function ($scope, KhachHangService)
         controlBtnUpdate();
     }
 
-    $scope.comfirmUpdate = function () {
-
-    }
+    
     /*
         Hàm xử lý logic, hỗ trợ
     */
@@ -218,8 +246,20 @@ ManagerApp.controller('QuanLyKhachHangCtrl', function ($scope, KhachHangService)
             $scope.updateFiledName = 'Cập nhật thông tin';
         } else {
             $scope.updateFiledName = 'Sửa thông tin';
+            comfirmUpdate();
         }
 
         $scope.updateFiled = !$scope.updateFiled;
+    }
+
+    function comfirmUpdate() {
+        KhachHangService.putKhachHang($scope.khachHangSelected).then(
+            function (response) {
+                console.log(response)
+            },
+            function (err) {
+                console.log(err);
+                alert('Lỗi: ' +err.data)
+            });
     }
 });

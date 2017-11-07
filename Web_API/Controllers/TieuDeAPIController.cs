@@ -46,21 +46,15 @@ namespace Web_API.Controllers
             }
             return Ok(title);
         }
-        ////
-        //[Route("api/tieude/{limit}/{offset}")]
-        //public IHttpActionResult GetTitle()
-        //{
+        
+        [Route("api/tieude/{limit}/{offset}")]
+        public IHttpActionResult GetTieuDeBySizeOffset(int limit, int offset)
+        {
+            var ds = db.TieuDes.ToList().Skip(offset).Take(limit).ToList();
+            return Json(ds);
+        }
 
-        //}
-        //sua thong tin khach hang
-        //[Route("api/tieu")]
-        //public IHttpActionResult Put(KhachHang kh)
-        //{
-        //    db.Entry(kh).State = System.Data.Entity.EntityState.Modified;
-        //    db.SaveChanges();
-        //    return Ok();
-        //}
-        //them tieu de
+  
         [Route("api/tieude")]
         [HttpPost]
         public IHttpActionResult Post(TieuDe t)

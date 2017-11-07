@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Description;
 using Web_API.Models;
 using Web_API.Models.Enums;
 
@@ -21,7 +22,7 @@ namespace Web_API.Controllers
         [Route("api/dia")]
         public IHttpActionResult GetAll()
         {
-            var lst = db.Dias.OrderBy(x=>x.MaTieuDe).ToList();
+            var lst = db.Dias.ToList();
             if (lst.Count == 0)
             {
                 return NotFound();
@@ -39,6 +40,18 @@ namespace Web_API.Controllers
             });
 
             return Json(result);
+        }
+
+        [Route("api/dia/{maDia}")]
+        public IHttpActionResult GetDia(int maDia)
+        {
+            Dia dia =  db.Dias.Find(maDia);
+            if (dia == null)
+            {
+                return NotFound();
+            }
+
+            return Json(dia);
         }
 
         //them dia
@@ -84,8 +97,8 @@ namespace Web_API.Controllers
         }
 
         //get so luong dia cua mot tieu de
-        [Route("api/dia/{maTieuDe}/count")]
-        public IHttpActionResult GetCount(int maTieuDe)
+        [Route("api/dia/tieude/{maTieuDe}/count")]
+        public IHttpActionResult GetCountDiaByTieuDe(int maTieuDe)
         {
             if(maTieuDe < 0)
             {
@@ -97,8 +110,8 @@ namespace Web_API.Controllers
         }
 
         //get 
-        [Route("api/dia/{maTieuDe}/{limit}/{offset}")]
-        public IHttpActionResult GetDias(int maTieuDe, int limit, int offset)
+        [Route("api/dia/tieude/{maTieuDe}/{limit}/{offset}")]
+        public IHttpActionResult GetDiaByTieuDes(int maTieuDe, int limit, int offset)
         {
             string err = null;
             var tieuDe = db.TieuDes.Find(maTieuDe);
@@ -112,12 +125,8 @@ namespace Web_API.Controllers
                 err = "Lỗi";
                 return Json(err);
             }
-            var result = db.Dias.Where(x => x.MaTieuDe == maTieuDe).Skip(offset).Take(limit).OrderBy(x=>x.MaDia).ToList();
-            if (result.Count == 0)
-            {
-                err = "Không tìm thấy đĩa theo yêu cầu";
-                return Json(err);
-            }
+            var result = db.Dias.Where(x => x.MaTieuDe == maTieuDe).ToList().Skip(offset).Take(limit).ToList();
+            
             return Json(result);
         }
     }

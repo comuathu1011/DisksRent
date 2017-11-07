@@ -79,7 +79,7 @@ namespace Web_API.Controllers
                 err = "Không tìm thấy khách hàng cần tìm";
                 return Json(err);
             }
-            var result = db.DsChoThue.Where(x => x.NgayPhaiTra < x.NgayThucTra && x.MaKhachHang == maKh).OrderByDescending(x => x.NgayThue)
+            var result = db.DsChoThue.Where(x => x.NgayPhaiTra < x.NgayThucTra && x.MaKhachHang == maKh && x.DaThanhToanPhiTre == false).OrderByDescending(x => x.NgayThue)
                                 .Skip(offset).Take(limit).ToList();
             if (result.Count == 0)
             {
@@ -98,7 +98,7 @@ namespace Web_API.Controllers
                 err = "Không tìm thấy khách hàng cần tìm";
                 return Json(err);
             }
-            var result = db.DsChoThue.Where(x => x.NgayPhaiTra < x.NgayThucTra && x.MaKhachHang == maKhachHang).Count();
+            var result = db.DsChoThue.Where(x => x.NgayPhaiTra < x.NgayThucTra && x.MaKhachHang == maKhachHang && x.DaThanhToanPhiTre == false).Count();
             return Json(result);
         }
 

@@ -5,7 +5,6 @@
 }
 
 <div class="section" ng-controller="QuanLyKhachHangCtrl">
-
     <div class="fade modal" id="add-customer-modal" tabindex="-1" role="dialog" aria-labelledby="dekete-disk-label">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -14,6 +13,10 @@
                     <h4 class="modal-title" id="add-customer-label">Thêm mới khách hàng</h4>
                 </div>
                 <div class="modal-body">
+                    <div ng-show="addMess.mess" class="callout {{addMess.style}}">
+                        <h4>{{addMess.mess}}</h4>
+                    </div>
+
                     <form class="form-horizontal">
                         <div class="form-group">
                             <label for="ho-va-ten" class="col-sm-3 control-label">Họ và tên</label>
@@ -58,6 +61,7 @@
                 <div class="modal-body">
                     <h4 class="danger">Bạn có chắc chắn muốn xóa!</h4>
                     <h2 class="danger">Khách hàng: {{khachHangSelected.Ten}}</h2>
+                    <h2 class="danger">{{deleteMess}}</h2>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>

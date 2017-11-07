@@ -63,6 +63,38 @@ ManagerApp.factory('PhiTreService', function ($http, $q) {
 
             return deferred.promise;
         }
+
+        self.postThanhToanPhiTre = function (entity) {
+            let deferred = $q.defer();
+
+            $http({
+                method: 'post',
+                url: API + 'phitre/thanhtoan',
+                data: entity
+            }).then(function success(response) {
+                deferred.resolve(response);
+            }, function error(response) {
+                deferred.reject(response);
+            });
+
+            return deferred.promise;
+        }
+
+        self.postHuyPhiTre = function (entity) {
+            let deferred = $q.defer();
+
+            $http({
+                method: 'post',
+                url: API + 'phitre/huy',
+                data: entity
+            }).then(function success(response) {
+                deferred.resolve(response);
+            }, function error(response) {
+                deferred.reject(response);
+            });
+
+            return deferred.promise;
+        }
     }
 
     return new PhiTreService();
