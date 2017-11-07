@@ -27,7 +27,7 @@ namespace Web_API.Controllers
         public IHttpActionResult PostThueDia(int maKhachHang, int maDia)
         {
             string err = null;
-            var dia = db.Dias.Where(x => x.MaDia == maDia).FirstOrDefault();
+            var dia = db.Dias.Find(maDia);
             var tieuDe = db.TieuDes.Find(dia.MaTieuDe);
             var soNgayChoThueMoiDia = db.DanhMucs.Find(tieuDe.MaDanhMuc).ThoiGianThue;
             var kh = db.KhachHangs.Where(x => x.MaKhachHang == maKhachHang).FirstOrDefault();
@@ -41,7 +41,10 @@ namespace Web_API.Controllers
                 MaKhachHang = maKhachHang,
                 MaDia = maDia,
                 NgayThue = DateTime.Now,
-                NgayPhaiTra = DateTime.Now.AddDays(soNgayChoThueMoiDia)
+                NgayPhaiTra = DateTime.Now.AddDays(soNgayChoThueMoiDia),
+                NgayThucTra = new DateTime(1753, 1, 1),
+                Dia = dia,
+                KhachHang = kh
             };
             db.DsChoThue.Add(model);
             db.SaveChanges();

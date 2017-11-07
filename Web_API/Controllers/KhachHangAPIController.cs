@@ -69,6 +69,12 @@ namespace Web_API.Controllers
         [HttpPost]
         public IHttpActionResult Post(KhachHang kh)
         {
+            var model = new KhachHang
+            {
+                Ten = kh.Ten,
+                DiaChi = kh.DiaChi,
+                SoDienThoai = kh.SoDienThoai,
+            };
             db.KhachHangs.Add(kh);
             db.SaveChanges();
             return Ok();

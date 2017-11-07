@@ -25,7 +25,7 @@ namespace Web_API.Controllers
             {
                 return NotFound();
             }
-            return Ok(lst);
+            return Json(lst);
         }
         //get danh sach phi tre theo ma kh
         [Route("api/phitre/{maKh}")]
@@ -115,6 +115,7 @@ namespace Web_API.Controllers
                                     && x.NgayThue == entity.NgayThue).FirstOrDefault();
             model.DaThanhToanPhiTre = true;
             db.Entry(model).State = System.Data.Entity.EntityState.Modified;
+            db.SaveChanges();
             return Ok();
         }
 
