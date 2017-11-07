@@ -116,7 +116,7 @@ namespace Web_API.Controllers
         //}
 
         //Chuyển tình trạng đĩa sang "đã xong" khi kh đã nhận đĩa
-        [Route("api/dia/{maTieuDe}/{maKh}")]
+        [Route("api/dathang/dia/{maTieuDe}/{maKh}")]
         public IHttpActionResult PutChuyenTinhTragDiaDaXong(int maTieuDe, int maKh )
         {
             if (maTieuDe < 0 || maKh < 0) return NotFound();

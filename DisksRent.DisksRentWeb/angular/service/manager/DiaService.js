@@ -53,7 +53,7 @@ ManagerApp.factory('DiaService', function ($http, $q) {
             let deferred = $q.defer();
 
             $http({
-                method: 'GET',
+                method: 'POST',
                 url: API + 'dia/' +maTieuDe + '/' + soLuong
             }).then(function success(response) {
                 deferred.resolve(response);

@@ -32,6 +32,8 @@ ManagerApp.controller('QuanLyTieuDeVaDiaCtrl', ($scope, TieuDeService, DiaServic
     $scope.danhMucIdSelected;
     $scope.danhMucSelected;
 
+    $scope.newDia = {};
+
     //Main flow
     loadDanhMuc();
     init();
@@ -139,6 +141,19 @@ ManagerApp.controller('QuanLyTieuDeVaDiaCtrl', ($scope, TieuDeService, DiaServic
             },
             function(err){
                 alert('Lỗi')
+                console.log(err)
+            }
+        )
+    }
+
+    $scope.addNewDiskToTitle = function(){
+        DiaService.postDia($scope.tieuDeSelected.MaTieuDe, 1).then(
+            function(response){
+                $scope.newDia = response.data;
+                getPaginationDia();
+            },
+            function(err){
+                $scope.newDia['MaDia'] = 'Lỗi'.
                 console.log(err)
             }
         )

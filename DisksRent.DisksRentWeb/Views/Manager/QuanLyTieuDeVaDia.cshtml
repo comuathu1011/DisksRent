@@ -47,11 +47,10 @@
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="modal-body">
-                        <h2>Đã phát sinh mã đĩa: {{tieuDeSelected.Ten}}</h2>
+                        <h2>Đã phát sinh mã đĩa: {{newDia.MaDia}}</h2>
                     </div></div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-                    <button type="button" class="btn btn-primary">Lưu</button>
                 </div>
             </div>
         </div>
@@ -107,7 +106,7 @@
                         <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                     </div><!-- /.box-tools -->
                 </div><!-- /.box-header -->
-                <div class="box-body">
+                <div class="box-body" style="height: 430px">
                     <div class="col-md-12">
                         <table class="table table-hover table-bordered">
                             <thead>
@@ -162,7 +161,7 @@
                         <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                     </div><!-- /.box-tools -->
                 </div><!-- /.box-header -->
-                <div class="box-body">
+                <div class="box-body" style="height: 430px">
                   <div class="col-md-12">
                       <table class="table table-hover table-bordered">
                           <thead>
@@ -184,7 +183,7 @@
                 <div class="box-footer ">
                     <div class="col-md-6">
                         <button class="btn btn-sm pull-left" style="margin-right: 5px" data-target="#delete-disk-modal" data-toggle="modal">Xóa đĩa</button>    
-                        <button class="btn btn-sm btn-primary pull-left" data-target="#add-disk-for-title-modal" data-toggle="modal">Thêm đĩa</button>
+                        <button class="btn btn-sm btn-primary pull-left" data-target="#add-disk-for-title-modal" ng-click="addNewDiskToTitle()" data-toggle="modal">Thêm đĩa</button>
                     </div>
                     <div class="col-md-6">
                         <ul style="margin: 0"

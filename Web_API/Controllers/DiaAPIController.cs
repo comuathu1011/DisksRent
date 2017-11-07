@@ -61,6 +61,7 @@ namespace Web_API.Controllers
         {
             if (maTieuDe < 0 || soLuong < 0) return NotFound();
             var tieuDe = db.TieuDes.Find(maTieuDe);
+            /*
             var list = new List<Dia>();
             for (int i = 0; i < soLuong; i++)
             {
@@ -71,10 +72,16 @@ namespace Web_API.Controllers
                 };
                 list.Add(model);
             }
+            */
+            var model = new Dia
+            {
+                MaTieuDe = tieuDe.MaTieuDe,
+                TinhTrangThue = TinhTrangThueCollection.CoSan
+            };
 
-            db.Dias.AddRange(list);
+            var result = db.Dias.Add(model);
             db.SaveChanges();
-            return Ok();
+            return Json(result);
         }
 
         //xoa dia
