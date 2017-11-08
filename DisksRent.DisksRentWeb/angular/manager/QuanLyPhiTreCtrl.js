@@ -26,8 +26,10 @@ ManagerApp.controller('QuanLyPhiTreCtrl', ($scope, PhiTreService) => {
 
     $scope.searchPhiTreByKhachHang = function(event){
         if(event.keyCode == 13){
-            isSortByMaKhachHang =  true;
-            getConfigPhiTre();
+            if ($scope.maKhachHangSearch.length > 0){
+                isSortByMaKhachHang =  true;
+                getConfigPhiTre();
+            }
         }
     }
     
@@ -41,6 +43,54 @@ ManagerApp.controller('QuanLyPhiTreCtrl', ($scope, PhiTreService) => {
 
     $scope.dsPhiTreSelected = function(dia){
         $scope.chiTietPhiTre = dia;
+    }
+
+    //-------------------------------------------------> Hủy phí trễ
+    $scope.confirmHuyPhiTre = async function () {
+        let x = await huyPhiTre($scope.chiTietPhiTre);
+        console.log(x)
+        configPhiTrePagination($scope.dsPhiTrePaginaion.total - 1, $scope.dsPhiTrePaginaion.model == 1 ? 1 : ($scope.dsPhiTre.length == 1 ? $scope.dsPhiTrePaginaion.model - 1 : $scope.dsPhiTrePaginaion.model));
+        getDsPhiTre();
+        $('#delete-phi-tre-modal').modal('hide');
+    }
+
+    function huyPhiTre(entity){
+        return new Promise(
+            (resolve, reject) => {
+                PhiTreService.postHuyPhiTre(entity).then(
+                    function (response) {
+                        resolve(response);
+                    },
+                    function (err) {
+                        reject(err);
+                    }
+                )
+            }
+        );
+    }
+
+    //-------------------------------------------------> Thanh toán phí trễ
+    $scope.confirmThanhToanPhiTre = async function () {
+        let x = await thanhToanPhiTre($scope.chiTietPhiTre);
+        console.log(x)
+        configPhiTrePagination($scope.dsPhiTrePaginaion.total - 1, $scope.dsPhiTrePaginaion.model == 1 ? 1 : ($scope.dsPhiTre.length == 1 ? $scope.dsPhiTrePaginaion.model - 1 : $scope.dsPhiTrePaginaion.model));
+        getDsPhiTre();
+        $('#pay-phi-tre-modal').modal('hide');
+    }
+
+    function thanhToanPhiTre(entity){
+        return new Promise(
+            (resolve, reject) => {
+                PhiTreService.postThanhToanPhiTre(entity).then(
+                    function (response) {
+                        resolve(response);
+                    },
+                    function (err) {
+                        reject(err);
+                    }
+                )
+            }
+        );
     }
 
     async function getConfigPhiTre() {
@@ -113,6 +163,8 @@ ManagerApp.controller('QuanLyPhiTreCtrl', ($scope, PhiTreService) => {
         $scope.dsPhiTre = phiTres;
         if($scope.dsPhiTre.length > 0){
             $scope.chiTietPhiTre = $scope.dsPhiTre[0];
+        }else{
+            $scope.chiTietPhiTre = {};
         }
     }
 

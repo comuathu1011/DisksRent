@@ -6,19 +6,110 @@
 
 <div class="session" ng-controller="QuanLyDatHangCtrl">
     <div class="fade modal" id="add-booking-disk-modal" tabindex="-1" role="dialog" aria-labelledby="dekete-customer-label">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="delete-customer-label">Xóa khách hàng</h4>
+                    <h4 class="modal-title" id="delete-customer-label">Thêm đặt hàng</h4>
                 </div>
                 <div class="modal-body">
-                    <h4 class="danger">Bạn có chắc chắn muốn xóa!</h4>
-                    <h2 class="danger">Khách hàng: {{khachHangSelected.Ten}}</h2>
+                    <div class="col-md-6">
+                        <div class="col-md-12">
+                            <form class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Mã tiêu đề</label>
+
+                                    <div class="col-sm-9">
+                                        <input type="text" ng-keyup="timTieuDeDatHang($event)" class="form-control" ng-model="maTieuDeSearch" />
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                        <h5>Thông tin chi tiết của đĩa</h5>
+                        <div class="col-md-12">
+                            <form class="form-horizontal">
+                                <div class="form-group">
+                                    <label for="ho-va-ten" class="col-sm-3 control-label">Tiêu đề</label>
+
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" ng-model="tieuDeResult.TieuDe.Ten" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="sdt" class="col-sm-3 control-label">Danh mục</label>
+
+                                    <div class="col-sm-9">
+                                        <input type="tel" class="form-control" ng-model="tieuDeResult.TieuDe.DanhMuc.TenDanhMuc" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="dia-chi" class="col-sm-3 control-label">Giá thuê</label>
+                                    <div class="col-sm-9">
+                                        <input type="tel" class="form-control" ng-model="tieuDeResult.TieuDe.DanhMuc.GiaThue" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="dia-chi" class="col-sm-3 control-label">Thời gian thuê</label>
+
+                                    <div class="col-sm-9">
+                                        <input type="tel" class="form-control" ng-model="tieuDeResult.TieuDe.DanhMuc.ThoiGianThue" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="col-md-12">
+                            <form class="form-horizontal">
+                                <div class="form-group">
+                                    <div class="col-sm-9">
+                                        <input type="text" ng-keyup="timKhachHangDatHang($event)" class="form-control" ng-model="maKhachHangSearch" />
+                                    </div>
+                                    <label class="col-sm-3 control-label">Mã KH</label>
+                                </div>
+
+                            </form>
+                        </div>
+                        <h5 style="text-align: right">Thông tin chi tiết của khách hàng</h5>
+                        <div class="col-md-12">
+                            <form class="form-horizontal">
+                                <div class="form-group">
+                                    
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" ng-model="khachHangResult.TieuDe.Ten" />
+                                    </div>
+                                    <label for="ho-va-ten" class="col-sm-3 control-label">Họ tên</label>
+
+                                </div>
+
+                                <div class="form-group">
+                                    
+                                    <div class="col-sm-9">
+                                        <input type="tel" class="form-control" ng-model="khachHangResult.TieuDe.DanhMuc.TenDanhMuc" />
+                                    </div>
+                                    <label for="sdt" class="col-sm-3 control-label pull-left">SDT</label>
+
+                                </div>
+
+                                <div class="form-group">
+                                   
+                                    <div class="col-sm-9">
+                                        <textarea rows="3" class="form-control" ng-model="khachHangResult.TieuDe.DanhMuc.GiaThue" ></textarea>
+                                    </div>
+                                    <label for="dia-chi" class="col-sm-3 control-label">Địa chỉ</label>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-                    <button type="button" class="btn btn-danger" ng-click="confirmXoaKhachHang()">Có</button>
+                    <button type="button" class="btn btn-primary" ng-click="confirmDatHang()">Đặt hàng</button>
                 </div>
             </div>
         </div>
@@ -29,15 +120,14 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="delete-customer-label">Xóa khách hàng</h4>
+                    <h4 class="modal-title" id="delete-customer-label">Hủy đặt hàng</h4>
                 </div>
                 <div class="modal-body">
-                    <h4 class="danger">Bạn có chắc chắn muốn xóa!</h4>
-                    <h2 class="danger">Khách hàng: {{khachHangSelected.Ten}}</h2>
+                    <h4 class="danger">Bạn có chắc chắn muốn hủy đặt hàng?</h4>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-                    <button type="button" class="btn btn-danger" ng-click="confirmXoaKhachHang()">Có</button>
+                    <button type="button" class="btn btn-danger" ng-click="confirmHuyDatHang()">Có</button>
                 </div>
             </div>
         </div>
@@ -62,13 +152,13 @@
                     <div class="col-md-6 col-sm-12 col-sx-12 margin-bottom pull-right">
                         <div class="inputform-group">
                             <div class="input-group input-group-sm">
-                                <input type="text" ng-model="searchPatientInputModel"
-                                       ng-keyup="searchPatient($event)"
+                                <input type="text" ng-model="maKhachHangSort"
+                                       ng-keyup="sortByMaKhachHang($event)"
                                        class="form-control pull-right ng-pristine ng-valid ng-empty ng-touched"
                                        placeholder="Lọc theo mã khách hàng...">
 
                                 <div class="input-group-btn">
-                                    <button ng-click="refreshSearchResult()" data-toggle="tooltip"
+                                    <button ng-click="refreshSortByMaKhachHang()" data-toggle="tooltip"
                                             data-placement="top" title="Sắp xếp" type="submit"
                                             class="btn btn-default togo" data-original-title="Bỏ tìm kiếm">
                                         <i class="fa fa-user" aria-hidden="true"></i>
@@ -81,13 +171,13 @@
                     <div class="col-md-6 col-sm-12 col-sx-12 margin-bottom pull-right">
                         <div class="inputform-group">
                             <div class="input-group input-group-sm">
-                                <input type="text" ng-model="searchPatientInputModel"
-                                       ng-keyup="searchPatient($event)"
+                                <input type="text" ng-model="maTieuDeSort"
+                                       ng-keyup="sortByMaTieuDe($event)"
                                        class="form-control pull-right ng-pristine ng-valid ng-empty ng-touched"
                                        placeholder="Lọc theo mã tiêu đề...">
 
                                 <div class="input-group-btn">
-                                    <button ng-click="refreshSearchResult()" data-toggle="tooltip"
+                                    <button ng-click="refreshSortByMaTieuDe()" data-toggle="tooltip"
                                             data-placement="top" title="Sắp xếp" type="submit"
                                             class="btn btn-default togo" data-original-title="Bỏ tìm kiếm">
                                         <i class="fa fa-file-video-o" aria-hidden="true"></i>
@@ -108,7 +198,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                                <tr ng-repeat="datHang in dsDatHang track by $index">
                                     <td></td>
                                     <td></td>
                                 </tr>
@@ -121,10 +211,10 @@
                         <ul style="margin: 0"
                             uib-pagination
                             ng-change="khachHangPageChange()"
-                            total-items="khachHangPagination.totalItem"
-                            ng-model="khachHangPagination.model"
-                            max-size="khachHangPagination.maxPage"
-                            items-per-page="khachHangPagination.perPage"
+                            total-items="dsdatHangPagiantion.total"
+                            ng-model="dsdatHangPagiantion.model"
+                            max-size="dsdatHangPagiantion.maxSize"
+                            items-per-page="dsdatHangPagiantion.itemsPerPage"
                             class="pagination-sm pull-right"
                             boundary-link-numbers="true"
                             rotate="false"></ul>
@@ -144,17 +234,21 @@
 
                 <div class="box-body" id="body-box-thong-tin-phi-tre">
                     <div class="col-md-12">
-                        <h3>Trạng thái: <strong>20$</strong></h3>
+                        <h3>Trạng thái: <strong>Hold</strong></h3>
                         <hr />
                         <p><strong>Thông tin Khách hàng</strong></p>
-                        <p>Anh (chị): <strong>Nguyễn Văn A</strong></p>
-                        <p>Mã khách hàng: <strong>A0001</strong></p>
-                        <p>Số điện thoại: <strong>012122</strong></p>
-                        <p>Địa chỉ: <strong>Nguyễn văn</strong></p>
+                        <p>Anh (chị): <strong>{{chiTietDatHang.KhachHang.Ten}}</strong></p>
+                        <p>Mã khách hàng: <strong>{{chiTietDatHang.KhachHang.MaKhachHang}}</strong></p>
+                        <p>Số điện thoại: <strong>{{chiTietDatHang.KhachHang.SoDienThoai}}</strong></p>
+                        <p>Địa chỉ: <strong>{{chiTietDatHang.KhachHang.DiaChi}}</strong></p>
                         <hr />
                         <p><strong>Thông tin đĩa</strong></p>
-                        <p>Tên đĩa: <strong>LOL</strong></p>
-                        <p>Thể loại: <strong>Nguyễn văn</strong></p>
+                        <p>Tên đĩa: <strong>{{chiTietDatHang.Dia.TieuDe.Ten}}</strong></p>
+                        <p>Mã đĩa: <strong>{{chiTietDatHang.Dia.MaDia}}</strong></p>
+                        <p>Ngày thuê: <strong>{{chiTietDatHang.NgayThue}}</strong></p>
+                        <p>Ngày phải trả: <strong>{{chiTietDatHang.NgayPhaiTra}}</strong></p>
+                        <p>Ngày trả thực: <strong>{{chiTietDatHang.NgayThucTra}}</strong></p>
+                        <p>Trạng thái: <strong>{{chiTietDatHang.DaThanhToanPhiTre ? 'Đã thanh toán phí trể' : 'Chưa thanh toán phí trễ'}}</strong></p>
                     </div>
                 </div>
                 <div class="box-footer">

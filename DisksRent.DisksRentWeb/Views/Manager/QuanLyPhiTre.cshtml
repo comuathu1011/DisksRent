@@ -62,7 +62,7 @@
 
                                 <div class="input-group-btn">
                                     <button ng-click="refreshSearchResult()" data-toggle="tooltip" 
-                                            data-placement="top" title="Lọc" type="submit" 
+                                            data-placement="top" title="Bỏ tìm kiếm" type="submit" 
                                             class="btn btn-default" data-original-title="Bỏ tìm kiếm">
                                         <i class="fa fa-user" aria-hidden="true"></i>
                                     </button>
@@ -75,9 +75,6 @@
                         <table class="table table-bordered table-hover">
                             <thead>
                                 <tr>
-                                    <th>
-
-                                    </th>
                                     <th>Mã số đĩa</th>
                                     <th>Tiêu đề</th>
                                     <th>Ngày thuê</th>
@@ -87,9 +84,6 @@
                             <tbody>
                                 <tr ng-repeat="dia in dsPhiTre track by $index"
                                     ng-click="dsPhiTreSelected(dia)">
-                                    <th>
-                                        <input type="checkbox" ng-model="dia.isDelete" />
-                                    </th>
                                     <th>{{dia.MaDia}}</th>
                                     <th>{{dia.Dia.TieuDe.Ten}}</th>
                                     <th>{{dia.NgayThue}}</th>
