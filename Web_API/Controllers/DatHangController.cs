@@ -18,7 +18,7 @@ namespace Web_API.Controllers
         }
 
         //đặt hàng tiêu đề đang hết đĩa
-        [Route("api/dathang/{maKh}/{maTieuDe}")]
+        [Route("api/dathang/dathang/{maKh}/{maTieuDe}")]
         public IHttpActionResult Post(int maKh, int maTieuDe)
         {
             string err = "";
@@ -50,7 +50,7 @@ namespace Web_API.Controllers
             return Json(model);
         }
         //hủy đặt hàng
-        [Route("api/dathang/{maKh}/{maTieuDe}/{thuTu}")]
+        [Route("api/dathang/huy/{maKh}/{maTieuDe}/{thuTu}")]
         public IHttpActionResult Put(int maKh, int maTieuDe, int thuTu)
         {
             string err = null;
@@ -116,7 +116,7 @@ namespace Web_API.Controllers
         //}
 
         //Chuyển tình trạng đĩa sang "đã xong" khi kh đã nhận đĩa
-        [Route("api/dathang/dia/{maTieuDe}/{maKh}")]
+        [Route("api/dathang/hold/dia/{maTieuDe}/{maKh}")]
         public IHttpActionResult PutChuyenTinhTragDiaDaXong(int maTieuDe, int maKh )
         {
             if (maTieuDe < 0 || maKh < 0) return NotFound();
@@ -127,7 +127,7 @@ namespace Web_API.Controllers
             return Ok();
         }
 
-        [Route("api/datHang/{limit}/{offset} ")]
+        [Route("api/datHang/get/{limit}/{offset}")]
         public IHttpActionResult GetLimit(int limit, int offset)
         {
             string err = null;
@@ -136,11 +136,11 @@ namespace Web_API.Controllers
                 err = "Lỗi";
                 return Json(err);
             }
-            var result = db.DsDatHang.Skip(offset).Take(limit).ToList();
+            var result = db.DsDatHang.ToList().Skip(offset).Take(limit).ToList();
             return Json(result);
         }
 
-        [Route("api/datHang/{maKhachHang}/{maTieuDe}/{limit}/{offset}")]
+        [Route("api/datHang/option/{maKhachHang}/{maTieuDe}/{limit}/{offset}")]
         public IHttpActionResult GetLimitWithOptions(int maKhachHang, int maTieuDe, int limit, int offset)
         {
             string err = null;
@@ -152,20 +152,20 @@ namespace Web_API.Controllers
             var result = new List<DsDatHang>();
             if(maKhachHang != -1 && maTieuDe != -1)
             {
-                result = db.DsDatHang.OrderBy(x=>x.MaKhachHang).OrderBy(x=>x.MaTieuDe).Skip(offset).Take(limit).ToList();
+                result = db.DsDatHang.Where(x => x.MaKhachHang == maKhachHang && x.MaTieuDe == maTieuDe).OrderBy(x=>x.MaKhachHang).OrderBy(x=>x.MaTieuDe).Skip(offset).Take(limit).ToList();
             }
-            else if(maKhachHang != -1)
+            else if(maKhachHang == -1 && maTieuDe != -1)
             {
-                result = db.DsDatHang.OrderBy(x => x.MaTieuDe).Skip(offset).Take(limit).ToList();
+                result = db.DsDatHang.Where(x => x.MaTieuDe == maTieuDe).OrderBy(x => x.MaTieuDe).Skip(offset).Take(limit).ToList();
             }
-            else
+            else if (maKhachHang != -1 && maTieuDe == -1)
             {
-                result = db.DsDatHang.OrderBy(x => x.MaKhachHang).Skip(offset).Take(limit).ToList();
+                result = db.DsDatHang.Where(x => x.MaKhachHang == maKhachHang).OrderBy(x => x.MaKhachHang).Skip(offset).Take(limit).ToList();
             }
             return Json(result);
         }
 
-        [Route("api/datHang/{maKhachHang}/{maTieuDe}/count")]
+        [Route("api/datHang/option/{maKhachHang}/{maTieuDe}/count")]
         public IHttpActionResult GetCountWithOptions(int maKhachHang, int maTieuDe)
         {
             var result = 0;
@@ -173,18 +173,18 @@ namespace Web_API.Controllers
             {
                 result = db.DsDatHang.Where(x => x.MaKhachHang == x.MaKhachHang && x.MaTieuDe == maTieuDe).Count();
             }
-            else if (maKhachHang != -1)
+            else if (maKhachHang != -1 && maTieuDe == -1)
             {
-                result = db.DsDatHang.Where(x =>x.MaTieuDe == maTieuDe).Count();
+                result = db.DsDatHang.Where(x =>x.MaKhachHang == maKhachHang).Count();
             }
-            else
+            else if (maKhachHang == -1 && maKhachHang != -1)
             {
-                result = db.DsDatHang.Where(x => x.MaKhachHang == x.MaKhachHang).Count();
+                result = db.DsDatHang.Where(x => x.MaTieuDe == maTieuDe).Count();
             }
             return Json(result);
         }
 
-        [Route("api/datHang/count ")]
+        [Route("api/datHang/get/count")]
         public IHttpActionResult GetCount()
         {
             var result = db.DsDatHang.Count() ;

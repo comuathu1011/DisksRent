@@ -191,16 +191,19 @@
                         <table class="table table-bordered table-hover">
                             <thead>
                                 <tr>
-                                    <th>Mã khách hàng</th>
-                                    <th>Mã tiêu đề</th>
+                                    <th>Khách hàng</th>
+                                    <th>Tiêu đề</th>
                                     <th>Thứ tự</th>
                                     <th>Trạng thái</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="datHang in dsDatHang track by $index">
-                                    <td></td>
-                                    <td></td>
+                                <tr ng-repeat="datHang in dsDatHang track by $index"
+                                    ng-click="dsDatHangClick(datHang)">
+                                    <td>{{datHang.KhachHang.Ten}}</td>
+                                    <td>{{datHang.TieuDe.Ten}}</td>
+                                    <td>{{datHang.ThuTu}}</td>
+                                    <td>{{datHang.TinhTrang}}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -210,7 +213,7 @@
                     <div class="col-md-12">
                         <ul style="margin: 0"
                             uib-pagination
-                            ng-change="khachHangPageChange()"
+                            ng-change="dsDatHangPageChange()"
                             total-items="dsdatHangPagiantion.total"
                             ng-model="dsdatHangPagiantion.model"
                             max-size="dsdatHangPagiantion.maxSize"
@@ -234,7 +237,7 @@
 
                 <div class="box-body" id="body-box-thong-tin-phi-tre">
                     <div class="col-md-12">
-                        <h3>Trạng thái: <strong>Hold</strong></h3>
+                        <h3>Trạng thái: <strong>{{chiTietDatHang.TinhTrang}}</strong></h3>
                         <hr />
                         <p><strong>Thông tin Khách hàng</strong></p>
                         <p>Anh (chị): <strong>{{chiTietDatHang.KhachHang.Ten}}</strong></p>
@@ -243,12 +246,11 @@
                         <p>Địa chỉ: <strong>{{chiTietDatHang.KhachHang.DiaChi}}</strong></p>
                         <hr />
                         <p><strong>Thông tin đĩa</strong></p>
-                        <p>Tên đĩa: <strong>{{chiTietDatHang.Dia.TieuDe.Ten}}</strong></p>
-                        <p>Mã đĩa: <strong>{{chiTietDatHang.Dia.MaDia}}</strong></p>
-                        <p>Ngày thuê: <strong>{{chiTietDatHang.NgayThue}}</strong></p>
-                        <p>Ngày phải trả: <strong>{{chiTietDatHang.NgayPhaiTra}}</strong></p>
-                        <p>Ngày trả thực: <strong>{{chiTietDatHang.NgayThucTra}}</strong></p>
-                        <p>Trạng thái: <strong>{{chiTietDatHang.DaThanhToanPhiTre ? 'Đã thanh toán phí trể' : 'Chưa thanh toán phí trễ'}}</strong></p>
+                        <p>Tên tiêu đề: <strong>{{chiTietDatHang.TieuDe.Ten}}</strong></p>
+                        <p>Mã tiêu đề: <strong>{{chiTietDatHang.MaTieuDe}}</strong></p>
+                        <p>Danh mục: <strong>{{chiTietDatHang.TieuDe.DanhMuc.Ten}}</strong></p>
+                        <p>Giá thuê: <strong>{{chiTietDatHang.TieuDe.DanhMuc.GiaThue}}</strong></p>
+                        <p>Thời gian thuê: <strong>{{chiTietDatHang.TieuDe.DanhMuc.ThoiGianThue}}</strong></p>
                     </div>
                 </div>
                 <div class="box-footer">
