@@ -65,12 +65,26 @@ ManagerApp.factory('TieuDeService', function ($http, $q) {
             return deferred.promise;
         }
 
-
         self.deleteTieuDe = function (id) {
             let deferred = $q.defer();
 
             $http({
                 method: 'DELETE',
+                url: API + 'tieude/' + id
+            }).then(function success(response) {
+                deferred.resolve(response);
+            }, function error(response) {
+                deferred.reject(response);
+            });
+
+            return deferred.promise;
+        }
+
+        self.getTieuDeById = function (id) {
+            let deferred = $q.defer();
+
+            $http({
+                method: 'get',
                 url: API + 'tieude/' + id
             }).then(function success(response) {
                 deferred.resolve(response);

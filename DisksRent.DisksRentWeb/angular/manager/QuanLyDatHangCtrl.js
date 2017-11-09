@@ -1,5 +1,5 @@
 ﻿/// <reference path="ManagerApp.js" />
-ManagerApp.controller('QuanLyDatHangCtrl', ($scope, DatHangService) => {
+ManagerApp.controller('QuanLyDatHangCtrl', ($scope, DatHangService, TieuDeService, KhachHangService) => {
     $scope.maKhachHangSort = '';
     $scope.maTieuDeSort = '';
     $scope.dsDatHang = [];
@@ -10,10 +10,10 @@ ManagerApp.controller('QuanLyDatHangCtrl', ($scope, DatHangService) => {
         itemsPerPage: 10,
         maxSize: 5
     }
-    $scope.maKhachHangSearch = '';
-    $scope.maTieuDeSearch = '';
-    $scope.khachHangResult = {};
-    $scope.tieuDeResult = {}
+    $scope.maKhachHangSearch = undefined;
+    $scope.maTieuDeSearch = undefined;
+    $scope.khachHangResult = undefined;
+    $scope.tieuDeResult = undefined;
 
     let isSortByMaKhachHang = false;
     let isSortByMaTieuDe = false;
@@ -99,7 +99,6 @@ ManagerApp.controller('QuanLyDatHangCtrl', ($scope, DatHangService) => {
         )
     }
 
-
     //Hàm chức năng
     function init() {
         getPaginationDatHang();
@@ -177,5 +176,70 @@ ManagerApp.controller('QuanLyDatHangCtrl', ($scope, DatHangService) => {
             itemsPerPage: 10,
             maxSize: 5
         }
+    }
+
+
+    /// -----> function đặt hàng
+    //Hàm tìm kiếm khách hành từ server
+   
+    // --> tìm kiếm khách hàng
+    $scope.timKhachHangDatHang = function (event) {
+        if (event.keyCode == 13) {
+            timKiemKhachHang();
+        }
+    }
+
+    function timKiemKhachHang() {
+        if ($scope.maKhachHangSearch) {
+            KhachHangService.getKhachHangDetails($scope.maKhachHangSearch).then(
+                    function (response) {
+                        console.log(response)
+                        $scope.khachHangResult = response.data;
+                    },
+                    function (err) {
+                        alert('Không tìm thấy khách hàng có mã số: ' + $scope.maKhachHangSearch)
+                    }
+           )
+        }
+    }
+
+    $scope.timTieuDeDatHang = function (event) {
+        if (event.keyCode == 13) {
+            timTieuDe();
+        }
+    }
+
+    function timTieuDe() {
+        if ($scope.maTieuDeSearch) {
+            TieuDeService.getTieuDeById($scope.maTieuDeSearch).then(
+                function (res) {
+                    console.log(res)
+                    $scope.tieuDeResult = res.data;
+                },
+                function (err) {
+                    alert('Không tìm thấy tiêu đề có mã số: ' + $scope.maTieuDeSearch);
+                }
+            )
+        }
+    }
+
+    // --> Dat hang
+    $scope.confirmDatHang = function () {
+        DatHangService.datHangTieuDeDangHetDia($scope.khachHangResult.MaKhachHang, $scope.tieuDeResult.MaTieuDe).then(
+            function (res) {
+                console.log(res);
+
+                if (isSortByMaTieuDe && isSortByMaKhachHang) {
+                    getPaginationDatHangWithOption();
+                } else {
+                    getPaginationDatHang();
+                }
+                $('#add-booking-disk-modal').modal('hide');
+            },
+            function (err) {
+                console.log(err);
+                alert('Đặt hàng thất bại!');
+            }
+        )
     }
 });

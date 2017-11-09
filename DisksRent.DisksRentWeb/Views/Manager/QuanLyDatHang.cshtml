@@ -33,7 +33,7 @@
                                     <label for="ho-va-ten" class="col-sm-3 control-label">Tiêu đề</label>
 
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" ng-model="tieuDeResult.TieuDe.Ten" />
+                                        <input type="text" class="form-control" ng-model="tieuDeResult.Ten" />
                                     </div>
                                 </div>
 
@@ -41,14 +41,14 @@
                                     <label for="sdt" class="col-sm-3 control-label">Danh mục</label>
 
                                     <div class="col-sm-9">
-                                        <input type="tel" class="form-control" ng-model="tieuDeResult.TieuDe.DanhMuc.TenDanhMuc" />
+                                        <input type="tel" class="form-control" ng-model="tieuDeResult.DanhMuc.TenDanhMuc" />
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="dia-chi" class="col-sm-3 control-label">Giá thuê</label>
                                     <div class="col-sm-9">
-                                        <input type="tel" class="form-control" ng-model="tieuDeResult.TieuDe.DanhMuc.GiaThue" />
+                                        <input type="tel" class="form-control" ng-model="tieuDeResult.DanhMuc.GiaThue" />
                                     </div>
                                 </div>
 
@@ -56,7 +56,7 @@
                                     <label for="dia-chi" class="col-sm-3 control-label">Thời gian thuê</label>
 
                                     <div class="col-sm-9">
-                                        <input type="tel" class="form-control" ng-model="tieuDeResult.TieuDe.DanhMuc.ThoiGianThue" />
+                                        <input type="tel" class="form-control" ng-model="tieuDeResult.DanhMuc.ThoiGianThue" />
                                     </div>
                                 </div>
                             </form>
@@ -81,7 +81,7 @@
                                 <div class="form-group">
                                     
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" ng-model="khachHangResult.TieuDe.Ten" />
+                                        <input type="text" class="form-control" ng-model="khachHangResult.Ten" />
                                     </div>
                                     <label for="ho-va-ten" class="col-sm-3 control-label">Họ tên</label>
 
@@ -90,7 +90,7 @@
                                 <div class="form-group">
                                     
                                     <div class="col-sm-9">
-                                        <input type="tel" class="form-control" ng-model="khachHangResult.TieuDe.DanhMuc.TenDanhMuc" />
+                                        <input type="tel" class="form-control" ng-model="khachHangResult.SoDienThoai" />
                                     </div>
                                     <label for="sdt" class="col-sm-3 control-label pull-left">SDT</label>
 
@@ -99,7 +99,7 @@
                                 <div class="form-group">
                                    
                                     <div class="col-sm-9">
-                                        <textarea rows="3" class="form-control" ng-model="khachHangResult.TieuDe.DanhMuc.GiaThue" ></textarea>
+                                        <textarea rows="3" class="form-control" ng-model="khachHangResult.DiaChi" ></textarea>
                                     </div>
                                     <label for="dia-chi" class="col-sm-3 control-label">Địa chỉ</label>
                                 </div>
@@ -109,13 +109,13 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-                    <button type="button" class="btn btn-primary" ng-click="confirmDatHang()">Đặt hàng</button>
+                    <button type="button" ng-disabled="khachHangResult == undefined || tieuDeResult == undefined" class="btn btn-primary" ng-click="confirmDatHang()">Đặt hàng</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="fade modal" id="cancel-booking-disk-modal" tabindex="-1" role="dialog" aria-labelledby="dekete-customer-label">
+    <div class="fade modal" id="cancel-booking-disk-modal " tabindex="-1" role="dialog" aria-labelledby="dekete-customer-label">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
