@@ -27,5 +27,17 @@ namespace Web_API.Controllers
             return Json(lst);
         }
 
+        [Route("api/nhanvien")]
+        [HttpPost]
+        public IHttpActionResult PostAuthen(NhanVien model)
+        {
+            var user = db.NhanViens.Where(x => x.TenDangNhap == model.TenDangNhap && x.MatKhau == model.MatKhau).FirstOrDefault();
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return Ok(user);
+        }
+
     }
 }
