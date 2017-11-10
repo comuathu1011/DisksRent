@@ -1,0 +1,150 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>@ViewBag.Title</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.7 -->
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <!-- Font Awesome -->
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+
+    <link href="~/admin-lte/css/AdminLTE.min.css" rel="stylesheet" />
+
+
+    <link href="~/admin-lte/css/skins/skin-blue.min.css" rel="stylesheet" />
+    <!-- Google Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+    <!--Angular-->
+    <script src="~/Scripts/angular.js"></script>
+    <script src="~/Scripts/angular-animate.js"></script>
+    <script src="~/Scripts/angular-sanitize.js"></script>
+
+    <!--Bootrap UI support angular-->
+    <script src="~/Scripts/angular-ui/ui-bootstrap-tpls.js"></script>
+
+    <script src="~/Scripts/jquery-3.1.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/admin-lte/js/adminlte.min.js"></script>
+
+</head>
+<body class="hold-transition skin-blue sidebar-mini sidebar-collapse" ng-app="ClerkApp">
+    <div class="wrapper">
+
+        <!-- Main Header -->
+        <header class="main-header">
+
+            <!-- Logo -->
+            <a href="#" class="logo">
+                <!-- mini logo for sidebar mini 50x50 pixels -->
+                <span class="logo-mini"><b>DR</b></span>
+                <!-- logo for regular state and mobile devices -->
+                <span class="logo-lg"><b>Disks rent</b></span>
+            </a>
+
+            <!-- Header Navbar -->
+            <nav class="navbar navbar-static-top" role="navigation">
+                <!-- Sidebar toggle button-->
+                <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                </a>
+
+            </nav>
+        </header>
+        <!-- Left side column. contains the logo and sidebar -->
+        <aside class="main-sidebar ">
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar">
+                <!-- Sidebar Menu -->
+                <ul class="sidebar-menu" data-widget="tree">
+                    <li class="header">Menu</li>
+                    <!-- Optionally, you can add icons to the links -->
+
+                    <li class="active">
+                        <a href="@Url.Action("QuanLyKhachHang", "Clerk")">
+                            <i class="fa fa-user"></i>
+                            <span>Quản lý khách hàng</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="@Url.Action("QuanLyThueTraDia", "Clerk")">
+                            <i class="fa fa-money"></i>
+                            <span>Quản lý thuê và trả đĩa</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="@Url.Action("QuanLyTieuDe", "Clerk")">
+                            <i class="fa fa-align-center"></i>
+                            <span>Quản lý tiêu đề</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="@Url.Action("QuanLyPhiTre", "Clerk")">
+                            <i class="fa fa-clock-o"></i>
+                            <span>Quản lý phí trả trễ</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="@Url.Action("QuanLyDatHang", "Clerk")">
+                            <i class="fa fa-cart-plus"></i>
+                            <span>Quản lý đặt hàng</span>
+                        </a>
+                    </li>
+                </ul>
+                <!-- /.sidebar-menu -->
+            </section>
+            <!-- /.sidebar -->
+        </aside>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+
+            <!-- Main content -->
+            <section class="content container-fluid">
+
+                @RenderBody()
+
+            </section>
+            <!-- /.content -->
+
+        </div>
+        <!-- /.content-wrapper -->
+        <!-- Main Footer -->
+        <footer class="main-footer">
+
+            <!-- Default to the left -->
+            <strong>Software construction</strong> -  Chương trình cho thuê đĩa
+        </footer>
+
+        <!-- Add the sidebar's background. This div must be placed
+        immediately after the control sidebar -->
+        <div class="control-sidebar-bg"></div>
+    </div>
+
+    <!--Angular controller and app-->
+    <script src="~/angular/manager/ManagerApp.js"></script>
+    <script src="~/angular/clerk/ClerkApp.js"></script>
+    <script src="~/angular/clerk/QuanLyDatHangCtrl.js"></script>
+    <script src="~/angular/clerk/QuanLyKhachHangCtrl.js"></script>
+    <script src="~/angular/clerk/QuanLyPhiTreCtrl.js"></script>
+    <script src="~/angular/clerk/QuanLyThueTraDiaCtrl.js"></script>
+    <script src="~/angular/clerk/QuanLyTieuDeVaDiaCtrl.js"></script>
+    <!--Angular service-->
+    <script src="~/angular/clerk/QuanLyTieuDeVaDiaCtrl.js"></script>
+    <script src="~/angular/service/clerk/DanhMucService.js"></script>
+    <script src="~/angular/service/clerk/DatHangService.js"></script>
+    <script src="~/angular/service/clerk/DiaService.js"></script>
+    <script src="~/angular/service/clerk/KhachHangService.js"></script>
+    <script src="~/angular/service/clerk/NhanVienService.js"></script>
+    <script src="~/angular/service/clerk/PhiTreService.js"></script>
+    <script src="~/angular/service/clerk/ThueDiaService.js"></script>
+    <script src="~/angular/service/clerk/TieuDeService.js"></script>
+</body>
+</html>

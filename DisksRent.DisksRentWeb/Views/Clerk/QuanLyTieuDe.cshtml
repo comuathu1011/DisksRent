@@ -1,0 +1,111 @@
+﻿
+@{
+    ViewBag.Title = "Quản lý tiêu đề";
+    Layout = "~/Views/Shared/_ClerkLayout.cshtml";
+}
+
+<div class="section" ng-controller="QuanLyTieuDeVaDiaCtrl">
+ 
+    <div class="row">
+        <div class="col-md-7 col-sm-12">
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Danh sách tiêu đề</h3>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div><!-- /.box-tools -->
+                </div><!-- /.box-header -->
+                <div class="box-body" style="height: 430px">
+                    <div class="col-md-12">
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Mã tiêu đề</th>
+                                    <th>Tên tiêu đề</th>
+                                    <th>Danh mục</th>
+                                    <th>Giá thuê</th>
+                                    <th>Thời gian thuê</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr ng-repeat="tieuDe in dsTieuDe track by $index"
+                                    ng-click="tieuDeRowClick(tieuDe)">
+                                    <td>{{tieuDe.MaTieuDe}}</td>
+                                    <td>{{tieuDe.Ten}}</td>
+                                    <td>{{tieuDe.DanhMuc.TenDanhMuc}}</td>
+                                    <td>{{tieuDe.DanhMuc.GiaThue}}</td>
+                                    <td>{{tieuDe.DanhMuc.ThoiGianThue}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div><!-- /.box-body -->
+                <div class="box-footer">
+                    <div class="col-md-6">
+                        
+                    </div>
+                    <div class="col-md-6">
+                        <ul style="margin: 0"
+                            uib-pagination
+                            ng-change="tieuDePageChange()"
+                            total-items="dsTieuDePagination.total"
+                            ng-model="dsTieuDePagination.model"
+                            max-size="dsTieuDePagination.maxSize"
+                            items-per-page="dsTieuDePagination.itemsPerPage"
+                            class="pagination-sm pull-right"
+                            boundary-link-numbers="true"
+                            rotate="false"></ul>
+                    </div>
+                </div>
+            </div><!-- /.box -->
+        </div>
+
+        <div class="col-md-5 col-sm-12">
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Danh sách đĩa: {{tieuDeSelected.Ten}}</h3>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div><!-- /.box-tools -->
+                </div><!-- /.box-header -->
+                <div class="box-body" style="height: 430px">
+                    <div class="col-md-12">
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Mã số</th>
+                                    <th>Tình trạng</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="dia in dsDia track by $index"
+                                    ng-click="diaRowClick(dia)">
+                                    <td>{{dia.MaDia}}</td>
+                                    <td>{{dia.TinhTrangThue}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div><!-- /.box-body -->
+                <div class="box-footer ">
+                    <div class="col-md-6">
+                        
+                    </div>
+                    <div class="col-md-6">
+                        <ul style="margin: 0"
+                            uib-pagination
+                            ng-change="diaPageChange()"
+                            total-items="dsDiaPagination.total"
+                            ng-model="dsDiaPagination.model"
+                            max-size="dsDiaPagination.maxSize"
+                            items-per-page="dsDiaPagination.itemsPerPage"
+                            class="pagination-sm pull-right"
+                            boundary-link-numbers="true"
+                            rotate="false"></ul>
+                    </div>
+                </div>
+            </div><!-- /.box -->
+        </div>
+    </div>
+</div>

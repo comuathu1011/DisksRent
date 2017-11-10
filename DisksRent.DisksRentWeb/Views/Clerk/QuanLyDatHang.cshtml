@@ -1,0 +1,284 @@
+﻿
+@{
+    ViewBag.Title = "Quản lý đặt hàng";
+    Layout = "~/Views/Shared/_ClerkLayout.cshtml";
+}
+
+<div class="session" ng-controller="QuanLyDatHangCtrl">
+    <div class="fade modal" id="add-booking-disk-modal" tabindex="-1" role="dialog" aria-labelledby="dekete-customer-label">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="delete-customer-label">Thêm đặt hàng</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-6">
+                        <div class="col-md-12">
+                            <form class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Mã tiêu đề</label>
+
+                                    <div class="col-sm-9">
+                                        <input type="text" ng-keyup="timTieuDeDatHang($event)" class="form-control" ng-model="maTieuDeSearch" />
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                        <h5>Thông tin chi tiết của đĩa</h5>
+                        <div class="col-md-12">
+                            <form class="form-horizontal">
+                                <div class="form-group">
+                                    <label for="ho-va-ten" class="col-sm-3 control-label">Tiêu đề</label>
+
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" ng-model="tieuDeResult.Ten" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="sdt" class="col-sm-3 control-label">Danh mục</label>
+
+                                    <div class="col-sm-9">
+                                        <input type="tel" class="form-control" ng-model="tieuDeResult.DanhMuc.TenDanhMuc" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="dia-chi" class="col-sm-3 control-label">Giá thuê</label>
+                                    <div class="col-sm-9">
+                                        <input type="tel" class="form-control" ng-model="tieuDeResult.DanhMuc.GiaThue" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="dia-chi" class="col-sm-3 control-label">Thời gian thuê</label>
+
+                                    <div class="col-sm-9">
+                                        <input type="tel" class="form-control" ng-model="tieuDeResult.DanhMuc.ThoiGianThue" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="col-md-12">
+                            <form class="form-horizontal">
+                                <div class="form-group">
+                                    <div class="col-sm-9">
+                                        <input type="text" ng-keyup="timKhachHangDatHang($event)" class="form-control" ng-model="maKhachHangSearch" />
+                                    </div>
+                                    <label class="col-sm-3 control-label">Mã KH</label>
+                                </div>
+
+                            </form>
+                        </div>
+                        <h5 style="text-align: right">Thông tin chi tiết của khách hàng</h5>
+                        <div class="col-md-12">
+                            <form class="form-horizontal">
+                                <div class="form-group">
+
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" ng-model="khachHangResult.Ten" />
+                                    </div>
+                                    <label for="ho-va-ten" class="col-sm-3 control-label">Họ tên</label>
+
+                                </div>
+
+                                <div class="form-group">
+
+                                    <div class="col-sm-9">
+                                        <input type="tel" class="form-control" ng-model="khachHangResult.SoDienThoai" />
+                                    </div>
+                                    <label for="sdt" class="col-sm-3 control-label pull-left">SDT</label>
+
+                                </div>
+
+                                <div class="form-group">
+
+                                    <div class="col-sm-9">
+                                        <textarea rows="3" class="form-control" ng-model="khachHangResult.DiaChi"></textarea>
+                                    </div>
+                                    <label for="dia-chi" class="col-sm-3 control-label">Địa chỉ</label>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                    <button type="button" ng-disabled="khachHangResult == undefined || tieuDeResult == undefined" class="btn btn-primary" ng-click="confirmDatHang()">Đặt hàng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fade modal" id="cancel-booking-disk-modal " tabindex="-1" role="dialog" aria-labelledby="dekete-customer-label">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="delete-customer-label">Hủy đặt hàng</h4>
+                </div>
+                <div class="modal-body">
+                    <h4 class="danger">Bạn có chắc chắn muốn hủy đặt hàng?</h4>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-danger" ng-click="confirmHuyDatHang()">Có</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row margin-bottom">
+        <div class="col-md-12">
+            <button class="btn btn-primary" data-toggle="modal" data-target="#add-booking-disk-modal">Thêm đặt hàng</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="box">
+                <div class="box-header">
+                    <p class="box-title">Danh sách khách hàng</p>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div>
+                <div class="box-body" id="body-box-phi-tre">
+                    <div class="col-md-6 col-sm-12 col-sx-12 margin-bottom pull-right">
+                        <div class="inputform-group">
+                            <div class="input-group input-group-sm">
+                                <input type="text" ng-model="maKhachHangSort"
+                                       ng-keyup="sortByMaKhachHang($event)"
+                                       class="form-control pull-right ng-pristine ng-valid ng-empty ng-touched"
+                                       placeholder="Lọc theo mã khách hàng...">
+
+                                <div class="input-group-btn">
+                                    <button ng-click="refreshSortByMaKhachHang()" data-toggle="tooltip"
+                                            data-placement="top" title="Sắp xếp" type="submit"
+                                            class="btn btn-default togo" data-original-title="Bỏ tìm kiếm">
+                                        <i class="fa fa-user" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-12 col-sx-12 margin-bottom pull-right">
+                        <div class="inputform-group">
+                            <div class="input-group input-group-sm">
+                                <input type="text" ng-model="maTieuDeSort"
+                                       ng-keyup="sortByMaTieuDe($event)"
+                                       class="form-control pull-right ng-pristine ng-valid ng-empty ng-touched"
+                                       placeholder="Lọc theo mã tiêu đề...">
+
+                                <div class="input-group-btn">
+                                    <button ng-click="refreshSortByMaTieuDe()" data-toggle="tooltip"
+                                            data-placement="top" title="Sắp xếp" type="submit"
+                                            class="btn btn-default togo" data-original-title="Bỏ tìm kiếm">
+                                        <i class="fa fa-file-video-o" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Khách hàng</th>
+                                    <th>Tiêu đề</th>
+                                    <th>Thứ tự</th>
+                                    <th>Trạng thái</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="datHang in dsDatHang track by $index"
+                                    ng-click="dsDatHangClick(datHang)">
+                                    <td>{{datHang.KhachHang.Ten}}</td>
+                                    <td>{{datHang.TieuDe.Ten}}</td>
+                                    <td>{{datHang.ThuTu}}</td>
+                                    <td>{{datHang.TinhTrang}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <div class="col-md-12">
+                        <ul style="margin: 0"
+                            uib-pagination
+                            ng-change="dsDatHangPageChange()"
+                            total-items="dsdatHangPagiantion.total"
+                            ng-model="dsdatHangPagiantion.model"
+                            max-size="dsdatHangPagiantion.maxSize"
+                            items-per-page="dsdatHangPagiantion.itemsPerPage"
+                            class="pagination-sm pull-right"
+                            boundary-link-numbers="true"
+                            rotate="false"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="box">
+                <div class="box-header">
+                    <p class="box-title">Chi tiết đặt hàng</p>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div>
+
+                <div class="box-body" id="body-box-thong-tin-phi-tre">
+                    <div class="col-md-12">
+                        <h3>Trạng thái: <strong>{{chiTietDatHang.TinhTrang}}</strong></h3>
+                        <hr />
+                        <p><strong>Thông tin Khách hàng</strong></p>
+                        <p>Anh (chị): <strong>{{chiTietDatHang.KhachHang.Ten}}</strong></p>
+                        <p>Mã khách hàng: <strong>{{chiTietDatHang.KhachHang.MaKhachHang}}</strong></p>
+                        <p>Số điện thoại: <strong>{{chiTietDatHang.KhachHang.SoDienThoai}}</strong></p>
+                        <p>Địa chỉ: <strong>{{chiTietDatHang.KhachHang.DiaChi}}</strong></p>
+                        <hr />
+                        <p><strong>Thông tin đĩa</strong></p>
+                        <p>Tên tiêu đề: <strong>{{chiTietDatHang.TieuDe.Ten}}</strong></p>
+                        <p>Mã tiêu đề: <strong>{{chiTietDatHang.MaTieuDe}}</strong></p>
+                        <p>Danh mục: <strong>{{chiTietDatHang.TieuDe.DanhMuc.Ten}}</strong></p>
+                        <p>Giá thuê: <strong>{{chiTietDatHang.TieuDe.DanhMuc.GiaThue}}</strong></p>
+                        <p>Thời gian thuê: <strong>{{chiTietDatHang.TieuDe.DanhMuc.ThoiGianThue}}</strong></p>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <div class="col-md-12">
+                        <button class="btn btn-danger btn-sm pull-right"
+                                data-toggle="modal"
+                                data-target="#cancel-booking-disk-modal"
+                                style="margin-right: 5px">
+                            Hủy đặt hàng
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(() => {
+        let boxPhiTre = $('#body-box-phi-tre').height();
+        let boxThongTinPhiTre = $('#body-box-thong-tin-phi-tre').height();
+
+        if (boxPhiTre > boxThongTinPhiTre) {
+            $('#body-box-thong-tin-phi-tre').height(boxPhiTre);
+        } else {
+            $('#body-box-phi-tre').height(boxThongTinPhiTre);
+        }
+    });
+</script>
+
+

@@ -1,0 +1,146 @@
+﻿
+@{
+    ViewBag.Title = "Quản lý phí trễ";
+    Layout = "~/Views/Shared/_ClerkLayout.cshtml";
+}
+
+<div class="section" ng-controller="QuanLyPhiTreCtrl">
+    <div class="fade modal" id="pay-phi-tre-modal" tabindex="-1" role="dialog" aria-labelledby="dekete-customer-label">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="delete-customer-label">Thanh toán</h4>
+                </div>
+                <div class="modal-body">
+                    <h4 class="danger">Bạn có chắc chắn muốn thanh toán!</h4>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-danger" ng-click="confirmThanhToanPhiTre()">Có</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="box">
+                <div class="box-header">
+                    <p class="box-title">Danh sách phí trễ</p>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div>
+                <div class="box-body" id="body-box-phi-tre">
+                    <div class="col-md-12 col-sm-12 col-sx-12 margin-bottom pull-right">
+                        <div class="inputform-group">
+                            <div class="input-group input-group-sm">
+                                <input type="text" ng-model="maKhachHangSearch"
+                                       ng-keyup="searchPhiTreByKhachHang($event)"
+                                       class="form-control pull-right ng-pristine ng-valid ng-empty ng-touched"
+                                       placeholder="Sắp xếp theo mã khách hàng...">
+
+                                <div class="input-group-btn">
+                                    <button ng-click="refreshSearchResult()" data-toggle="tooltip"
+                                            data-placement="top" title="Bỏ tìm kiếm" type="submit"
+                                            class="btn btn-default" data-original-title="Bỏ tìm kiếm">
+                                        <i class="fa fa-user" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Mã số đĩa</th>
+                                    <th>Tiêu đề</th>
+                                    <th>Ngày thuê</th>
+                                    <th>Phí trễ</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="dia in dsPhiTre track by $index"
+                                    ng-click="dsPhiTreSelected(dia)">
+                                    <th>{{dia.MaDia}}</th>
+                                    <th>{{dia.Dia.TieuDe.Ten}}</th>
+                                    <th>{{dia.NgayThue}}</th>
+                                    <th>{{dia.PhiTre}}</th>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <div class="col-md-12">
+
+                        <ul style="margin: 0"
+                            uib-pagination
+                            ng-change="phiTrePageChange()"
+                            total-items="dsPhiTrePaginaion.total"
+                            ng-model="dsPhiTrePaginaion.model"
+                            max-size="dsPhiTrePaginaion.maxSize"
+                            items-per-page="dsPhiTrePaginaion.itemsPerPage"
+                            class="pagination-sm pull-right"
+                            boundary-link-numbers="true"
+                            rotate="false"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="box">
+                <div class="box-header">
+                    <p class="box-title">Chi tiết phí trễ</p>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div>
+
+                <div class="box-body" id="body-box-thong-tin-phi-tre">
+                    <div class="col-md-12">
+                        <h3>Phí: <strong>{{chiTietPhiTre.PhiTre}}</strong></h3>
+                        <hr />
+                        <p><strong>Thông tin Khách hàng</strong></p>
+                        <p>Anh (chị): <strong>{{chiTietPhiTre.KhachHang.Ten}}</strong></p>
+                        <p>Mã khách hàng: <strong>{{chiTietPhiTre.KhachHang.MaKhachHang}}</strong></p>
+                        <p>Số điện thoại: <strong>{{chiTietPhiTre.KhachHang.SoDienThoai}}</strong></p>
+                        <p>Địa chỉ: <strong>{{chiTietPhiTre.KhachHang.DiaChi}}</strong></p>
+                        <hr />
+                        <p><strong>Thông tin đĩa</strong></p>
+                        <p>Tên đĩa: <strong>{{chiTietPhiTre.Dia.TieuDe.Ten}}</strong></p>
+                        <p>Mã đĩa: <strong>{{chiTietPhiTre.Dia.MaDia}}</strong></p>
+                        <p>Ngày thuê: <strong>{{chiTietPhiTre.NgayThue}}</strong></p>
+                        <p>Ngày phải trả: <strong>{{chiTietPhiTre.NgayPhaiTra}}</strong></p>
+                        <p>Ngày trả thực: <strong>{{chiTietPhiTre.NgayThucTra}}</strong></p>
+                        <p>Trạng thái: <strong>{{chiTietPhiTre.DaThanhToanPhiTre ? 'Đã thanh toán phí trể' : 'Chưa thanh toán phí trễ'}}</strong></p>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <div class="col-md-12">
+                        <button class="btn btn-danger btn-sm pull-right" data-toggle="modal" data-target="#delete-phi-tre-modal" style="margin-right: 5px">Hủy phí trễ</button>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(() => {
+        let boxPhiTre = $('#body-box-phi-tre').height();
+        let boxThongTinPhiTre = $('#body-box-thong-tin-phi-tre').height();
+
+        if (boxPhiTre > boxThongTinPhiTre) {
+            $('#body-box-thong-tin-phi-tre').height(boxPhiTre);
+        } else {
+            $('#body-box-phi-tre').height(boxThongTinPhiTre);
+        }
+    });
+</script>
+

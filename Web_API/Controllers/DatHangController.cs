@@ -30,16 +30,26 @@ namespace Web_API.Controllers
                 return Json(err);
             }
             if (maTieuDe < 0 || maKh < 0) return NotFound();
+
+            int thuTu;
+            try
+            {
+                thuTu = db.DsDatHang.Where(x => x.MaTieuDe == maTieuDe).Max(x => x.ThuTu) + 1;
+            }catch (Exception)
+            {
+                thuTu = 1;
+            }
+
             var model = new DsDatHang
             {
                 MaKhachHang = maKh,
                 MaTieuDe = maTieuDe,
-                ThuTu = db.DsDatHang.Where(x => x.MaTieuDe == maTieuDe).Max(x => x.ThuTu) + 1,
+                ThuTu = thuTu,
                 TinhTrang = TinhTrangDatHangCollection.DangCho
             };
             try
             {
-                db.DsDatHang.Add(model);
+                model = db.DsDatHang.Add(model);
                 db.SaveChanges();
             }
             catch (Exception)

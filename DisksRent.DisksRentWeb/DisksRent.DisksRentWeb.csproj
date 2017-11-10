@@ -178,6 +178,12 @@
     <Content Include="admin-lte\js\adminlte.min.js" />
     <Content Include="admin-lte\js\app.js" />
     <Content Include="admin-lte\js\app.min.js" />
+    <Content Include="angular\clerk\ClerkApp.js" />
+    <Content Include="angular\clerk\QuanLyDatHangCtrl.js" />
+    <Content Include="angular\clerk\QuanLyKhachHangCtrl.js" />
+    <Content Include="angular\clerk\QuanLyPhiTreCtrl.js" />
+    <Content Include="angular\clerk\QuanLyThueTraDiaCtrl.js" />
+    <Content Include="angular\clerk\QuanLyTieuDeVaDiaCtrl.js" />
     <Content Include="angular\manager\ManagerApp.js" />
     <Content Include="angular\manager\QuanLyDatHangCtrl.js" />
     <Content Include="angular\manager\QuanLyKhachHangCtrl.js" />
@@ -185,6 +191,14 @@
     <Content Include="angular\manager\QuanLyThueTraDiaCtrl.js" />
     <Content Include="angular\manager\QuanLyTieuDeVaDiaCtrl.js" />
     <Content Include="angular\manager\QuanLyXuatBaoCaoCtrl.js" />
+    <Content Include="angular\service\clerk\DanhMucService.js" />
+    <Content Include="angular\service\clerk\DatHangService.js" />
+    <Content Include="angular\service\clerk\DiaService.js" />
+    <Content Include="angular\service\clerk\KhachHangService.js" />
+    <Content Include="angular\service\clerk\NhanVienService.js" />
+    <Content Include="angular\service\clerk\PhiTreService.js" />
+    <Content Include="angular\service\clerk\ThueDiaService.js" />
+    <Content Include="angular\service\clerk\TieuDeService.js" />
     <Content Include="angular\service\manager\DanhMucService.js" />
     <Content Include="angular\service\manager\DatHangService.js" />
     <Content Include="angular\service\manager\DiaService.js" />
@@ -1060,6 +1074,12 @@
     <Content Include="Views\Shared\_LoginLayout.cshtml" />
     <Content Include="Views\Manager\QuanLyBaoCao.cshtml" />
     <Content Include="Views\Login\Authen.cshtml" />
+    <Content Include="Views\Shared\_ClerkLayout.cshtml" />
+    <Content Include="Views\Clerk\QuanLyKhachHang.cshtml" />
+    <Content Include="Views\Clerk\QuanLyThueTraDia.cshtml" />
+    <Content Include="Views\Clerk\QuanLyTieuDe.cshtml" />
+    <Content Include="Views\Clerk\QuanLyPhiTre.cshtml" />
+    <Content Include="Views\Clerk\QuanLyDatHang.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1068,9 +1088,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="angular\clerk\" />
     <Folder Include="angular\login\" />
-    <Folder Include="angular\service\clerk\" />
     <Folder Include="angular\service\public\" />
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />

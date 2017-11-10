@@ -1,15 +1,15 @@
 ﻿/// <reference path="../../manager/ManagerApp.js" />
-ManagerApp.factory('DatHangService', function ($http, $q) {
+ClerkApp.factory('PhiTreService', function ($http, $q) {
     let API = 'http://localhost:49497/api/';
-    function DatHangService() {
+    function PhiTreService() {
         let self = this;
 
-        self.getCountDsDatHang = function () {
+        self.getCountPhiTre = function () {
             let deferred = $q.defer();
 
             $http({
                 method: 'get',
-                url: API + 'datHang/get/count'
+                url: API + 'phitre/count'
             }).then(function success(response) {
                 deferred.resolve(response);
             }, function error(response) {
@@ -19,12 +19,12 @@ ManagerApp.factory('DatHangService', function ($http, $q) {
             return deferred.promise;
         }
 
-        self.getDsDatHang = function (limit, model) {
+        self.getPhiTre = function (limit, model) {
             let deferred = $q.defer();
 
             $http({
                 method: 'get',
-                url: API + 'datHang/get/' + limit + '/' + ((--model)*limit)
+                url: API + 'phitre/' +limit + '/' +((model-1)*limit)
             }).then(function success(response) {
                 deferred.resolve(response);
             }, function error(response) {
@@ -34,15 +34,12 @@ ManagerApp.factory('DatHangService', function ($http, $q) {
             return deferred.promise;
         }
 
-
-        self.getCountDsDatHangWithOption = function (maKhachHang, maTieuDe) {
+        self.getPhiTreKhachHang = function (maKh) {
             let deferred = $q.defer();
-            maKhachHang = maKhachHang.length > 0 ? maKhachHang : '-1';
-            maTieuDe = maTieuDe.length > 0 ? maTieuDe : '-1';
-            
+
             $http({
                 method: 'get',
-                url: API + 'datHang/option/' + maKhachHang + '/' + maTieuDe + '/count'
+                url: API + 'phitre/' +maKh
             }).then(function success(response) {
                 deferred.resolve(response);
             }, function error(response) {
@@ -52,14 +49,12 @@ ManagerApp.factory('DatHangService', function ($http, $q) {
             return deferred.promise;
         }
 
-        self.getDsDatHangWithOption = function (maKhachHang, maTieuDe, limit, model) {
+        self.getCountPhiTreByKhachHang = function (maKhachHang) {
             let deferred = $q.defer();
-            maKhachHang = maKhachHang.length > 0 ? maKhachHang : '-1';
-            maTieuDe = maTieuDe.length > 0 ? maTieuDe : '-1';
 
             $http({
-                method: 'get',
-                url: API + 'datHang/option/' + maKhachHang + '/' + maTieuDe +'/' + limit + '/' + ((--model) * limit)
+                method: 'GET',
+                url: API + 'phitre/' + maKhachHang + '/count'
             }).then(function success(response) {
                 deferred.resolve(response);
             }, function error(response) {
@@ -69,12 +64,28 @@ ManagerApp.factory('DatHangService', function ($http, $q) {
             return deferred.promise;
         }
 
-        self.datHangTieuDeDangHetDia = function (maKh, maTieuDe) {
+        self.getPhiTreByKhachHang = function (maKhachHang, limit, model) {
+            let deferred = $q.defer();
+
+            $http({
+                method: 'GET',
+                url: API + 'phitre/' + maKhachHang + '/' + limit + '/' + ((model - 1) * limit)
+            }).then(function success(response) {
+                deferred.resolve(response);
+            }, function error(response) {
+                deferred.reject(response);
+            });
+
+            return deferred.promise;
+        }
+
+        self.postThanhToanPhiTre = function (entity) {
             let deferred = $q.defer();
 
             $http({
                 method: 'post',
-                url: API + 'dathang/dathang/' + maKh + '/' + maTieuDe
+                url: API + 'phitre/thanhtoan',
+                data: entity
             }).then(function success(response) {
                 deferred.resolve(response);
             }, function error(response) {
@@ -84,27 +95,13 @@ ManagerApp.factory('DatHangService', function ($http, $q) {
             return deferred.promise;
         }
 
-        self.huyDatHang = function (maKh, maTieuDe, thuTu) {
+        self.postHuyPhiTre = function (entity) {
             let deferred = $q.defer();
 
             $http({
-                method: 'put',
-                url: API + 'dathang/huy/' + maKh + '/' + maTieuDe + '/' + thuTu
-            }).then(function success(response) {
-                deferred.resolve(response);
-            }, function error(response) {
-                deferred.reject(response);
-            });
-
-            return deferred.promise;
-        }
-
-        self.chuyenTinhTragDiaDaXong = function (maKh, maTieuDe) {
-            let deferred = $q.defer();
-
-            $http({
-                method: 'put',
-                url: API + 'dia/' + maTieuDe + '/' + maKh
+                method: 'post',
+                url: API + 'phitre/huy',
+                data: entity
             }).then(function success(response) {
                 deferred.resolve(response);
             }, function error(response) {
@@ -115,5 +112,5 @@ ManagerApp.factory('DatHangService', function ($http, $q) {
         }
     }
 
-    return new DatHangService();
+    return new PhiTreService();
 });

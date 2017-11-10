@@ -1,5 +1,5 @@
 ﻿/// <reference path="../../manager/ManagerApp.js" />
-ManagerApp.factory('DatHangService', function ($http, $q) {
+ClerkApp.factory('DatHangService', function ($http, $q) {
     let API = 'http://localhost:49497/api/';
     function DatHangService() {
         let self = this;
