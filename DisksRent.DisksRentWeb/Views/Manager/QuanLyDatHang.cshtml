@@ -237,7 +237,7 @@
 
                 <div class="box-body" id="body-box-thong-tin-phi-tre">
                     <div class="col-md-12">
-                        <h3>Trạng thái: <strong>{{chiTietDatHang.TinhTrang}}</strong></h3>
+                        <h3>Trạng thái: <strong>{{chiTietDatHang.TinhTrang == 1 ? 'Đã nhận đĩa' : (chiTietDatHang.TinhTrang == 2 ? 'Đang chờ đĩa' : 'Đã hủy')}}</strong></h3>
                         <hr />
                         <p><strong>Thông tin Khách hàng</strong></p>
                         <p>Anh (chị): <strong>{{chiTietDatHang.KhachHang.Ten}}</strong></p>

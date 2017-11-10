@@ -1029,6 +1029,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\NhanVienVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1091,7 +1092,6 @@
     <Folder Include="angular\login\" />
     <Folder Include="angular\service\public\" />
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
     <Folder Include="Views\Clerks\" />
   </ItemGroup>
   <PropertyGroup>

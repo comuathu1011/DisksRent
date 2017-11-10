@@ -12,7 +12,6 @@ namespace DisksRent.DisksRentWeb.Controllers
 
         // GET: Manager
 
-
         public ActionResult Index()
         {
             return View("QuanLyKhachHang");
