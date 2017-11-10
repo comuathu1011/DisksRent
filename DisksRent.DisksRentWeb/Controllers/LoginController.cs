@@ -1,7 +1,9 @@
-﻿using System;
+﻿using DisksRent.DisksRentWeb.Models;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
 
@@ -24,11 +26,35 @@ namespace DisksRent.DisksRentWeb.Controllers
         [HttpPost]
         public ActionResult Authen(string Username, string Password)
         {
-            if (Username == "vung" && Password == "123")
+            var model = new NhanVienVM
             {
-                return RedirectToAction("QuanLyKhachHang", "Manager");
+                TenDangNhap = Username,
+                MatKhau = Password
+            };
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:49497/api/");
+                var response = client.PostAsJsonAsync("nhanvien", model);
+                response.Wait();
+
+                var result = response.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var read = result.Content.ReadAsAsync<NhanVienVM>();
+                    read.Wait();
+                    NhanVienVM user = read.Result;
+                    Session["LaQuanLy"] = user.LaQuanLy;
+                    if(user != null)
+                    {
+                        return RedirectToAction("QuanLyKhachHang", "Manager");
+                    }
+                }
             }
-            return View("Index");
+            //if (Username == "vung" && Password == "123")
+            //{
+            //    return RedirectToAction("QuanLyKhachHang", "Manager");
+            //}
+            return View();
         }
 
         public ActionResult ForgetPassword()
