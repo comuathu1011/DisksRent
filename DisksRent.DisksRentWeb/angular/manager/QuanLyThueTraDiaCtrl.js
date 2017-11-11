@@ -283,9 +283,13 @@ ManagerApp.controller('QuanLyThueTraDiaCtrl', ($scope, KhachHangService, ThueDia
         ThueDiaService.thueDia($scope.khachHang.MaKhachHang, $scope.diaFindResult.MaDia).then(
             function(response){
                 console.log(response);
+                $('#thue-dia-modal').modal('hide');
+                configDsDiaThue();
+                configDsPhiTre();
             },
             function(err){
-                console.log(err)
+                console.log(err);
+                alert('Lỗi: ' + err.data)
             }
         )
     }

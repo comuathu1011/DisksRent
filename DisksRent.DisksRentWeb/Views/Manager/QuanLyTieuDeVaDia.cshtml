@@ -56,6 +56,27 @@
         </div>
     </div>
 
+    <div class="modal fade" id="add-multi-disk-for-title-modal" tabindex="-1" role="dialog" aria-labelledby="add-title-label">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">Số lượng đĩa</label>
+                            <div class="col-md-8">
+                                <input type="number" ng-model="soLuongDiaMoi" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary" ng-disabled="soLuongDiaMoi < 1" ng-click="addMultiNewDiskToTitle()">Thêm mới</button>
+                </div>
+            </div>by
+        </div>
+    </div>
+
     <div class="fade modal" id="delete-title-modal" tabindex="-1" role="dialog" aria-labelledby="dekete-title-label">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
@@ -91,6 +112,7 @@
             </div>
         </div>
     </div>
+
 
     <div class="row">
         <div class="col-md-12">
@@ -183,7 +205,8 @@
                 <div class="box-footer ">
                     <div class="col-md-6">
                         <button class="btn btn-sm pull-left" style="margin-right: 5px" data-target="#delete-disk-modal" data-toggle="modal">Xóa đĩa</button>    
-                        <button class="btn btn-sm btn-primary pull-left" data-target="#add-disk-for-title-modal" ng-click="addNewDiskToTitle()" data-toggle="modal">Thêm đĩa</button>
+                        <button class="btn btn-sm btn-primary pull-left" style="margin-right: 5px" data-target="#add-disk-for-title-modal" ng-click="addNewDiskToTitle()" data-toggle="modal">Thêm đĩa</button>
+                        <button class="btn btn-sm btn-primary pull-left" data-target="#add-multi-disk-for-title-modal" data-toggle="modal">Thêm nhiều đĩa</button>
                     </div>
                     <div class="col-md-6">
                         <ul style="margin: 0"

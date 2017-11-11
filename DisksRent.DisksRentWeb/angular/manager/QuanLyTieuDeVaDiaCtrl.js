@@ -16,6 +16,8 @@ ManagerApp.controller('QuanLyTieuDeVaDiaCtrl', ($scope, TieuDeService, DiaServic
         itemsPerPage: 10
     }
 
+    $scope.soLuongDiaMoi = 0;
+
     //------> Danh sách dia config
     $scope.dsDia = [];
     $scope.disSelected = {};
@@ -159,6 +161,32 @@ ManagerApp.controller('QuanLyTieuDeVaDiaCtrl', ($scope, TieuDeService, DiaServic
         )
     }
 
+
+    $scope.addMultiNewDiskToTitle = async function(){
+        for (let i=0; i<$scope.soLuongDiaMoi; i++){
+            await addMultiNewDiskToTitle();
+        }
+        $('#add-multi-disk-for-title-modal').modal('hide');
+        configDiaPagination($scope.dsDiaPagination.total + $scope.soLuongDiaMoi, $scope.dsDiaPagination.model);
+        getDia();
+    }
+
+    function addMultiNewDiskToTitle(){
+        return new Promise(
+            function (resolve, reject){
+                DiaService.postDia($scope.tieuDeSelected.MaTieuDe, 1).then(
+                       function(response){
+                           console.log(response)
+                           resolve(response)
+                       },
+                       function(err){
+                           console.log(err)
+                           reject(err)
+                       }
+                   )
+            }
+        )
+    }
 
     function getDia() {
         DiaService.getDiaOfTieuDeBySizeOffset($scope.tieuDeSelected.MaTieuDe, $scope.dsDiaPagination.itemsPerPage, $scope.dsDiaPagination.model).then(
