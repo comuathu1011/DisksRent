@@ -85,6 +85,7 @@ ManagerApp.controller('QuanLyDatHangCtrl', ($scope, DatHangService, TieuDeServic
     $scope.confirmHuyDatHang = function () {
         DatHangService.huyDatHang($scope.chiTietDatHang.MaKhachHang, $scope.chiTietDatHang.MaTieuDe, $scope.chiTietDatHang.ThuTu).then(
             function (res) {
+                console.log(res)
                 configDatHangPagination($scope.dsdatHangPagiantion.total - 1, $scope.dsdatHangPagiantion.model == 1 ? $scope.dsdatHangPagiantion.model : ($scope.dsDatHang.length > 1 ? $scope.dsdatHangPagiantion.model - 1 : $scope.dsdatHangPagiantion.model));
                 if (isSortByMaKhachHang || isSortByMaTieuDe) {
                     getDsDatHangWithOption();
