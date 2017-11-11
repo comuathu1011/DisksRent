@@ -77,30 +77,7 @@ ClerkApp.controller('QuanLyKhachHangCtrl', function ($scope, $timeout, KhachHang
         getListKhachHang();
     }
 
-    /*
-        Sự kiện diễn ra khi người dùng xác nhận xóa khách hàng đã chọn. Hàm gửi mã khách hàng lên Server
-    */
-    $scope.confirmXoaKhachHang = function () {
-        KhachHangService.deleteKhachHang($scope.khachHangSelected.MaKhachHang).then(
-            function (response) {
-                console.log(response);
-                if (response.data) {
-                    $scope.deleteMess = 'Thành công';
-
-                    $timeout(function () {
-                        $('#delete-customer-modal').modal('hide');
-                        $scope.deleteMess = '';
-                        loadKhachHang();
-                    }, 1000);
-                } else {
-                    $scope.deleteMess = 'Thất bại';
-                }
-            },
-            function (err) {
-                $scope.deleteMess = 'Thất bại';
-                console.log(err)
-            })
-    }
+   
 
     /*
         Sự kiện diễn ra khi người dùng không muốn thêm 1 khách hàng nửa và nhấn nút Đóng trên modal thêm khách hàng

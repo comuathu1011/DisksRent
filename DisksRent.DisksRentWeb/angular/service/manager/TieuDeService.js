@@ -19,6 +19,36 @@ ManagerApp.factory('TieuDeService', function ($http, $q) {
             return deferred.promise;
         }
 
+        self.getCountDiaTieuDeDaThue = function (maTieuDe) {
+            let deferred = $q.defer();
+
+            $http({
+                method: 'GET',
+                url: API + 'tieude/dia/dathue/count/' +maTieuDe
+            }).then(function success(response) {
+                deferred.resolve(response);
+            }, function error(response) {
+                deferred.reject(response);
+            });
+
+            return deferred.promise;
+        }
+
+        self.getCountDiaTieuDeDangChoKhach = function (maTieuDe) {
+            let deferred = $q.defer();
+
+            $http({
+                method: 'GET',
+                url: API + 'tieude/dia/hold/count/' +maTieuDe
+            }).then(function success(response) {
+                deferred.resolve(response);
+            }, function error(response) {
+                deferred.reject(response);
+            });
+
+            return deferred.promise;
+        }
+
         self.getTieuDeByLimitAndOffset = function (limit, model) {
             let deferred = $q.defer();
 

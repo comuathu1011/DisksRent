@@ -61,5 +61,10 @@ namespace DisksRent.DisksRentWeb.Controllers
         {
             return View();
         }
+
+        public ActionResult Logout()
+        {
+            return View("Index");
+        }
     }
 }

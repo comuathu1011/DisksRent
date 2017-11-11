@@ -1,5 +1,5 @@
 ﻿/// <reference path="ManagerApp.js" />
-ManagerApp.controller('QuanLyXuatBaoCaoCtrl', ($scope, KhachHangService, ThueDiaService, PhiTreService) => {
+ManagerApp.controller('QuanLyXuatBaoCaoCtrl', ($scope, DiaService, KhachHangService, ThueDiaService, PhiTreService, TieuDeService) => {
     $scope.sortKhachHang = 'all';
     $scope.listKhachHang = [];
     /*
@@ -68,6 +68,7 @@ ManagerApp.controller('QuanLyXuatBaoCaoCtrl', ($scope, KhachHangService, ThueDia
     //hàm chức năng
     function init() {
         loadKhachHang();
+        configTieuDe();
     }
 
     function loadKhachHang() {
@@ -283,10 +284,110 @@ ManagerApp.controller('QuanLyXuatBaoCaoCtrl', ($scope, KhachHangService, ThueDia
         maxSize: 5,
         model: 1
     }
-    
+    $scope.thongTinTieuDe = {
+        tongSoDia: 0,
+        soDiaDuocThue: 0,
+        soDiaDangCho: 0,
+        soDiaConLai: 0
+    }
+
+    $scope.tieuDePageChange = function(){
+        getTieuDe();
+    }
+
+    $scope.tieuDeRowClick = function(tieuDe){
+        $scope.tieuDeSelected = tieuDe;
+        getThongTinTieuDe();
+    }
+
     async function configTieuDe(){
         let total = await getPaginationTieuDe();
         configTieuDePagination(total, 1);
         getTieuDe();
+    }
+
+    function getTieuDe() {
+        console.log("Load tiêu đề")
+        TieuDeService.getTieuDeByLimitAndOffset($scope.dsTieuDePagination.itemsPerPage, $scope.dsTieuDePagination.model).then(
+                    function (response) {
+                        loadTieuDe(response.data);      
+                    },
+                    function (err) {
+                        loadTieuDe([]) ;
+                    }
+                )
+    }
+
+    function loadTieuDe(tieuDes){
+        $scope.dsTieuDe = tieuDes;
+        if ($scope.dsTieuDe.length > 0){
+            $scope.tieuDeSelected = $scope.dsTieuDe[0];
+        }else{
+            $scope.tieuDeSelected = {};
+        }
+        getThongTinTieuDe();
+        console.log($scope.tieuDeSelected )
+    }
+    
+   
+    function getPaginationTieuDe() {
+        return new Promise(
+            (resolve, reject) => {
+                TieuDeService.getCountTieuDe().then(
+                    function (response) {
+                        resolve(response.data) 
+                    },
+                    function (err) {
+                        reject(0)
+                    }
+                )
+            }
+        )
+    }
+    
+    function configTieuDePagination(total, model) {
+        $scope.dsTieuDePagination = {
+            total: total,
+            model: model,
+            maxSize: 5,
+            itemsPerPage: 10
+        }
+    }
+
+    function getThongTinTieuDe(){
+        DiaService.getCountDiaOfTieuDe($scope.tieuDeSelected.MaTieuDe).then(
+            function(res){
+                $scope.thongTinTieuDe.tongSoDia  = res.data;
+                getSeconeThongTinTieuDe
+            },
+            function(err){
+                scope.thongTinTieuDe.tongSoDia  = 0;
+                getSeconeThongTinTieuDe
+            }
+        )
+    }
+
+    function getSeconeThongTinTieuDe(){
+        TieuDeService.getCountDiaTieuDeDaThue($scope.tieuDeSelected.MaTieuDe).then(
+            function(res){
+                $scope.thongTinTieuDe.soDiaDuocThue  = res.data;
+            },
+            function (err){
+                scope.thongTinTieuDe.soDiaDuocThue  = 0
+            }
+        )
+
+        TieuDeService.getCountDiaTieuDeDangChoKhach($scope.tieuDeSelected.MaTieuDe).then(
+            function(res){
+                $scope.thongTinTieuDe.soDiaDangCho  = res.data;
+            },
+            function (err){
+                scope.thongTinTieuDe.soDiaDangCho  = 0
+            }
+        )
+
+        $scope.thongTinTieuDe.soDiaConLai =     $scope.thongTinTieuDe.tongSoDia
+                                                - $scope.thongTinTieuDe.soDiaDuocThue
+                                                - $scope.thongTinTieuDe.soDiaDangCho;
     }
 });

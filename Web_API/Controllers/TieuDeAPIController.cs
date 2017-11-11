@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Web_API.Models;
+using Web_API.Models.Enums;
 
 namespace Web_API.Controllers
 {
@@ -34,6 +35,33 @@ namespace Web_API.Controllers
         {
            return Json(db.TieuDes.ToList().Count);
         }
+
+        [Route("api/tieude/dia/dathue/count/{maTieuDe}")]
+        [HttpGet]
+        public IHttpActionResult GetCountDiaOfTieuDeDaChoThue(int maTieuDe)
+        {
+            var count = (
+                        from tieude in db.TieuDes
+                        join dia in db.Dias
+                        on tieude.MaTieuDe equals dia.MaTieuDe
+                        where (dia.TinhTrangThue == TinhTrangThueCollection.DangThue && dia.MaTieuDe.Equals(maTieuDe))
+                        select dia).Count();    
+            return Json(count);
+        }
+
+        [Route("api/tieude/dia/hold/count/{maTieuDe}")]
+        [HttpGet]
+        public IHttpActionResult GetCountDiaOfTieuDeGiuChoKhach(int maTieuDe)
+        {
+            var count = (
+                        from tieude in db.TieuDes
+                        join dia in db.Dias
+                        on tieude.MaTieuDe equals dia.MaTieuDe
+                        where (dia.TinhTrangThue == TinhTrangThueCollection.DangGiu && dia.MaTieuDe.Equals(maTieuDe))
+                        select dia).Count();
+            return Json(count);
+        }
+
         //get tieu de theo id
         [Route("api/tieude/{id}")]
         [HttpGet]
