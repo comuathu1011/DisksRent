@@ -17,28 +17,53 @@ namespace DisksRent.DisksRentWeb.Controllers
 
         public ActionResult QuanLyKhachHang()
         {
-            return View();
+            string flag = Session["UserType"] as string;
+            if (flag == "Clerk" || flag == "Manager")
+            {
+                return View();
+            }
+            return RedirectToAction("Index", "Login");
         }
 
         public ActionResult QuanLyThueTraDia()
         {
-            return View();
+            string flag = Session["UserType"] as string;
+            if (flag == "Clerk" || flag == "Manager")
+            {
+                return View();
+            }
+            return RedirectToAction("Index", "Login");
         }
 
 
         public ActionResult QuanLyTieuDe()
         {
-            return View();
+            string flag = Session["UserType"] as string;
+            if (flag == "Clerk" || flag == "Manager")
+            {
+                return View();
+            }
+            return RedirectToAction("Index", "Login");
         }
 
         public ActionResult QuanLyPhiTre()
         {
-            return View();
+            string flag = Session["UserType"] as string;
+            if (flag == "Clerk" || flag == "Manager")
+            {
+                return View();
+            }
+            return RedirectToAction("Index", "Login");
         }
 
         public ActionResult QuanLyDatHang()
         {
-            return View();
+            string flag = Session["UserType"] as string;
+            if (flag == "Clerk" || flag == "Manager")
+            {
+                return View();
+            }
+            return RedirectToAction("Index", "Login");
         }
 
     }

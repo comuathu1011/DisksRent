@@ -43,8 +43,16 @@ namespace DisksRent.DisksRentWeb.Controllers
                     var read = result.Content.ReadAsAsync<NhanVienVM>();
                     read.Wait();
                     NhanVienVM user = read.Result;
-                    Session["LaQuanLy"] = user.LaQuanLy;
-                    if(user != null)
+                    //Session["LaQuanLy"] = user.LaQuanLy;
+                    if (user.LaQuanLy)
+                    {
+                        Session["UserType"] = "Manager";
+                    }
+                    else
+                    {
+                        Session["UserType"] = "Clerk";
+                    }
+                    if (user != null)
                     {
                         return RedirectToAction("QuanLyKhachHang", "Manager");
                     }
