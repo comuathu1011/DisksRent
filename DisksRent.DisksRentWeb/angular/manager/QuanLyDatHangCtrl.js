@@ -228,7 +228,6 @@ ManagerApp.controller('QuanLyDatHangCtrl', ($scope, DatHangService, TieuDeServic
         DatHangService.datHangTieuDeDangHetDia($scope.khachHangResult.MaKhachHang, $scope.tieuDeResult.MaTieuDe).then(
             function (res) {
                 console.log(res);
-
                 if (isSortByMaTieuDe && isSortByMaKhachHang) {
                     getPaginationDatHangWithOption();
                 } else {

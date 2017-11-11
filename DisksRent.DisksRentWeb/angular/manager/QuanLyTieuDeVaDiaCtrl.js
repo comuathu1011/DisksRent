@@ -173,6 +173,7 @@ ManagerApp.controller('QuanLyTieuDeVaDiaCtrl', ($scope, TieuDeService, DiaServic
 
     function loadDia(dias){
         $scope.dsDia = dias;
+        console.log(dias)
         if ($scope.dsDia.length > 0){
             $scope.disSelected = $scope.dsDia[0];
         }
