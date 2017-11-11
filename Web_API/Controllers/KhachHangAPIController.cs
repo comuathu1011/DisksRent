@@ -62,7 +62,65 @@ namespace Web_API.Controllers
             return Json(cust);
         }
 
-        
+        [Route("api/khachhang/diatre/count")]
+        public IHttpActionResult GetCountTraTre()
+        {
+            var count = (from t1 in db.KhachHangs
+                        join t2 in db.DsChoThue
+                        on t1.MaKhachHang equals t2.MaKhachHang
+                        where (t2.NgayThucTra.CompareTo(t2.NgayPhaiTra) > 0)
+                        select t1).Count();
+                       
+                       
+            return Json(count);
+        }
+
+        [Route("api/khachhang/diatre/{limit}/{offset}")]
+        public IHttpActionResult GetKhachHangTraTre(int limit, int offset)
+        {
+            var list = (from t1 in db.KhachHangs
+                         join t2 in db.DsChoThue
+                         on t1.MaKhachHang equals t2.MaKhachHang
+                         where (t2.NgayThucTra.CompareTo(t2.NgayPhaiTra) > 0)
+                         select t1)
+                         .OrderByDescending(x => x.Ten)
+                         .Skip(offset)
+                         .Take(limit)
+                         .ToList();
+
+
+            return Json(list);
+        }
+
+        [Route("api/khachhang/cono/count")]
+        public IHttpActionResult GetCountCoNo()
+        {
+            var count = (from t1 in db.KhachHangs
+                         join t2 in db.DsChoThue
+                         on t1.MaKhachHang equals t2.MaKhachHang
+                         where (t2.PhiTre > 0)
+                         select t1).Count();
+
+
+            return Json(count);
+        }
+
+        [Route("api/khachhang/cono")]
+        public IHttpActionResult GetKhachHangCoNo(int limit, int offset)
+        {
+            var list = (from t1 in db.KhachHangs
+                        join t2 in db.DsChoThue
+                        on t1.MaKhachHang equals t2.MaKhachHang
+                        where (t2.PhiTre > 0)
+                        select t1)
+                         .OrderByDescending(x => x.Ten)
+                         .Skip(offset)
+                         .Take(limit)
+                         .ToList();
+
+
+            return Json(list);
+        }
 
         //them khach hang
         [Route("api/khachhang")]

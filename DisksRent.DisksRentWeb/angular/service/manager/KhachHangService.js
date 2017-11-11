@@ -50,6 +50,68 @@ ManagerApp.factory('KhachHangService', function ($http, $q) {
             return deferred.promise;
         }
 
+
+        self.getCountKhachHangTraTre = function () {
+            let deferred = $q.defer();
+
+            $http({
+                method: 'GET',
+                url: API + 'khachhang/diatre/count'
+            }).then(function success(response) {
+                deferred.resolve(response);
+            }, function error(response) {
+                deferred.reject(response);
+            });
+
+            return deferred.promise;
+        }
+
+        self.getKhachHangTraTre = function (limit, model) {
+            let deferred = $q.defer();
+            let offset = (model - 1) * limit;
+            $http({
+                method: 'GET',
+                url: API + 'khachhang/diatre/' + limit + '/' + model
+            }).then(function success(response) {
+                deferred.resolve(response);
+            }, function error(response) {
+                deferred.reject(response);
+            });
+
+            return deferred.promise;
+        }
+
+        self.getCountKhachHangCoNo = function () {
+            let deferred = $q.defer();
+
+            $http({
+                method: 'GET',
+                url: API + 'khachhang/cono/count'
+            }).then(function success(response) {
+                deferred.resolve(response);
+            }, function error(response) {
+                deferred.reject(response);
+            });
+
+            return deferred.promise;
+        }
+
+        self.getKhachHangCoNo = function (limit, model) {
+            let deferred = $q.defer();
+            let offset = (model - 1) * limit;
+            $http({
+                method: 'GET',
+                url: API + 'khachhang/cono/' + limit + '/' + model
+            }).then(function success(response) {
+                deferred.resolve(response);
+            }, function error(response) {
+                deferred.reject(response);
+            });
+
+            return deferred.promise;
+        }
+
+
         self.getKhachHangDetails = function (maKhachHang) {
             let deferred = $q.defer();
 

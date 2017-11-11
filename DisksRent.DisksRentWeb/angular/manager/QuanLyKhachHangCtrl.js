@@ -23,7 +23,7 @@ ManagerApp.controller('QuanLyKhachHangCtrl', function ($scope, $timeout, KhachHa
         model: 1,
         maxPage: 5,
         perPage: 10,
-        totalItem: $scope.listKhachHang.lenght
+        totalItem: $scope.listKhachHang.length
     };
 
     /*
@@ -108,7 +108,7 @@ ManagerApp.controller('QuanLyKhachHangCtrl', function ($scope, $timeout, KhachHa
     */
     $scope.confirmThemKhachHang = function () {
         //Kiễm tra dữ liệu hợp lệ
-        if (checkKhachHang()) {
+        if (checkKhachHang('new')) {
             //Gửi lên server
             KhachHangService.postKhachHang($scope.newKhachHang).then(
                 function (response) {
@@ -209,10 +209,10 @@ ManagerApp.controller('QuanLyKhachHangCtrl', function ($scope, $timeout, KhachHa
 
     function checkTenKhachHang(action) {
         if (action == 'new') {
-            if ($scope.newKhachHang.Ten.lenght <= 0)
+            if ($scope.newKhachHang.Ten.length <= 0)
                 return false;
         } else {
-            if ($scope.khachHangSelected.Ten.lenght <= 0)
+            if ($scope.khachHangSelected.Ten.length <= 0)
                 return false;
         }
         return true;
@@ -220,10 +220,10 @@ ManagerApp.controller('QuanLyKhachHangCtrl', function ($scope, $timeout, KhachHa
 
     function checkSDTKhachHang(action) {
         if (action == 'new') {
-            if ($scope.newKhachHang.SoDienThoai.lenght <= 0)
+            if ($scope.newKhachHang.SoDienThoai.length <= 0)
                 return false;
         } else {
-            if ($scope.khachHangSelected.SoDienThoai.lenght <= 0)
+            if ($scope.khachHangSelected.SoDienThoai.length <= 0)
                 return false;
         }
         return true;
@@ -231,10 +231,10 @@ ManagerApp.controller('QuanLyKhachHangCtrl', function ($scope, $timeout, KhachHa
 
     function checkDiaChiKhachHang(action) {
         if (action == 'new') {
-            if ($scope.newKhachHang.DiaChi.lenght <= 0)
+            if ($scope.newKhachHang.DiaChi.length <= 0)
                 return false;
         } else {
-            if ($scope.khachHangSelected.DiaChi.lenght <= 0)
+            if ($scope.khachHangSelected.DiaChi.length <= 0)
                 return false;
         }
         return true;

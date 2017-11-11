@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_ManagerLayout.cshtml";
 }
 
-<div class="session">
+<div class="session" ng-controller="QuanLyXuatBaoCaoCtrl">
     <div class="col-md-12">
         <!-- Custom Tabs -->
         <div class="nav-tabs-custom">
@@ -14,43 +14,292 @@
             </ul>
             <div class="tab-content">
                 <div class="tab-pane active" id="tab-khach-hang">
-                   <table class="table table-bordered table-hover">
-                       <thead>
-                           <tr>
-                               <th>Mã khách hàng</th>
-                               <th>Họ và tên</th>
-                               <th>Số điện thoại</th>
-                               <th>Địa chỉ</th>
-                           </tr>
-                       </thead>
-                       <tbody>
-                           <tr>
-                               <td>Mã khách hàng</td>
-                               <td>Họ và tên</td>
-                               <td>Số điện thoại</td>
-                               <td>Địa chỉ</td>
-                           </tr>
-                       </tbody>
-                   </table>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label class="margin">
+                                <input type="radio" ng-click="sortKhachHangChange()" name="sortKH" ng-model="sortKhachHang" value="all" />
+                                Tất cả
+                            </label>
+                            <label class="magrin">
+                                <input type="radio"  ng-click="sortKhachHangChange()" name="sortKH" ng-model="sortKhachHang" value="tratre" />
+                                Khách hàng có đĩa trả trễ
+                            </label>
+                            <label class="margin">
+                                <input type="radio"  ng-click="sortKhachHangChange()" name="sortKH" ng-model="sortKhachHang" value="phino" />
+                                Khách hàng có phí trễ hoặc nợ
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5  col-sm-12">
+                            <div class="box box-primary">
+                                <div class="box-header">
+                                    <p class="box-title">Danh sách khách hàng</p>
+                                    <div class="box-tools pull-right">
+                                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                    </div>
+                                </div>
+                                <div class="box-body" id="body-box-list">
+                                    <table class="table table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Mã số</th>
+                                                <th>Họ và tên</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="khachHang in listKhachHang track by $index"
+                                                ng-click="listKhachHangClicked(khachHang)">
+                                                <td>{{khachHang.MaKhachHang}}</td>
+                                                <td>{{khachHang.Ten}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="box-footer">
+                                    <div class="col-md-12">
+                                        <ul style="margin: 0"
+                                            uib-pagination
+                                            ng-change="khachHangPageChange()"
+                                            total-items="khachHangPagination.totalItem"
+                                            ng-model="khachHangPagination.model"
+                                            max-size="khachHangPagination.maxPage"
+                                            items-per-page="khachHangPagination.perPage"
+                                            class="pagination pull-right"
+                                            boundary-link-numbers="true"
+                                            rotate="false"></ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-7  col-sm-12">
+                            <div class="box box-primary">
+                                <div class="box-header">
+                                    <p class="box-title">Thông tin chi tiết khách hàng</p>
+                                    <div class="box-tools pull-right">
+                                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                    </div>
+                                </div>
+                                <div class="box-body" id="body-box-info">
+                                    <h3>Tổng số đĩa đã thuê: {{soLuongDiaDaThue}}</h3>
+                                    <form class="form-horizontal">
+                                        <div class="form-group">
+                                            <label for="ho-va-ten-view" class="col-sm-3 control-label">Họ và tên</label>
+
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" ng-disabled="true" ng-model="khachHangSelected.Ten" />
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="sdt-view" class="col-sm-3 control-label">Số điện thoại</label>
+
+                                            <div class="col-sm-9">
+                                                <input type="tel" class="form-control" ng-disabled="true" ng-model="khachHangSelected.SoDienThoai" />
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="dia-chi-view" class="col-sm-3 control-label">Địa chỉ</label>
+
+                                            <div class="col-sm-9">
+                                                <textarea class="form-control" ng-disabled="true" ng-model="khachHangSelected.DiaChi" rows="7">
+                                                    Phường 5, Gò Vấp, Tp Hồ Chí Minh
+                                                </textarea>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="box-footer">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                       <div class="col-md-6">
+                            <div class="box box-primary">
+                                <div class="box-header">
+                                    <p class="box-title">Danh sách các đĩa đang thuê</p>
+                                    <div class="box-tools pull-right">
+                                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                    </div>
+                                </div>
+                                <div class="box-body" id="body-box-info">
+                                    <div class="col-md-12">
+                                        <table class="table table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                
+                                                    <th>Mã số đĩa</th>
+                                                    <th>Tiêu đề</th>
+                                                    <th>Ngày thuê</th>
+                                                    <th>Ngày phải trả</th>
+                                                    <th>Ngày thực trả</th>
+                                                    <th>Phí trễ</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="dia in dsDiaTraTre track by $index">
+                                                    <th>
+                                                        <input type="checkbox" ng-model="dia.isDelete" />
+                                                    </th>
+                                                    <th>{{dia.MaDia}}</th>
+                                                    <th>{{dia.Dia.TieuDe.Ten}}</th>
+                                                    <th>{{dia.NgayThue}}</th>
+                                                    <th>{{dia.NgayPhaiTra}}</th>
+                                                    <th>{{dia.NgayThucTra}}</th>
+                                                    <th>{{dia.PhiTre}}</th>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="box-footer">
+                                    <div class="col-md-12">
+                                        <ul style="margin: 0"
+                                            uib-pagination
+                                            ng-change="diaThuePageChange()"
+                                            total-items="dsDiaThuePaginaion.total"
+                                            ng-model="dsDiaThuePaginaion.model"
+                                            max-size="dsDiaThuePaginaion.maxSize"
+                                            items-per-page="dsDiaThuePaginaion.itemsPerPage"
+                                            class="pagination-sm pull-right"
+                                            boundary-link-numbers="true"
+                                            rotate="false"></ul>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                       <div class="col-md-6">
+                           <div class="box box-primary">
+                               <div class="box-header">
+                                   <p class="box-title">Danh sách phí trả trễ</p>
+                                   <div class="box-tools pull-right">
+                                       <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                   </div>
+                               </div>
+                               <div class="box-body" id="body-box-info">
+                                   <div class="col-md-12">
+                                       <table class="table table-bordered table-hover">
+                                           <thead>
+                                               <tr>
+
+                                                   <th>Mã số đĩa</th>
+                                                   <th>Tiêu đề</th>
+                                                   <th>Ngày thuê</th>
+                                                   <th>Phí trễ</th>
+                                               </tr>
+                                           </thead>
+                                           <tbody>
+                                               <tr ng-repeat="dia in dsPhiTre track by $index"
+                                                   ng-click="dsPhiTreSelected(dia)">
+                                                  
+                                                   <th>{{dia.MaDia}}</th>
+                                                   <th>{{dia.Dia.TieuDe.Ten}}</th>
+                                                   <th>{{dia.NgayThue}}</th>
+                                                   <th>{{dia.PhiTre}}</th>
+                                               </tr>
+                                           </tbody>
+                                       </table>
+                                   </div>
+                               </div>
+                               <div class="box-footer">
+                                   <div class="col-md-12">
+                                       
+                                       <ul style="margin: 0"
+                                           uib-pagination
+                                           ng-change="phiTrePageChange()"
+                                           total-items="dsPhiTrePaginaion.total"
+                                           ng-model="dsPhiTrePaginaion.model"
+                                           max-size="dsPhiTrePaginaion.maxSize"
+                                           items-per-page="dsPhiTrePaginaion.itemsPerPage"
+                                           class="pagination-sm pull-right"
+                                           boundary-link-numbers="true"
+                                           rotate="false"></ul>
+                                   </div>
+                               </div>
+                           </div>
+                       </div> 
+                    </div>
                 </div>
                 <!-- /.tab-pane -->
                 <div class="tab-pane" id="tab-tieu-de">
-                    <table class="table table-bordered table-hover">
-                        <thead>
-                            <tr>
-                                <th>Mã tiêu đề</th>
-                                <th>Tên tiêu đề</th>
-                                <th>Danh mục</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Mã khách hàng</td>
-                                <td>Họ và tên</td>
-                                <td>Số điện thoại</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="row">
+                        <div class="col-md-7 col-sm-12">
+                            <div class="box box-default">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Danh sách tiêu đề</h3>
+                                    <div class="box-tools pull-right">
+                                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                    </div><!-- /.box-tools -->
+                                </div><!-- /.box-header -->
+                                <div class="box-body" style="height: 430px">
+                                    <div class="col-md-12">
+                                        <table class="table table-hover table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Mã tiêu đề</th>
+                                                    <th>Tên tiêu đề</th>
+                                                    <th>Danh mục</th>
+                                                    <th>Giá thuê</th>
+                                                    <th>Thời gian thuê</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                <tr ng-repeat="tieuDe in dsTieuDe track by $index"
+                                                    ng-click="tieuDeRowClick(tieuDe)">
+                                                    <td>{{tieuDe.MaTieuDe}}</td>
+                                                    <td>{{tieuDe.Ten}}</td>
+                                                    <td>{{tieuDe.DanhMuc.TenDanhMuc}}</td>
+                                                    <td>{{tieuDe.DanhMuc.GiaThue}}</td>
+                                                    <td>{{tieuDe.DanhMuc.ThoiGianThue}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div><!-- /.box-body -->
+                                <div class="box-footer">
+                                    <div class="col-md-6">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <ul style="margin: 0"
+                                            uib-pagination
+                                            ng-change="tieuDePageChange()"
+                                            total-items="dsTieuDePagination.total"
+                                            ng-model="dsTieuDePagination.model"
+                                            max-size="dsTieuDePagination.maxSize"
+                                            items-per-page="dsTieuDePagination.itemsPerPage"
+                                            class="pagination-sm pull-right"
+                                            boundary-link-numbers="true"
+                                            rotate="false"></ul>
+                                    </div>
+                                </div>
+                            </div><!-- /.box -->
+                        </div>
+
+                        <div class="col-md-5 col-sm-12">
+                            <div class="box box-default">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Danh sách đĩa: {{tieuDeSelected.Ten}}</h3>
+                                    <div class="box-tools pull-right">
+                                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                    </div><!-- /.box-tools -->
+                                </div><!-- /.box-header -->
+                                <div class="box-body" style="height: 430px">
+                                    <div class="col-md-12">
+                                    </div>
+                                </div><!-- /.box-body -->
+                                <div class="box-footer ">
+                                    
+                                </div>
+                            </div><!-- /.box -->
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- /.tab-content -->
