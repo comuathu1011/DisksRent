@@ -1092,7 +1092,6 @@
     <Folder Include="angular\login\" />
     <Folder Include="angular\service\public\" />
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Clerks\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

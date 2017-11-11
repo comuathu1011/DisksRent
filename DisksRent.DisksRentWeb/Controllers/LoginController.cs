@@ -72,6 +72,7 @@ namespace DisksRent.DisksRentWeb.Controllers
 
         public ActionResult Logout()
         {
+            Session["UserType"] = "";
             return View("Index");
         }
     }
