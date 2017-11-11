@@ -19,39 +19,103 @@ namespace DisksRent.DisksRentWeb.Controllers
 
         public ActionResult QuanLyKhachHang()
         {
-            return View();
+            string flag = Session["UserType"] as string;
+            if (flag == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+            else if (flag == "Manager")
+            {
+                return View();
+            }
+            return RedirectToAction("QuanLyKhachHang", "Clerk");
+            //return View();
         }
 
         public ActionResult QuanLyThueTraDia()
         {
-            return View();
+            string flag = Session["UserType"] as string;
+            if (flag == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+            else if (flag == "Manager")
+            {
+                return View();
+            }
+            return RedirectToAction("QuanLyKhachHang", "Clerk");
         }
 
       
         public ActionResult QuanLyTieuDeVaDia()
         {
-            return View();
+            string flag = Session["UserType"] as string;
+            if (flag == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+            else if (flag == "Manager")
+            {
+                return View();
+            }
+            return RedirectToAction("QuanLyKhachHang", "Clerk");
         }
 
         public ActionResult QuanLyPhiTre()
         {
-            return View();
+            string flag = Session["UserType"] as string;
+            if (flag == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+            else if (flag == "Manager")
+            {
+                return View();
+            }
+            return RedirectToAction("QuanLyKhachHang", "Clerk");
         }
 
         public ActionResult QuanLyDatHang()
         {
-            return View();
+            string flag = Session["UserType"] as string;
+            if (flag == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+            else if (flag == "Manager")
+            {
+                return View();
+            }
+            return RedirectToAction("QuanLyKhachHang", "Clerk");
         }
 
         public ActionResult QuanLyBaoCao()
         {
-            return View();
+            string flag = Session["UserType"] as string;
+            if (flag == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+            else if (flag == "Manager")
+            {
+                return View();
+            }
+            return RedirectToAction("QuanLyKhachHang", "Clerk");
         }
 
         //Maybe delete
         public ActionResult QuanLyDia()
         {
-            return View();
+            string flag = Session["UserType"] as string;
+            if (flag == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+            else if (flag == "Manager")
+            {
+                return View();
+            }
+            return RedirectToAction("QuanLyKhachHang", "Clerk");
         }
     }
 }
