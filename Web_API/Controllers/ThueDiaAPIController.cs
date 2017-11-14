@@ -47,6 +47,8 @@ namespace Web_API.Controllers
                 KhachHang = kh
             };
             db.DsChoThue.Add(model);
+            dia.TinhTrangThue = Models.Enums.TinhTrangThueCollection.DangThue;
+            db.Entry(dia).State = System.Data.Entity.EntityState.Modified;
             db.SaveChanges();
             return Json(model);
         }
