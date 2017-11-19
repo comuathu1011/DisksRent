@@ -1,5 +1,5 @@
 ﻿/// <reference path="ClerkApp.js" />
-ClerkApp.controller('QuanLyThueTraDiaCtrl', ($scope, KhachHangService, ThueDiaService, PhiTreService, DiaService) => {
+ManagerApp.controller('QuanLyThueTraDiaCtrl', ($scope, KhachHangService, ThueDiaService, PhiTreService, DiaService) => {
     //Từ khóa tìm kiếm khách hàng
     $scope.maKhachHangKeyword = '';
     //khách hàng hiện tại tìm kiếm được
@@ -60,6 +60,16 @@ ClerkApp.controller('QuanLyThueTraDiaCtrl', ($scope, KhachHangService, ThueDiaSe
         getDsDiaThue();
     }
 
+    $scope.tongPhiTre = 0;
+    $scope.tinhTongPhiTre = function(){
+        $scope.tongPhiTre = 0;
+        for (let i=0; i<$scope.dsDiaThue.length; i++){
+            if ($scope.dsDiaThue[i].isDelete){
+                $scope.tongPhiTre += $scope.dsDiaThue[i].PhiTre;
+            }
+        }
+    }
+
     $scope.confirmTraDia = async function () {
         for (let dia in $scope.dsDiaThue) {
             if ($scope.dsDiaThue[dia].isDelete){
@@ -69,6 +79,23 @@ ClerkApp.controller('QuanLyThueTraDiaCtrl', ($scope, KhachHangService, ThueDiaSe
         configDsDiaThue();
         $('#delete-dia-thue-modal').modal('hide');
     }
+
+    $scope.confirmTraDiaCoPhiTre = async function () {
+        for (let dia in $scope.dsDiaThue) {
+            if ($scope.dsDiaThue[dia].isDelete){
+                let x = await traDia($scope.dsDiaThue[dia].MaDia);
+            }
+        }
+        for (let dia in $scope.dsDiaThue) {
+            if ($scope.dsDiaThue[dia].isDelete){
+                let x = await thanhToanPhiTre($scope.dsDiaThue[dia]);
+                console.log(x)
+            }
+        }
+        configDsDiaThue();
+        $('#delete-dia-thue-modal').modal('hide');
+    }
+
 
     function traDia(MaDia){
         return new Promise(
@@ -111,6 +138,7 @@ ClerkApp.controller('QuanLyThueTraDiaCtrl', ($scope, KhachHangService, ThueDiaSe
                 function (response) {
                     if (response.data.length > 0) {
                         $scope.dsDiaThue = response.data;
+                        tinhPhiTre();
                     } else {
                         $scope.dsDiaThue = [];
                     }
@@ -121,6 +149,16 @@ ClerkApp.controller('QuanLyThueTraDiaCtrl', ($scope, KhachHangService, ThueDiaSe
                     console.log(err)
                 }
             )
+        }
+    }
+
+    function tinhPhiTre(){
+        for (let i=0; i<$scope.dsDiaThue.length; i++){
+            let NgayPhaiTra = new Date($scope.dsDiaThue[i].NgayPhaiTra);
+            let currentDate = new Date();
+            if (NgayPhaiTra.getTime() < currentDate.getTime()){
+                $scope.dsDiaThue[i].PhiTre = 100000;
+            }
         }
     }
 
@@ -143,7 +181,6 @@ ClerkApp.controller('QuanLyThueTraDiaCtrl', ($scope, KhachHangService, ThueDiaSe
         getDsPhiTre();
     }
 
-   
 
     //-------------------------------------------------> Thanh toán phí trễ
     $scope.confirmThanhToanPhiTre = async function () {
@@ -258,9 +295,13 @@ ClerkApp.controller('QuanLyThueTraDiaCtrl', ($scope, KhachHangService, ThueDiaSe
         ThueDiaService.thueDia($scope.khachHang.MaKhachHang, $scope.diaFindResult.MaDia).then(
             function(response){
                 console.log(response);
+                $('#thue-dia-modal').modal('hide');
+                configDsDiaThue();
+                configDsPhiTre();
             },
             function(err){
-                console.log(err)
+                console.log(err);
+                alert('Lỗi: ' + err.data)
             }
         )
     }
