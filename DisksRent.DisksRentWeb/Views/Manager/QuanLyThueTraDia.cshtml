@@ -96,6 +96,7 @@
                 </div>
                 <div class="modal-body">
                     <h4 class="danger">Bạn có chắc chắn muốn thanh toán!</h4>
+                    <h4>Tổng phí trễ: <strong>{{tongPhiTre}}</strong></h4>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
@@ -243,7 +244,7 @@
                 </div>
                 <div class="box-footer">
                     <div class="col-md-12">
-                        <button class="btn btn-sm pull-left" data-toggle="modal" data-target="#delete-dia-thue-modal" ng-click="tinhTongPhiTre()">
+                        <button class="btn btn-sm pull-left" data-toggle="modal" data-target="#delete-dia-thue-modal" ng-click="tinhTongPhiTre(1)">
                             Trả đĩa
                         </button>
                         <ul style="margin: 0"
@@ -308,7 +309,7 @@
                         <button style="margin-right: 5px" class="btn  btn-sm pull-left" data-target="#delete-phi-tre-modal" data-toggle="modal">
                             Hủy phí trễ
                         </button>
-                        <button class="btn  btn-sm pull-left" data-target="#pay-phi-tre-modal" data-toggle="modal">
+                        <button class="btn  btn-sm pull-left" data-target="#pay-phi-tre-modal" ng-click="tinhTongPhiTre(2)" data-toggle="modal">
                             Thanh toán phí trễ
                         </button>
                         <ul style="margin: 0"

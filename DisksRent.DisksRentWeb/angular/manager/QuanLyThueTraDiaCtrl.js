@@ -61,13 +61,22 @@ ManagerApp.controller('QuanLyThueTraDiaCtrl', ($scope, KhachHangService, ThueDia
     }
 
     $scope.tongPhiTre = 0;
-    $scope.tinhTongPhiTre = function(){
+    $scope.tinhTongPhiTre = function(action){
         $scope.tongPhiTre = 0;
-        for (let i=0; i<$scope.dsDiaThue.length; i++){
-            if ($scope.dsDiaThue[i].isDelete){
-                $scope.tongPhiTre += $scope.dsDiaThue[i].PhiTre;
+        if (action === 1){
+            for (let i=0; i<$scope.dsDiaThue.length; i++){
+                if ($scope.dsDiaThue[i].isDelete){
+                    $scope.tongPhiTre += $scope.dsDiaThue[i].PhiTre;
+                }
+            }
+        }else{
+            for (let i=0; i<$scope.dsPhiTre.length; i++){
+                if ($scope.dsPhiTre[i].isDelete){
+                    $scope.tongPhiTre += $scope.dsPhiTre[i].PhiTre;
+                }
             }
         }
+        
     }
 
     $scope.confirmTraDia = async function () {
