@@ -112,7 +112,7 @@ namespace Web_API.Controllers
                 return Json(err);
             }
             var model = db.DsChoThue.Where(x => x.MaKhachHang == entity.MaKhachHang && x.MaDia == x.MaDia 
-                                    && x.NgayThue == entity.NgayThue).FirstOrDefault();
+                                    && x.NgayThue.CompareTo(entity.NgayThue) == 0).FirstOrDefault();
             model.DaThanhToanPhiTre = true;
             db.Entry(model).State = System.Data.Entity.EntityState.Modified;
             db.SaveChanges();
