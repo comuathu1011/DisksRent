@@ -101,7 +101,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-                    <button type="button" class="btn btn-default" ng-click="confirmTraDia()">Có nhưng không trả phí trễ</button>
+                    <button type="button" class="btn btn-default" ng-disabled="tongPhiTre <= 0" ng-click="confirmTraDia()">Có nhưng không trả phí trễ</button>
                     <button type="button" class="btn btn-danger" ng-click="confirmTraDiaCoPhiTre()">Có</button>
                 </div>
             </div>

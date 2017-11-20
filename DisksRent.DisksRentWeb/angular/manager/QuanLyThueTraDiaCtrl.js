@@ -77,6 +77,7 @@ ManagerApp.controller('QuanLyThueTraDiaCtrl', ($scope, KhachHangService, ThueDia
             }
         }
         configDsDiaThue();
+        configDsPhiTre();
         $('#delete-dia-thue-modal').modal('hide');
     }
 
@@ -243,6 +244,7 @@ ManagerApp.controller('QuanLyThueTraDiaCtrl', ($scope, KhachHangService, ThueDia
                     getDsPhiTre();
                 } else {
                     configPhiTrePagination(0);
+                    $scope.chiTietPhiTre = {};
                     $scope.dsPhiTre = [];
                 }
 
