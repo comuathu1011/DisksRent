@@ -75,13 +75,29 @@ namespace Web_API.Controllers
                 err = "Lỗi";
                 return Json(err);
             }
+            if (KiemTraTieuDeDangDuocDatHang(maTieuDe))
+            {
+                var model2 = db.DsDatHang.Where(x => x.MaTieuDe == maTieuDe && x.TinhTrang == TinhTrangDatHangCollection.DangCho).
+                                    OrderBy(x => x.ThuTu).FirstOrDefault();
+                model2.TinhTrang = TinhTrangDatHangCollection.DaXong;
+                db.Entry(model2).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+            }
+            else
+            {
+                var dia = db.Dias.Where(x => x.MaTieuDe == maTieuDe && x.TinhTrangThue == TinhTrangThueCollection.DangGiu).FirstOrDefault();
+                dia.TinhTrangThue = TinhTrangThueCollection.CoSan;
+                db.Entry(dia).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+            }
             return Json(err);
         }
         //Kiểm tra tiêu đề của đĩa được trả lại có đang được đặt hàng không
-        private bool KiemTraTieuDeDangDuocDatHang(int maDia)
+        private bool KiemTraTieuDeDangDuocDatHang(int maTieuDe)
         {
-            if (maDia < 0) return false;
-            var maTieuDe = db.Dias.Find(maDia).MaTieuDe;
+            if (maTieuDe < 0) return false;
+            //    if (maDia < 0) return false;
+            //    var maTieuDe = db.Dias.Find(maDia).MaTieuDe;
             var model = db.DsDatHang.Where(x => x.MaTieuDe == maTieuDe && x.TinhTrang == TinhTrangDatHangCollection.DangCho);
             if (model.Count() == 0)
             {
@@ -94,7 +110,7 @@ namespace Web_API.Controllers
         {
             var dia = db.Dias.Find(maDia);
             var maTieuDe = dia.MaTieuDe;
-            if(KiemTraTieuDeDangDuocDatHang(maDia))
+            if(KiemTraTieuDeDangDuocDatHang(maTieuDe))
             {
                 var model = db.DsDatHang.Where(x => x.MaTieuDe == maTieuDe && x.TinhTrang == TinhTrangDatHangCollection.DangCho).
                                     OrderBy(x=>x.ThuTu).FirstOrDefault();
@@ -102,15 +118,13 @@ namespace Web_API.Controllers
                 db.Entry(model).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
                 dia.TinhTrangThue = TinhTrangThueCollection.DangGiu;
-                db.Entry(dia).State = System.Data.Entity.EntityState.Modified;
-                db.SaveChanges();
             }
             else
             {
                 dia.TinhTrangThue = TinhTrangThueCollection.CoSan;
-                db.Entry(dia).State = System.Data.Entity.EntityState.Modified;
-                db.SaveChanges();
             }
+            db.Entry(dia).State = System.Data.Entity.EntityState.Modified;
+            db.SaveChanges();
         }
 
         //chuyển tình trạng của đĩa sang "on hold"

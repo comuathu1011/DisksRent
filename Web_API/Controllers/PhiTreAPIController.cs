@@ -53,7 +53,7 @@ namespace Web_API.Controllers
         [Route("api/phitre/{limit}/{offset}")]
         public IHttpActionResult GetPhitres(int limit, int offset)
         {
-            var result = db.DsChoThue.Where(x => x.NgayPhaiTra.CompareTo(x.NgayThucTra) < 0 ? true: false).OrderByDescending(x=>x.NgayThue)
+            var result = db.DsChoThue.Where(x => x.NgayPhaiTra < x.NgayThucTra && x.DaThanhToanPhiTre == false).OrderByDescending(x=>x.NgayThue)
                                 .Skip(offset).Take(limit).ToList();
             if (result.Count == 0)
             {
@@ -133,7 +133,8 @@ namespace Web_API.Controllers
                                     && x.NgayThue == entity.NgayThue).FirstOrDefault();
             if(model != null)
             {
-                db.DsChoThue.Remove(model);
+                model.DaThanhToanPhiTre = true;
+                db.Entry(model).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
             }
             else

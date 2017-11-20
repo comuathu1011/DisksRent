@@ -85,9 +85,8 @@ namespace Web_API.Controllers
                          select t1)
                          .OrderByDescending(x => x.Ten)
                          .Skip(offset)
-                         .Take(limit)
+                         .Take(limit).Distinct()
                          .ToList();
-
 
             return Json(list);
         }
@@ -105,7 +104,7 @@ namespace Web_API.Controllers
             return Json(count);
         }
 
-        [Route("api/khachhang/cono")]
+        [Route("api/khachhang/cono/{limit}/{offset}")]
         public IHttpActionResult GetKhachHangCoNo(int limit, int offset)
         {
             var list = (from t1 in db.KhachHangs

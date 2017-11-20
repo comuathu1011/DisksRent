@@ -47,6 +47,8 @@ namespace Web_API.Controllers
                 KhachHang = kh
             };
             db.DsChoThue.Add(model);
+            dia.TinhTrangThue = Models.Enums.TinhTrangThueCollection.DangThue;
+            db.Entry(dia).State = System.Data.Entity.EntityState.Modified;
             db.SaveChanges();
             return Json(model);
         }
@@ -80,7 +82,9 @@ namespace Web_API.Controllers
                 err = "Lỗi";
                 return Json(err);
             }
-            var result = db.DsChoThue.Where(x => x.MaKhachHang == kh.MaKhachHang).ToList().Skip(offset).Take(limit).OrderByDescending(x=>x.NgayThue).ToList();
+            DateTime defaultDate = DateTime.Parse("1753-01-01 00:00:00.000");
+            var result = db.DsChoThue.Where(x => x.MaKhachHang == kh.MaKhachHang && x.NgayThucTra.CompareTo(defaultDate) == 0)
+                .ToList().Skip(offset).Take(limit).OrderByDescending(x=>x.NgayThue).ToList();
             return Json(result);
         }
 
@@ -94,8 +98,8 @@ namespace Web_API.Controllers
                 err = "Không tìm thấy khách hàng cần tìm";
                 return Json(err);
             }
-
-            var result = db.DsChoThue.Where(x => x.MaKhachHang == kh.MaKhachHang).Count();
+            DateTime defaultDate = DateTime.Parse("1753-01-01 00:00:00.000");
+            var result = db.DsChoThue.Where(x => x.MaKhachHang == kh.MaKhachHang && x.NgayThucTra.CompareTo(defaultDate) == 0).Count();
             return Json(result);
         }
 

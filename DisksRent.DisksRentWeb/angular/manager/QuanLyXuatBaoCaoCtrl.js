@@ -202,10 +202,11 @@ ManagerApp.controller('QuanLyXuatBaoCaoCtrl', ($scope, DiaService, KhachHangServ
 
     function getDsDiaThue() {
         if ($scope.dsDiaThuePaginaion.total > 0) {
-            ThueDiaService.getDiaThueByKhachHang($scope.khachHang.MaKhachHang, $scope.dsDiaThuePaginaion.itemsPerPage, $scope.dsDiaThuePaginaion.model).then(
+            ThueDiaService.getDiaThueByKhachHang($scope.khachHangSelected.MaKhachHang, $scope.dsDiaThuePaginaion.itemsPerPage, $scope.dsDiaThuePaginaion.model).then(
                 function (response) {
                     if (response.data.length > 0) {
                         $scope.dsDiaThue = response.data;
+                        console.log($scope.dsDiaThue)
                     } else {
                         $scope.dsDiaThue = [];
                     }
@@ -358,36 +359,39 @@ ManagerApp.controller('QuanLyXuatBaoCaoCtrl', ($scope, DiaService, KhachHangServ
         DiaService.getCountDiaOfTieuDe($scope.tieuDeSelected.MaTieuDe).then(
             function(res){
                 $scope.thongTinTieuDe.tongSoDia  = res.data;
-                getSeconeThongTinTieuDe
+                getSecondaryThongTinTieuDe();
             },
             function(err){
                 scope.thongTinTieuDe.tongSoDia  = 0;
-                getSeconeThongTinTieuDe
+                getSecondaryThongTinTieuDe();
             }
         )
     }
 
-    function getSeconeThongTinTieuDe(){
+    function getSecondaryThongTinTieuDe(){
         TieuDeService.getCountDiaTieuDeDaThue($scope.tieuDeSelected.MaTieuDe).then(
             function(res){
                 $scope.thongTinTieuDe.soDiaDuocThue  = res.data;
+
+                TieuDeService.getCountDiaTieuDeDangChoKhach($scope.tieuDeSelected.MaTieuDe).then(
+                    function(res){
+                        $scope.thongTinTieuDe.soDiaDangCho  = res.data;
+                        $scope.thongTinTieuDe.soDiaConLai = $scope.thongTinTieuDe.tongSoDia - $scope.thongTinTieuDe.soDiaDuocThue - $scope.thongTinTieuDe.soDiaDangCho;
+                    },
+                    function (err){
+                        $scope.thongTinTieuDe.soDiaDangCho  = 0
+                        $scope.thongTinTieuDe.soDiaConLai = $scope.thongTinTieuDe.tongSoDia - $scope.thongTinTieuDe.soDiaDuocThue - $scope.thongTinTieuDe.soDiaDangCho;
+                    }
+                )
             },
             function (err){
-                scope.thongTinTieuDe.soDiaDuocThue  = 0
+                $scope.thongTinTieuDe.soDiaDuocThue  = 0
+                $scope.thongTinTieuDe.soDiaConLai = $scope.thongTinTieuDe.tongSoDia - $scope.thongTinTieuDe.soDiaDuocThue - $scope.thongTinTieuDe.soDiaDangCho;
             }
         )
 
-        TieuDeService.getCountDiaTieuDeDangChoKhach($scope.tieuDeSelected.MaTieuDe).then(
-            function(res){
-                $scope.thongTinTieuDe.soDiaDangCho  = res.data;
-            },
-            function (err){
-                scope.thongTinTieuDe.soDiaDangCho  = 0
-            }
-        )
+        
 
-        $scope.thongTinTieuDe.soDiaConLai =     $scope.thongTinTieuDe.tongSoDia
-                                                - $scope.thongTinTieuDe.soDiaDuocThue
-                                                - $scope.thongTinTieuDe.soDiaDangCho;
+        
     }
 });

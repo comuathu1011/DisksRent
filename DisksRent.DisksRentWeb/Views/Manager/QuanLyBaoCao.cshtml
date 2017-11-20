@@ -137,20 +137,18 @@
                                                     <th>Tiêu đề</th>
                                                     <th>Ngày thuê</th>
                                                     <th>Ngày phải trả</th>
-                                                    <th>Ngày thực trả</th>
+                                                  
                                                     <th>Phí trễ</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr ng-repeat="dia in dsDiaTraTre track by $index">
-                                                    <th>
-                                                        <input type="checkbox" ng-model="dia.isDelete" />
-                                                    </th>
+                                                <tr ng-repeat="dia in dsDiaThue track by $index">
+                                                   
                                                     <th>{{dia.MaDia}}</th>
                                                     <th>{{dia.Dia.TieuDe.Ten}}</th>
-                                                    <th>{{dia.NgayThue}}</th>
-                                                    <th>{{dia.NgayPhaiTra}}</th>
-                                                    <th>{{dia.NgayThucTra}}</th>
+                                                    <th>{{dia.NgayThue | date: "dd/MM/yyyy"}}</th>
+                                                    <th>{{dia.NgayPhaiTra | date: "dd/MM/yyyy"}}</th>
+                                                    
                                                     <th>{{dia.PhiTre}}</th>
                                                 </tr>
                                             </tbody>
@@ -187,7 +185,6 @@
                                        <table class="table table-bordered table-hover">
                                            <thead>
                                                <tr>
-
                                                    <th>Mã số đĩa</th>
                                                    <th>Tiêu đề</th>
                                                    <th>Ngày thuê</th>
@@ -197,11 +194,10 @@
                                            <tbody>
                                                <tr ng-repeat="dia in dsPhiTre track by $index"
                                                    ng-click="dsPhiTreSelected(dia)">
-                                                  
-                                                   <th>{{dia.MaDia}}</th>
-                                                   <th>{{dia.Dia.TieuDe.Ten}}</th>
-                                                   <th>{{dia.NgayThue}}</th>
-                                                   <th>{{dia.PhiTre}}</th>
+                                                   <td>{{dia.MaDia}}</td>
+                                                   <td>{{dia.Dia.TieuDe.Ten}}</td>
+                                                   <td>{{dia.NgayThue | date: "dd/MM/yyyy"}}</td>
+                                                   <td>{{dia.PhiTre}}</td>
                                                </tr>
                                            </tbody>
                                        </table>

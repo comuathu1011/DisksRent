@@ -96,6 +96,7 @@
                 </div>
                 <div class="modal-body">
                     <h4 class="danger">Bạn có chắc chắn muốn thanh toán!</h4>
+                    <h4>Tổng phí trễ: <strong>{{tongPhiTre}}</strong></h4>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
@@ -114,10 +115,12 @@
                 </div>
                 <div class="modal-body">
                     <h4 class="danger">Bạn có chắc chắn muốn trả đĩa!</h4>
+                    <h4>Tổng phí trễ: <strong>{{tongPhiTre}}</strong></h4>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-                    <button type="button" class="btn btn-danger" ng-click="confirmTraDia()">Có</button>
+                    <button type="button" class="btn btn-default" ng-disabled="tongPhiTre <= 0" ng-click="confirmTraDia()">Có nhưng không trả phí trễ</button>
+                    <button type="button" class="btn btn-danger" ng-click="confirmTraDiaCoPhiTre()">Có</button>
                 </div>
             </div>
         </div>
@@ -185,7 +188,6 @@
 
                                 <div class="col-sm-9">
                                     <textarea class="form-control" ng-disabled="true" ng-model="khachHang.DiaChi" rows="4">
-                                        Phường 5, Gò Vấp, Tp Hồ Chí Minh
                                     </textarea>
                                 </div>
                             </div>
@@ -222,7 +224,6 @@
                                     <th>Tiêu đề</th>
                                     <th>Ngày thuê</th>
                                     <th>Ngày phải trả</th>
-                                    <th>Ngày thực trả</th>
                                     <th>Phí trễ</th>
                                 </tr>
                             </thead>
@@ -233,9 +234,8 @@
                                     </th>
                                     <th>{{dia.MaDia}}</th>
                                     <th>{{dia.Dia.TieuDe.Ten}}</th>
-                                    <th>{{dia.NgayThue}}</th>
-                                    <th>{{dia.NgayPhaiTra}}</th>
-                                    <th>{{dia.NgayThucTra}}</th>
+                                    <th>{{dia.NgayThue | date: "dd/MM/yyyy"}}</th>
+                                    <th>{{dia.NgayPhaiTra | date: "dd/MM/yyyy"}}</th>
                                     <th>{{dia.PhiTre}}</th>
                                 </tr>
                             </tbody>
@@ -244,7 +244,7 @@
                 </div>
                 <div class="box-footer">
                     <div class="col-md-12">
-                        <button class="btn btn-sm pull-left" data-toggle="modal" data-target="#delete-dia-thue-modal">
+                        <button class="btn btn-sm pull-left" data-toggle="modal" data-target="#delete-dia-thue-modal" ng-click="tinhTongPhiTre(1)">
                             Trả đĩa
                         </button>
                         <ul style="margin: 0"
@@ -284,6 +284,7 @@
                                     <th>Mã số đĩa</th>
                                     <th>Tiêu đề</th>
                                     <th>Ngày thuê</th>
+                                    <th>Ngày thực trả</th>
                                     <th>Phí trễ</th>
                                 </tr>
                             </thead>
@@ -295,7 +296,8 @@
                                     </th>
                                     <th>{{dia.MaDia}}</th>
                                     <th>{{dia.Dia.TieuDe.Ten}}</th>
-                                    <th>{{dia.NgayThue}}</th>
+                                    <th>{{dia.NgayThue | date: "dd/MM/yyyy"}}</th>
+                                    <th>{{dia.NgayThucTra | date: "dd/MM/yyyy"}}</th>
                                     <th>{{dia.PhiTre}}</th>
                                 </tr>
                             </tbody>
@@ -307,7 +309,7 @@
                         <button style="margin-right: 5px" class="btn  btn-sm pull-left" data-target="#delete-phi-tre-modal" data-toggle="modal">
                             Hủy phí trễ
                         </button>
-                        <button class="btn  btn-sm pull-left" data-target="#pay-phi-tre-modal" data-toggle="modal">
+                        <button class="btn  btn-sm pull-left" data-target="#pay-phi-tre-modal" ng-click="tinhTongPhiTre(2)" data-toggle="modal">
                             Thanh toán phí trễ
                         </button>
                         <ul style="margin: 0"
@@ -347,9 +349,9 @@
                             <p><strong>Thông tin đĩa</strong></p>
                             <p>Tên đĩa: <strong>{{chiTietPhiTre.Dia.TieuDe.Ten}}</strong></p>
                             <p>Mã đĩa: <strong>{{chiTietPhiTre.Dia.MaDia}}</strong></p>
-                            <p>Ngày thuê: <strong>{{chiTietPhiTre.NgayThue}}</strong></p>
-                            <p>Ngày phải trả: <strong>{{chiTietPhiTre.NgayPhaiTra}}</strong></p>
-                            <p>Ngày trả thực: <strong>{{chiTietPhiTre.NgayThucTra}}</strong></p>
+                            <p>Ngày thuê: <strong>{{chiTietPhiTre.NgayThue | date: "dd/MM/yyyy"}}</strong></p>
+                            <p>Ngày phải trả: <strong>{{chiTietPhiTre.NgayPhaiTra | date: "dd/MM/yyyy"}}</strong></p>
+                            <p>Ngày trả thực: <strong>{{chiTietPhiTre.NgayThucTra | date: "dd/MM/yyyy"}}</strong></p>
                             <p>Trạng thái: <strong>{{chiTietPhiTre.DaThanhToanPhiTre ? 'Đã thanh toán phí trể' : 'Chưa thanh toán phí trễ'}}</strong></p>
                         </div>
                     </div>

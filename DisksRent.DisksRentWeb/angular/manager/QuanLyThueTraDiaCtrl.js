@@ -60,6 +60,25 @@ ManagerApp.controller('QuanLyThueTraDiaCtrl', ($scope, KhachHangService, ThueDia
         getDsDiaThue();
     }
 
+    $scope.tongPhiTre = 0;
+    $scope.tinhTongPhiTre = function(action){
+        $scope.tongPhiTre = 0;
+        if (action === 1){
+            for (let i=0; i<$scope.dsDiaThue.length; i++){
+                if ($scope.dsDiaThue[i].isDelete){
+                    $scope.tongPhiTre += $scope.dsDiaThue[i].PhiTre;
+                }
+            }
+        }else{
+            for (let i=0; i<$scope.dsPhiTre.length; i++){
+                if ($scope.dsPhiTre[i].isDelete){
+                    $scope.tongPhiTre += $scope.dsPhiTre[i].PhiTre;
+                }
+            }
+        }
+        
+    }
+
     $scope.confirmTraDia = async function () {
         for (let dia in $scope.dsDiaThue) {
             if ($scope.dsDiaThue[dia].isDelete){
@@ -67,8 +86,26 @@ ManagerApp.controller('QuanLyThueTraDiaCtrl', ($scope, KhachHangService, ThueDia
             }
         }
         configDsDiaThue();
+        configDsPhiTre();
         $('#delete-dia-thue-modal').modal('hide');
     }
+
+    $scope.confirmTraDiaCoPhiTre = async function () {
+        for (let dia in $scope.dsDiaThue) {
+            if ($scope.dsDiaThue[dia].isDelete){
+                let x = await traDia($scope.dsDiaThue[dia].MaDia);
+            }
+        }
+        for (let dia in $scope.dsDiaThue) {
+            if ($scope.dsDiaThue[dia].isDelete){
+                let x = await thanhToanPhiTre($scope.dsDiaThue[dia]);
+                console.log(x)
+            }
+        }
+        configDsDiaThue();
+        $('#delete-dia-thue-modal').modal('hide');
+    }
+
 
     function traDia(MaDia){
         return new Promise(
@@ -111,6 +148,7 @@ ManagerApp.controller('QuanLyThueTraDiaCtrl', ($scope, KhachHangService, ThueDia
                 function (response) {
                     if (response.data.length > 0) {
                         $scope.dsDiaThue = response.data;
+                        tinhPhiTre();
                     } else {
                         $scope.dsDiaThue = [];
                     }
@@ -121,6 +159,16 @@ ManagerApp.controller('QuanLyThueTraDiaCtrl', ($scope, KhachHangService, ThueDia
                     console.log(err)
                 }
             )
+        }
+    }
+
+    function tinhPhiTre(){
+        for (let i=0; i<$scope.dsDiaThue.length; i++){
+            let NgayPhaiTra = new Date($scope.dsDiaThue[i].NgayPhaiTra);
+            let currentDate = new Date();
+            if (NgayPhaiTra.getTime() < currentDate.getTime()){
+                $scope.dsDiaThue[i].PhiTre = 100000;
+            }
         }
     }
 
@@ -205,6 +253,7 @@ ManagerApp.controller('QuanLyThueTraDiaCtrl', ($scope, KhachHangService, ThueDia
                     getDsPhiTre();
                 } else {
                     configPhiTrePagination(0);
+                    $scope.chiTietPhiTre = {};
                     $scope.dsPhiTre = [];
                 }
 
