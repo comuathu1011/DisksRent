@@ -98,9 +98,8 @@ namespace Web_API.Controllers
                 err = "Không tìm thấy khách hàng cần tìm";
                 return Json(err);
             }
-
             DateTime defaultDate = DateTime.Parse("1753-01-01 00:00:00.000");
-            var result = db.DsChoThue.Where(x => x.MaKhachHang == kh.MaKhachHang && x.NgayThucTra.CompareTo(defaultDate) == 0 ).Count();
+            var result = db.DsChoThue.Where(x => x.MaKhachHang == kh.MaKhachHang && x.NgayThucTra.CompareTo(defaultDate) == 0).Count();
             return Json(result);
         }
 

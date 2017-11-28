@@ -85,9 +85,8 @@ namespace Web_API.Controllers
                          select t1)
                          .OrderByDescending(x => x.Ten)
                          .Skip(offset)
-                         .Take(limit)
+                         .Take(limit).Distinct()
                          .ToList();
-
 
             return Json(list);
         }
